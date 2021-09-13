@@ -33,7 +33,7 @@ if any error occur, try:
 ![image](https://user-images.githubusercontent.com/67773933/115964006-8573fa00-a54c-11eb-9dde-a99b51e44da1.png)
 
 #Step 4: Checkout to develop branch.
-> git chekout develop
+> git checkout develop
 
 ![image](https://user-images.githubusercontent.com/67773933/115964039-b2281180-a54c-11eb-8bda-a3512ae6bc67.png)
 
@@ -60,16 +60,16 @@ NOTICE [What are added, changed, removed, name of feature] must writen in Englis
 
 if error occur, try:
 
-> git --set-upstream ogrin [Name of branch that you are working]
+> git --set-upstream origin [Name of branch that you are working]
 
 ![image](https://user-images.githubusercontent.com/67773933/115964299-ff58b300-a54d-11eb-8901-afe6b8d72c47.png)
 
 #Step 9: Access Github.com and create pull request
 
-#Bước 10: Check branch have pushed or not. If anything go wrong you can't not see your branch as remote branch
+#Step 10: Check branch have pushed or not. If anything go wrong you can't not see your branch as remote branch
 > git branch -a
 
-#Bước 11: Before want to begin new section, ask Duong Tung check everything before update code
+#Step 11: Before want to begin new section, ask Duong Tung check everything before update code
 > git fetch --prune
 
 Check all branch again
@@ -77,6 +77,6 @@ Check all branch again
 
 If you see branch feature/name_of_your_branch is deleted, your code is accepted and merged to Develop. If anything wrong with that code you will receive email with comments.
 
-#Bước 12:Checkout Develop, pull newest code and repeat the process
+#Step 12:Checkout Develop, pull newest code and repeat the process
 > git checkout develop
 > git pull
