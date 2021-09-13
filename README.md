@@ -1,75 +1,82 @@
 # Business_Social_Network_Flutter_App
+### Clean-Code convention
++ In this project we use Pascal and Camel naming convention for variable name and function name
++ Access Modifiers must be clearly
++ Describe everything easy to confuse, cross class function & variables, dependences, helpers in comment clearly in English
++ Add comma ',' after every parameter
+
 ### Git rules
-+ Không push code lên branch master/main, chỉ được push và tạo pull request từ branch feature vào branch develop.
-+ Commit và push code lên github trong khoảng thời gian từ 10h sáng đến 10h tối, không nhận bất kì lần pull request nào quá khoảng thời gian này.
-+ 9h sáng mỗi ngày hoặc muốn code tiếp tục thì thực hiện update code trước tiên.
-+ Mỗi feature sẽ tạo 1 branch mới.
-+ Không được phép merge code.
-### Hướng dẫn dùng Git Bash
-#Bước 1: Clone Project
-> git clone https://github.com/TeaTung/Health_Tracking_Android_App.git
++ Must not push code to branch master/main, push and create pull request from branch feature to branch develop.
++ Commit and push code to github from 7 A.M to 11 P.M, pull request after this time will be checked in next day.
++ Fetch code before coding new feature.
++ Each feature create a brand new branch.
++ Must not merge code.
+### Git & Working flow
+#Step 1: Clone Project
+> git clone https://github.com/TeaTung/Business_Social_Network_Flutter_App.git
 
-hoặc
+if any error occur, try:
 
-> git clone http://github.com/TeaTung/Health_Tracking_Android_App.git
+> git clone http://github.com/TeaTung/Business_Social_Network_Flutter_App.git
 
 ![image](https://user-images.githubusercontent.com/67773933/115963852-8193a800-a54b-11eb-9fbd-e3a0b9833212.png)
 
-#Bước 2: Kiểm tra các branch có trên máy và remote.
+#Step 2: Check local Git branch & remote Git branch.
 
 > git branch -a
 
 ![image](https://user-images.githubusercontent.com/67773933/115963974-4a71c680-a54c-11eb-8957-ba4da13af117.png)
 
-#Bước 3: Thực hiện fetch branch develop trên remote (GitHub) về máy để code.
+#Step 3: Fetch code from remote to local before working.
 > git fetch origin develop
 
 ![image](https://user-images.githubusercontent.com/67773933/115964006-8573fa00-a54c-11eb-9dde-a99b51e44da1.png)
 
-#Bước 4: Checkout sang nhánh develop.
+#Step 4: Checkout to develop branch.
 > git chekout develop
 
 ![image](https://user-images.githubusercontent.com/67773933/115964039-b2281180-a54c-11eb-8bda-a3512ae6bc67.png)
 
-Kể từ đây, mọi thao tác push và tạo pull request sẽ được push vào branch develop, không được phép thao tác thẳng lên master/main.
+[IMPORTANT] From this, every push and create pull request event will be pushed only to branch develop, must not work with master/main branch (this branch will store lasted stable state of project).
 
-#Bước 5: Thực hiện checkout từ branch develop sang một branch feature để code phần của mình.
-Mọi thao tác code sẽ được thực hiện trên chính branch này, push và pull request sẽ được đẩy vào branch develop, không được đẩy thẳng lên master/main
+#Step 5: Checkout from branch develop to branch feature to working with your feature.
+[IMPORTANT] Every push and create pull request event will be pushed only to branch develop, must not work with master/main branch (this branch will store lasted stable state of project).
 > git checkout -b feature/tasks_name
 
-#Bước 6: Sau khi hoàn thành task, check status những gì đã làm.
+#Step 6: [IMPORTANT] When everything have done, check status, test every parts of project from beginning flow of application.
 > git status
 
 ![image](https://user-images.githubusercontent.com/67773933/115964200-7b9ec680-a54d-11eb-9b8a-2b944f47e44f.png)
 
-#Bước 7: Sau khi review, add code và commit.
+#Step 7: Affter testing, add all files have change and commit.
 > git add .
-> git commit -m 'Tên những thay đổi hoặc cập nhật.'
+> git commit -m 'What are added, changed, removed, name of feature'
 
-Chú ý viết phần [Tên thay đổi hoặc cập nhật] rõ ràng và chi tiết.
+NOTICE [What are added, changed, removed, name of feature] must writen in English clearly and detail.
 ![image](https://user-images.githubusercontent.com/67773933/115964244-b6a0fa00-a54d-11eb-8852-c526bf111946.png)
 
-#Bước 8: Đưa code từ local lên remote
-> git push origin [Tên branch đang thao tác]
+#Step 8: Push from local to remote
+> git push origin [Name of branch that you are working]
 
-hoặc (nếu lệnh trên báo lỗi)
-> git --set-upstream ogrin [Tên branch đang thao tác]
+if error occur, try:
+
+> git --set-upstream ogrin [Name of branch that you are working]
 
 ![image](https://user-images.githubusercontent.com/67773933/115964299-ff58b300-a54d-11eb-8901-afe6b8d72c47.png)
 
-#Bước 9: Lên Github tạo pull request
+#Step 9: Access Github.com and create pull request
 
-#Bước 10: Kiểm tra branch đã lên remote chưa
+#Bước 10: Check branch have pushed or not. If anything go wrong you can't not see your branch as remote branch
 > git branch -a
 
-#Bước 11: Khi chuẩn bị code tiếp -> báo cho DT trước khi update code
+#Bước 11: Before want to begin new section, ask Duong Tung check everything before update code
 > git fetch --prune
 
-Kiểm tra lại các branch
+Check all branch again
 > git branch -a
 
-Khi thấy branch feature/task_đã_làm bị xoá -> code đã được accept và merge với nhánh Develop.
+If you see branch feature/name_of_your_branch is deleted, your code is accepted and merged to Develop. If anything wrong with that code you will receive email with comments.
 
-#Bước 12: Checkout nhánh Develop, pull code mới nhất và lặp lại
+#Bước 12:Checkout Develop, pull newest code and repeat the process
 > git checkout develop
 > git pull
