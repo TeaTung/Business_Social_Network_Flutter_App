@@ -2,7 +2,7 @@
 ### Clean-Code convention
 + In this project we use Pascal and Camel naming convention for variable name and function name
 + Access Modifiers must be clearly
-+ Describe everything easy to confuse, cross class function & variables, dependences, helpers in comment clearly in English
++ Describe everything easy to confuse, cross class function & variables, dependencies, helpers in comment clearly in English
 + Add comma ',' after every parameter
 
 ### Git rules
