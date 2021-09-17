@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'navigators/bottom_navigator.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -27,9 +29,18 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Business Social Network'),
       ),
-      body: const Center(
-        child: Text('body'),
-      ),
+      // body: Container(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //     children: const [
+      //       Center(
+      //         child: Text('body'),
+      //       ),
+      //       BottomNavigator(),
+      //     ],
+      //   ),
+      // ),
+      body: const BottomNavigator(),
     );
   }
 }
