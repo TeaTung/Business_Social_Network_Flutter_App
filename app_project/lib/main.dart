@@ -1,6 +1,5 @@
+import 'package:app_project/widgets/post_item.dart';
 import 'package:flutter/material.dart';
-
-import 'navigators/bottom_navigator.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,6 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Business Social Network'),
       ),
+
+      //This code bellow doesn't work correctly
       // body: Container(
       //   child: Column(
       //     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -40,7 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ],
       //   ),
       // ),
-      body: const BottomNavigator(),
+
+      //Test post item widget -> OK
+      body: const PostItem(),
+
+      //bottomNavigationBar: const BottomNavigator(),
     );
   }
 }
