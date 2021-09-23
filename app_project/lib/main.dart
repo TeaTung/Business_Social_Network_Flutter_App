@@ -1,17 +1,28 @@
 import 'package:app_project/widgets/post_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'navigators/bottom_navigator.dart';
+import './providers/comments.dart';
+import './screens/detail_post_screen.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Business Social Network',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: CommentProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Business Social Network',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: DetailPostScreen() ,
       ),
-      home: MyHomePage(),
     );
   }
 }

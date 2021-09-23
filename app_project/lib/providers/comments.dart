@@ -1,14 +1,53 @@
-import 'package:app_project/providers/comment.dart';
 import 'package:flutter/foundation.dart';
 
-//This class manage all comments of post data, add, edit, fetch,...
-class Comments with ChangeNotifier {
-  List<Comment> _comments;
-  Comments(this._comments);
+class Comment {
+  final String id;
+  final String uid;
+  final String userName;
+  final String userAvatarUrl;
+  final String userCommentText;
+  final int numberOfLike;
+  final DateTime date;
 
-  List<Comment> get comments {
-    return [..._comments];
+  Comment({
+    required this.id,
+    required this.uid,
+    required this.userName,
+    required this.userAvatarUrl,
+    required this.userCommentText,
+    required this.numberOfLike,
+    required this.date,
+  });
+}
+
+class CommentProvider with ChangeNotifier {
+  List<Comment> _listComment = [
+    Comment(
+      numberOfLike: 0,
+      id: 'id',
+      userName: 'Thang',
+      userCommentText: 'Comment ne',
+      userAvatarUrl: 'https://picsum.photos/200/300.jpg',
+      date: DateTime.now(),
+      uid: 'p1',
+    ),
+  ];
+
+  List<Comment> get listComment {
+    return [..._listComment];
   }
 
-  void fetchCommentsByIdPost() {}
-}
+  void addComment(Comment comment) {
+    _listComment.add(comment);
+    notifyListeners();
+  }
+
+  int get length {
+    return listComment.length;
+  }
+
+
+  void removeComment(String id) {
+    _listComment.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
