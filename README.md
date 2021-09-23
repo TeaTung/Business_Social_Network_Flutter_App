@@ -58,9 +58,11 @@ NOTICE [What are added, changed, removed, name of feature] must writen in Englis
 #Step 8: Push from local to remote
 > git push origin [Name of branch that you are working]
 
-if error occur, try:
+if you just clone project, try:
 
 > git --set-upstream origin [Name of branch that you are working]
+
+this command will set up a tracking relationship between local and remote repo
 
 ![image](https://user-images.githubusercontent.com/67773933/115964299-ff58b300-a54d-11eb-8901-afe6b8d72c47.png)
 
