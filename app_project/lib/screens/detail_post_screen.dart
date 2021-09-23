@@ -19,7 +19,9 @@ class DetailPostScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -44,8 +46,11 @@ class DetailPostScreen extends StatelessWidget {
                   itemBuilder: (ctx, i) => CommentItem(
                     listComment.listComment[i].id,
                     listComment.listComment[i].userName,
-                    listComment.listComment[i].userImageUrl,
+                    listComment.listComment[i].userAvatarUrl,
                     listComment.listComment[i].userCommentText,
+                    //usercommentID = myId
+                    1 == 1,
+                    listComment.listComment[i].date,
                   ),
                 ),
               ),
