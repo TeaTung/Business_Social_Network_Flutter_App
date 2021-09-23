@@ -51,4 +51,3 @@ class CommentProvider with ChangeNotifier {
     _listComment.removeWhere((element) => element.id == id);
     notifyListeners();
   }
-}
