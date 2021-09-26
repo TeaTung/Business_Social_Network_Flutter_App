@@ -11,7 +11,7 @@ class Post with ChangeNotifier {
   final String content;
   final int likeCount;
   final String? imageUrl;
-  Comments comments;
+  Comment? comments;
   final DateTime postTime;
 
   //Variables bellow point out that post is business post or not to add additional information to the post

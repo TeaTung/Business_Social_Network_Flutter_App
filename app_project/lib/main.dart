@@ -1,27 +1,45 @@
-import 'package:app_project/widgets/post_item.dart';
+import 'package:app_project/providers/posts.dart';
+import 'package:app_project/screens/list_post_screen.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'navigators/bottom_navigator.dart';
 import './providers/comments.dart';
 import './screens/detail_post_screen.dart';
+import 'navigators/demo_bottom_navigator.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.bottom,
+    ]);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: CommentProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Posts(),
         ),
       ],
       child: MaterialApp(
         title: 'Business Social Network',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.workSansTextTheme(
+          ),
         ),
-        home: DetailPostScreen() ,
+        home: MyHomePage(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
@@ -36,27 +54,87 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Business Social Network'),
+      body: PageView(
+        controller: controller,
+        children: [
+          ListPostScreen(),
+          Center(
+            child: Text("Dont where what to put here",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+          ),
+          Center(
+            child: Text("Message",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+          ),
+          Center(
+            child: Text("User",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+          ),
+        ],
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
+      bottomNavigationBar: _buildBottomBar(),
+    );
+  }
 
-      //This code bellow doesn't work correctly
-      // body: Container(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //     children: const [
-      //       Center(
-      //         child: Text('body'),
-      //       ),
-      //       BottomNavigator(),
-      //     ],
-      //   ),
-      // ),
+  int _currentIndex = 0;
+  PageController controller = PageController(
+    initialPage: 0,
+  );
 
-      //Test post item widget -> OK
-      body: const PostItem(),
-
-      //bottomNavigationBar: const BottomNavigator(),
+  Widget _buildBottomBar() {
+    return CustomAnimatedBottomBar(
+      containerHeight: 55,
+      backgroundColor: Colors.white,
+      selectedIndex: _currentIndex,
+      showElevation: true,
+      itemCornerRadius: 24,
+      curve: Curves.easeIn,
+      onItemSelected: (index) {
+        setState(() {
+          _currentIndex = index;
+        });
+        controller.animateToPage(_currentIndex,
+            duration: Duration(milliseconds: 200), curve: Curves.linear);
+      },
+      items: <BottomNavyBarItem>[
+        BottomNavyBarItem(
+          icon: Icon(MdiIcons.newspaperVariantOutline),
+          title: Text('Home'),
+          iconSelect: Icon(MdiIcons.newspaperVariant),
+          activeColor: Colors.black,
+          inactiveColor: Colors.black,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(MdiIcons.heartOutline),
+          iconSelect: Icon(MdiIcons.heart),
+          title: Text('Users'),
+          activeColor: Colors.black,
+          inactiveColor: Colors.black,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(MdiIcons.messageOutline),
+          iconSelect: Icon(MdiIcons.message),
+          title: Text('Messages'),
+          activeColor: Colors.black,
+          inactiveColor: Colors.black,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(MdiIcons.accountSettingsOutline),
+          iconSelect: Icon(MdiIcons.accountSettings),
+          title: Text('Settings'),
+          activeColor: Colors.black,
+          inactiveColor: Colors.black,
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

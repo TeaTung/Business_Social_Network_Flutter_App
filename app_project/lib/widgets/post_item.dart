@@ -2,7 +2,9 @@ import 'package:app_project/providers/comments.dart';
 import 'package:app_project/providers/post.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:like_button/like_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 //This widget represents for one individual post to load to posts list
 class PostItem extends StatelessWidget {
@@ -16,8 +18,8 @@ class PostItem extends StatelessWidget {
     // Comment comment = Provider.of<Comment>(context);
 
     //The code bellow for test without data
-    Comments comments = Comments([]);
-    Post post = Post(
+    var comments = null;
+    /*Post post = Post(
       id: DateTime.now().toString(),
       uid: 'test',
       content:
@@ -31,7 +33,8 @@ class PostItem extends StatelessWidget {
           'https://lwlies.com/wp-content/uploads/2017/04/avatar-2009-1108x0-c-default.jpg',
       imageUrl:
           'https://lwlies.com/wp-content/uploads/2017/04/avatar-2009-1108x0-c-default.jpg',
-    );
+    );*/
+    Post post = Provider.of<Post>(context);
     return Wrap(
       children: [
         Card(
@@ -92,11 +95,11 @@ class PostItem extends StatelessWidget {
               if (post.imageUrl != null)
                 Image.network(
                   post.imageUrl!,
-                  height: 230,
+                  height: 320,
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
-              const Divider(),
+              /*const Divider(),*/
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
@@ -106,31 +109,13 @@ class PostItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     if (!post.isBusinessPost) ...[
-                      _PostButton(
-                        icon: const Icon(
-                          MdiIcons.heartOutline,
-                          color: Colors.black87,
-                          size: 20,
-                        ),
-                        label: 'Love',
+                      _LikePostButton(
                         tapHandler: () {},
                       ),
-                      _PostButton(
-                        icon: const Icon(
-                          MdiIcons.commentOutline,
-                          color: Colors.black87,
-                          size: 20,
-                        ),
-                        label: 'Comment',
+                      _CommentPostButton(
                         tapHandler: () {},
                       ),
-                      _PostButton(
-                        icon: const Icon(
-                          MdiIcons.sendOutline,
-                          color: Colors.black87,
-                          size: 20,
-                        ),
-                        label: 'Message',
+                      _SharePostButton(
                         tapHandler: () {},
                       ),
                     ],
@@ -176,12 +161,217 @@ class _PostButton extends StatelessWidget {
           child: SizedBox(
             height: 40.0,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon,
                 const SizedBox(width: 5),
                 Text(label),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LikePostButton extends StatelessWidget {
+  final VoidCallback tapHandler;
+  final _primaryColor = Colors.black;
+  final _secondaryColor = Colors.black;
+
+  const _LikePostButton({required this.tapHandler});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: tapHandler,
+          child: SizedBox(
+            height: 40.0,
+            child: LikeButton(
+              circleColor: const CircleColor(
+                start: Color(0xff000000),
+                end: Color(0xca000000),
+              ),
+              bubblesColor: const BubblesColor(
+                dotPrimaryColor: Color(0xA9000000),
+                dotSecondaryColor: Color(0xa3000000),
+              ),
+              size: 20,
+              likeBuilder: (bool isLiked) {
+                if (isLiked) {
+                  return Icon(
+                    MdiIcons.heart,
+                    color: _primaryColor,
+                    size: 23,
+                  );
+                } else {
+                  return Icon(
+                    MdiIcons.heartOutline,
+                    color: _secondaryColor,
+                    size: 22,
+                  );
+                }
+              },
+              likeCount: 0,
+              countBuilder: (count, bool isLiked, String text) {
+                var color = isLiked ? _primaryColor : _secondaryColor;
+                Widget result;
+                if (count == 0) {
+                  result = Text(
+                    "",
+                    style: TextStyle(
+                      color: color,
+                    ),
+                  );
+                } else {
+                  result = Text(
+                    text,
+                    style: TextStyle(color: color),
+                  );
+                }
+                return result;
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CommentPostButton extends StatelessWidget {
+  final VoidCallback tapHandler;
+
+  const _CommentPostButton({required this.tapHandler});
+
+  final _primaryColor = Colors.black;
+  final _secondaryColor = Colors.black;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: tapHandler,
+          child: SizedBox(
+            height: 40.0,
+            child: LikeButton(
+              size: 22,
+              circleColor: const CircleColor(
+                start: Color(0xff000000),
+                end: Color(0xca000000),
+              ),
+              bubblesColor: const BubblesColor(
+                dotPrimaryColor: Color(0xA9000000),
+                dotSecondaryColor: Color(0xa3000000),
+              ),
+              likeBuilder: (bool isLiked) {
+                if (isLiked) {
+                  return Container(
+                    child: Icon(
+                      MdiIcons.message,
+                      color: isLiked ? _primaryColor : _secondaryColor,
+                      size: 23,
+                    ),
+                  );
+                } else {
+                  return Icon(
+                    MdiIcons.messageOutline,
+                    color: isLiked ? _primaryColor : _secondaryColor,
+                    size: 23,
+                  );
+                }
+              },
+              likeCount: 0,
+              countBuilder: (count, bool isLiked, String text) {
+                var color = isLiked ? _primaryColor : _secondaryColor;
+                Widget result;
+                if (count == 0) {
+                  result = Text(
+                    "",
+                    style: TextStyle(color: color),
+                  );
+                } else {
+                  result = Text(
+                    text,
+                    style: TextStyle(color: color),
+                  );
+                }
+                return result;
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SharePostButton extends StatelessWidget {
+  final VoidCallback tapHandler;
+
+  const _SharePostButton({required this.tapHandler});
+
+  final _primaryColor = Colors.black;
+  final _secondaryColor = Colors.black;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: tapHandler,
+          child: SizedBox(
+            height: 40.0,
+            child: LikeButton(
+              size: 23,
+              circleColor: const CircleColor(
+                start: Color(0xff000000),
+                end: Color(0xca000000),
+              ),
+              bubblesColor: const BubblesColor(
+                dotPrimaryColor: Color(0xA9000000),
+                dotSecondaryColor: Color(0xa3000000),
+              ),
+              likeBuilder: (bool isLiked) {
+                if (isLiked) {
+                  return Icon(
+                    Icons.check_box,
+                    color: isLiked ? _primaryColor : _secondaryColor,
+                    size: 23,
+                  );
+                } else {
+                  return Icon(
+                    Icons.share,
+                    color: isLiked ? _primaryColor : _secondaryColor,
+                    size: 23,
+                  );
+                }
+              },
+              likeCount: 0,
+              countBuilder: (count, bool isLiked, String text) {
+                var color = isLiked ? _primaryColor : _secondaryColor;
+                Widget result;
+                if (count == 0) {
+                  result = Text(
+                    "",
+                    style: TextStyle(color: color),
+                  );
+                } else {
+                  result = Text(
+                    text,
+                    style: TextStyle(color: color),
+                  );
+                }
+                return result;
+              },
             ),
           ),
         ),
