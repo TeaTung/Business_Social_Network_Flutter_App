@@ -6,9 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'navigators/bottom_navigator.dart';
+
 import './providers/comments.dart';
-import './screens/detail_post_screen.dart';
 import 'navigators/demo_bottom_navigator.dart';
 
 void main() {
@@ -35,8 +34,7 @@ class MyApp extends StatelessWidget {
         title: 'Business Social Network',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.workSansTextTheme(
-          ),
+          textTheme: GoogleFonts.workSansTextTheme(),
         ),
         home: MyHomePage(),
         debugShowCheckedModeBanner: false,
@@ -99,37 +97,37 @@ class _MyHomePageState extends State<MyHomePage> {
           _currentIndex = index;
         });
         controller.animateToPage(_currentIndex,
-            duration: Duration(milliseconds: 200), curve: Curves.linear);
+            duration: const Duration(milliseconds: 200), curve: Curves.linear);
       },
       items: <BottomNavyBarItem>[
         BottomNavyBarItem(
-          icon: Icon(MdiIcons.newspaperVariantOutline),
-          title: Text('Home'),
-          iconSelect: Icon(MdiIcons.newspaperVariant),
+          icon: const Icon(MdiIcons.newspaperVariantOutline),
+          title: const Text('Home'),
+          iconSelect: const Icon(MdiIcons.newspaperVariant),
           activeColor: Colors.black,
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(MdiIcons.heartOutline),
-          iconSelect: Icon(MdiIcons.heart),
-          title: Text('Users'),
+          icon: const Icon(MdiIcons.heartOutline),
+          iconSelect: const Icon(MdiIcons.heart),
+          title: const Text('Users'),
           activeColor: Colors.black,
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(MdiIcons.messageOutline),
-          iconSelect: Icon(MdiIcons.message),
-          title: Text('Messages'),
+          icon: const Icon(MdiIcons.messageOutline),
+          iconSelect: const Icon(MdiIcons.message),
+          title: const Text('Messages'),
           activeColor: Colors.black,
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(MdiIcons.accountSettingsOutline),
-          iconSelect: Icon(MdiIcons.accountSettings),
-          title: Text('Settings'),
+          icon: const Icon(MdiIcons.accountSettingsOutline),
+          iconSelect: const Icon(MdiIcons.accountSettings),
+          title: const Text('Settings'),
           activeColor: Colors.black,
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,

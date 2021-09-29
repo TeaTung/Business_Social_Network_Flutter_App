@@ -36,11 +36,10 @@ class ListPostScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             FloatingActionButton(
               elevation: 0,
               backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
                 ),
@@ -49,11 +48,11 @@ class ListPostScreen extends StatelessWidget {
                 listPost.addPost(p);
                 _controller.animateTo(
                   _controller.position.maxScrollExtent,
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   curve: Curves.fastOutSlowIn,
                 );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 size: 22,
                 color: Colors.white,
@@ -62,7 +61,7 @@ class ListPostScreen extends StatelessWidget {
             FloatingActionButton(
               elevation: 0,
               backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(5),
                 ),
@@ -71,11 +70,11 @@ class ListPostScreen extends StatelessWidget {
                 listPost.removePost(listPost.items.length - 1);
                 _controller.animateTo(
                   _controller.position.maxScrollExtent,
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   curve: Curves.fastOutSlowIn,
                 );
               },
-              child: Icon(
+              child: const Icon(
                 MdiIcons.minus,
                 size: 22,
                 color: Colors.white,
