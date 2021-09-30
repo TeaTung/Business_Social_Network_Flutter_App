@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/post.dart';
+import '../providers/comments.dart';
 import '../widgets/comment_field.dart';
 import '../widgets/comment_item.dart';
-
-import '../providers/comments.dart';
+import '../widgets/post.dart';
 
 class DetailPostScreen extends StatelessWidget {
   @override

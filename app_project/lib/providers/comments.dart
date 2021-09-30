@@ -46,8 +46,8 @@ class CommentProvider with ChangeNotifier {
     return listComment.length;
   }
 
-
   void removeComment(String id) {
     _listComment.removeWhere((element) => element.id == id);
     notifyListeners();
   }
+}

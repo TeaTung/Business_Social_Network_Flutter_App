@@ -1,114 +1,176 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
-class BottomNavigator extends StatefulWidget {
-  const BottomNavigator({Key? key}) : super(key: key);
+class CustomAnimatedBottomBar extends StatelessWidget {
+  const CustomAnimatedBottomBar({
+    Key? key,
+    this.selectedIndex = 0,
+    this.showElevation = true,
+    this.iconSize = 24,
+    this.backgroundColor,
+    this.itemCornerRadius = 50,
+    this.containerHeight = 56,
+    this.animationDuration = const Duration(milliseconds: 270),
+    this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
+    required this.items,
+    required this.onItemSelected,
+    this.curve = Curves.linear,
+  })  : assert(items.length >= 2 && items.length <= 5),
+        super(key: key);
 
-  @override
-  _BottomNavigatorState createState() => _BottomNavigatorState();
-}
+  final int selectedIndex;
+  final double iconSize;
+  final Color? backgroundColor;
+  final bool showElevation;
+  final Duration animationDuration;
+  final List<BottomNavyBarItem> items;
+  final ValueChanged<int> onItemSelected;
+  final MainAxisAlignment mainAxisAlignment;
+  final double itemCornerRadius;
+  final double containerHeight;
+  final Curve curve;
 
-class _BottomNavigatorState extends State<BottomNavigator> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        Positioned(
-          bottom: 0,
-          left: 0,
-          child: Container(
-            width: size.width,
-            height: 80,
-            color: Colors.black,
-            child: Stack(
-              children: [
-                CustomPaint(
-                  size: Size(
-                    size.width,
-                    80,
-                  ),
-                  painter: BNBCustomPainter(),
+    final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: bgColor,
+        boxShadow: [
+          if (showElevation)
+            const BoxShadow(
+              color: Colors.black12,
+              blurRadius: 20,
+            ),
+        ],
+      ),
+      child: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: containerHeight,
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          child: Row(
+            mainAxisAlignment: mainAxisAlignment,
+            children: items.map((item) {
+              var index = items.indexOf(item);
+              return GestureDetector(
+                onTap: () => onItemSelected(index),
+                child: _ItemWidget(
+                  item: item,
+                  iconSize: iconSize,
+                  isSelected: index == selectedIndex,
+                  backgroundColor: bgColor,
+                  itemCornerRadius: itemCornerRadius,
+                  animationDuration: animationDuration,
+                  curve: curve,
                 ),
-                Center(
-                  heightFactor: 0.5,
-                  child: SizedBox(
-                    height: 65.0,
-                    width: 65.0,
-                    child: FittedBox(
-                      child: FloatingActionButton(
-                        onPressed: () {},
-                        backgroundColor: Colors.indigo,
-                        child: const Icon(Icons.add),
-                        elevation: 0.1,
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ItemWidget extends StatelessWidget {
+  final double iconSize;
+  final bool isSelected;
+  final BottomNavyBarItem item;
+  final Color backgroundColor;
+  final double itemCornerRadius;
+  final Duration animationDuration;
+  final Curve curve;
+
+  const _ItemWidget({
+    Key? key,
+    required this.item,
+    required this.isSelected,
+    required this.backgroundColor,
+    required this.animationDuration,
+    required this.itemCornerRadius,
+    required this.iconSize,
+    this.curve = Curves.linear,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      selected: isSelected,
+      child: AnimatedContainer(
+        width: isSelected ? 130 : 50,
+        height: double.maxFinite,
+        duration: animationDuration,
+        curve: curve,
+        decoration: BoxDecoration(
+          color:
+              /*isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor*/
+              Colors.transparent,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: NeverScrollableScrollPhysics(),
+          child: Container(
+            width: isSelected ? 130 : 50,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                IconTheme(
+                  data: IconThemeData(
+                    size: iconSize,
+                    color: isSelected
+                        ? item.activeColor.withOpacity(1)
+                        : item.inactiveColor == null
+                            ? item.activeColor
+                            : item.inactiveColor,
+                  ),
+                  child: isSelected ? item.iconSelect : item.icon,
+                ),
+                if (isSelected)
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: DefaultTextStyle.merge(
+                        style: TextStyle(
+                          color: item.activeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        textAlign: item.textAlign,
+                        child: item.title,
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: size.width,
-                  height: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.home),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.announcement_rounded),
-                        onPressed: () {},
-                      ),
-                      const SizedBox(width: 50),
-                      IconButton(
-                        icon: const Icon(Icons.notifications_sharp),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.account_circle_rounded),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
 
-class BNBCustomPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
-    Path path = Path()..moveTo(0, 15);
-    path.quadraticBezierTo(size.width * 0.2, 0, size.width * 0.35, 0);
-    path.quadraticBezierTo(size.width * 0.4, 0, size.width * 0.40, 20);
-    path.arcToPoint(
-      Offset(size.width * 0.6, 20),
-      radius: const Radius.circular(10.0),
-      clockwise: false,
-    );
-    path.quadraticBezierTo(size.width * 0.6, 0, size.width * 0.65, 0);
-    path.quadraticBezierTo(size.width * 0.8, 0, size.width, 15);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-    canvas.drawShadow(
-      path,
-      Colors.black,
-      5,
-      true,
-    );
-    canvas.drawPath(path, paint);
-  }
+class BottomNavyBarItem {
+  BottomNavyBarItem({
+    required this.icon,
+    required this.iconSelect,
+    required this.title,
+    this.activeColor = Colors.blue,
+    this.textAlign,
+    this.inactiveColor,
+  });
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
+  final Widget icon;
+  final Widget iconSelect;
+  final Widget title;
+  final Color activeColor;
+  final Color? inactiveColor;
+  final TextAlign? textAlign;
 }
