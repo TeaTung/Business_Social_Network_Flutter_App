@@ -1,35 +1,45 @@
 import 'package:flutter/foundation.dart';
+import './user.dart';
 
-class Comment {
+class Comment with ChangeNotifier{
   final String id;
-  final String uid;
-  final String userName;
-  final String userAvatarUrl;
+  final User user;
   final String userCommentText;
   final int numberOfLike;
   final DateTime date;
 
   Comment({
     required this.id,
-    required this.uid,
-    required this.userName,
-    required this.userAvatarUrl,
+    required this.user,
     required this.userCommentText,
     required this.numberOfLike,
     required this.date,
   });
 }
 
-class CommentProvider with ChangeNotifier {
+class Comments with ChangeNotifier {
   List<Comment> _listComment = [
     Comment(
       numberOfLike: 0,
       id: 'id',
-      userName: 'Thang',
-      userCommentText: 'Comment ne',
-      userAvatarUrl: 'https://picsum.photos/200/300.jpg',
+      userCommentText: 'Comment neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
       date: DateTime.now(),
-      uid: 'p1',
+      user: User(
+        id: 'as',
+        userName: 'Nguyễn Võ Đức Thắng',
+        avatarUrl: 'https://picsum.photos/200/300.jpg' ,
+      ),
+    ),
+    Comment(
+      numberOfLike: 0,
+      id: 'id',
+      userCommentText: 'Comment ne',
+      date: DateTime.now(),
+      user: User(
+        id: 'as',
+        userName: 'Nguyễn Võ Đức Thắng',
+        avatarUrl: 'https://picsum.photos/200/300.jpg' ,
+      ),
     ),
   ];
 

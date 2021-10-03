@@ -1,25 +1,27 @@
+import '../widgets/post_item.dart';
+
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/user.dart';
 import '../providers/post.dart';
 import '../providers/posts.dart';
-import '../widgets/post_item.dart';
 
 class ListPostScreen extends StatelessWidget {
   Post p = Post(
       postTime: DateTime.now(),
       id: "1",
-      uid: "1",
-      userAvtUrl:
-          "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      userName: "Hello",
+      user: User(id: 'id',
+        userName: 'Bopy',
+        avatarUrl: "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      ),
       content: "Helo",
       likeCount: 1,
       isBusinessPost: false,
       comments: null,
       imageUrl:
-          "https://images.pexels.com/photos/5478188/pexels-photo-5478188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+      "https://images.pexels.com/photos/5478188/pexels-photo-5478188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
 
   // use this to scroll to bottom of listview
   final _controller = ScrollController();
@@ -37,10 +39,11 @@ class ListPostScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             FloatingActionButton(
               elevation: 0,
               backgroundColor: Colors.black,
-              shape: const RoundedRectangleBorder(
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
                 ),
@@ -49,11 +52,11 @@ class ListPostScreen extends StatelessWidget {
                 listPost.addPost(p);
                 _controller.animateTo(
                   _controller.position.maxScrollExtent,
-                  duration: const Duration(seconds: 1),
+                  duration: Duration(seconds: 1),
                   curve: Curves.fastOutSlowIn,
                 );
               },
-              child: const Icon(
+              child: Icon(
                 Icons.add,
                 size: 22,
                 color: Colors.white,
@@ -62,7 +65,7 @@ class ListPostScreen extends StatelessWidget {
             FloatingActionButton(
               elevation: 0,
               backgroundColor: Colors.black,
-              shape: const RoundedRectangleBorder(
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(5),
                 ),
@@ -71,11 +74,11 @@ class ListPostScreen extends StatelessWidget {
                 listPost.removePost(listPost.items.length - 1);
                 _controller.animateTo(
                   _controller.position.maxScrollExtent,
-                  duration: const Duration(seconds: 1),
+                  duration: Duration(seconds: 1),
                   curve: Curves.fastOutSlowIn,
                 );
               },
-              child: const Icon(
+              child: Icon(
                 MdiIcons.minus,
                 size: 22,
                 color: Colors.white,
