@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/screens/notification_screen.dart';
 
 import './navigators/bottom_navigator.dart';
 import './providers/comments.dart';
@@ -56,10 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         controller: controller,
         children: [
           ListPostScreen(),
-          Center(
-            child: Text("Dont where what to put here",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
+          NotificationScreen(),
           Center(
             child: Text("Message",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
