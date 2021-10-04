@@ -17,6 +17,8 @@ import './providers/post.dart';
 import './providers/education.dart';
 import './providers/position.dart';
 import './widgets/change_information_item.dart';
+import './screens/account_screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: AccountScreen(),
+        home: MyHomePage(),
         debugShowCheckedModeBanner: false,
         routes: {
           SettingAccount.routeName: (ctx) => const SettingAccount(),
@@ -87,10 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text("Message",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           ),
-          Center(
-            child: Text("User",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
+          AccountScreen(),
         ],
         onPageChanged: (index) {
           setState(() {

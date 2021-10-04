@@ -40,7 +40,7 @@ class AccountScreen extends StatelessWidget {
         ),
       );
     }
-    Widget listDetail() {
+    Widget listDetailInformation() {
       return Column(
         children: [
           detailInformation(const Icon(Icons.drive_file_rename_outline),
@@ -63,7 +63,6 @@ class AccountScreen extends StatelessWidget {
         ],
       );
     }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -119,7 +118,8 @@ class AccountScreen extends StatelessWidget {
                   thickness: 0.6,
                 ),
               ),
-              listDetail(),
+              //user information
+              listDetailInformation(),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(

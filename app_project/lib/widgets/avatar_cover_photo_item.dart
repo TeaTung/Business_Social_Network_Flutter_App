@@ -17,6 +17,7 @@ class AvatarCoverPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // avatar and cover photo
         SizedBox(
           height: 300,
           child: Stack(
@@ -54,6 +55,7 @@ class AvatarCoverPhoto extends StatelessWidget {
             ],
           ),
         ),
+        // user name and quote
         Container(
           width: double.infinity,
           color: Colors.white,
