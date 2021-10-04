@@ -87,13 +87,12 @@ class NotificationItem extends StatelessWidget {
                           ),
                           FittedBox(
                             fit: BoxFit.contain,
-                            child: Flexible(
-                              child: Text(
+                            child:
+                            Text(
                                 "mentioned you in ",
                                 style: TextStyle(fontSize: 14, color: myColor),
                                 textAlign: TextAlign.center,
                               ),
-                            ),
                           ),
                         ],
                       ),
