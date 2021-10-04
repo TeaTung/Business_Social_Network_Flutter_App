@@ -1,7 +1,8 @@
-import './post.dart';
 import 'package:flutter/foundation.dart';
 
-import 'comments.dart';
+import '../providers/user.dart';
+import '../providers/comments.dart';
+import '../providers/post.dart';
 
 //This class get every post relate to user to load to main screen
 class Posts with ChangeNotifier {
@@ -9,42 +10,42 @@ class Posts with ChangeNotifier {
     Post(
         postTime: DateTime.now(),
         id: "1",
-        uid: "1",
-        userAvtUrl:
-            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        userName: "Hello",
+        user: User(id: 'id',
+          userName: 'Bopy',
+          avatarUrl: "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        ),
         content: "Helo",
-        likeCount: 1,
+        likeCount: 0,
         isBusinessPost: false,
         comments: null,
         imageUrl:
-            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"),
+        "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"),
     Post(
         postTime: DateTime.now(),
         id: "1",
-        uid: "1",
-        userAvtUrl:
-            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        userName: "Hello",
+        user: User(id: 'id',
+          userName: 'Bopy',
+          avatarUrl: "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        ),
         content: "Helo",
         likeCount: 1,
         isBusinessPost: false,
-        comments: null,
         imageUrl:
-            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"),
+        "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"),
     Post(
         postTime: DateTime.now(),
         id: "1",
-        uid: "1",
-        userAvtUrl:
-            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        userName: "Hello",
+        user: User(id: 'id',
+          userName: 'Bopy',
+          avatarUrl: "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        ),
         content: "Helo",
         likeCount: 1,
         isBusinessPost: false,
         comments: null,
         imageUrl:
-            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+        "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"),
+
   ];
 
   List<Post> get items {

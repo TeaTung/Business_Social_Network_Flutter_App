@@ -21,8 +21,7 @@ class CommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listComment = Provider.of<CommentProvider>(context);
-
+    final listComment = Provider.of<Comments>(context);
     String returnTimePost() {
       var days = DateTime.now().difference(postDate).inDays;
       var hours = DateTime.now().difference(postDate).inHours;
@@ -36,106 +35,107 @@ class CommentItem extends StatelessWidget {
         return '${minutes}m';
       }
     }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 14,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 4,
-              vertical: 8,
-            ),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(userAvatarUrl),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(1),
-                border: Border.all(
-                  color: Colors.black12,
-                  width: 0.5,
-                ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 5,
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(userAvatarUrl),
+              ),
+            ),
+            const SizedBox(width: 2),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(1),
+                  border: Border.all(
+                    color: Colors.black12,
+                    width: 0.5,
+                  ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             Text(
                               '${userName}  ',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(fontSize: 16),
                             ),
                             Text(
                               returnTimePost(),
-                              style: const TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 13,
-                              ),
+                              style:
+                                  Theme.of(context).textTheme.headline1!.copyWith(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
                             )
                           ],
                         ),
-                        Text(
-                          userCommentText,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 14,
-                          ),
+                        const SizedBox(height: 4),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.68,
+                          child: Text(userCommentText,
+                              style:
+                                  Theme.of(context).textTheme.headline1!.copyWith(
+                                        color: Colors.black87,
+                                        fontSize: 14.5,
+                                        fontWeight: FontWeight.w400,
+                                      )),
                         ),
                       ],
                     ),
-                  ),
-                  if (isMyComment)
-                    IconButton(
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                                title: const Text("Are your sure ?"),
-                                content: const Text(
-                                    'Do you want to delete this comment ?'),
-                                actions: [
-                                  TextButton(
-                                      child: const Text('Yes'),
+                    const Spacer(),
+                    if (isMyComment)
+                      IconButton(
+                        onPressed: () => showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                                  title: const Text("Are your sure ?"),
+                                  content: const Text(
+                                      'Do you want to delete this comment ?'),
+                                  actions: [
+                                    TextButton(
+                                        child: const Text('Yes'),
+                                        onPressed: () {
+                                          listComment.removeComment(id);
+                                          Navigator.of(ctx).pop();
+                                        }),
+                                    TextButton(
+                                      child: const Text('No'),
                                       onPressed: () {
-                                        listComment.removeComment(id);
                                         Navigator.of(ctx).pop();
-                                      }),
-                                  TextButton(
-                                    child: const Text('No'),
-                                    onPressed: () {
-                                      Navigator.of(ctx).pop();
-                                    },
-                                  )
-                                ],
-                              )),
-                      icon: const Icon(Icons.delete),
-                      iconSize: 16,
-                      constraints:
-                          const BoxConstraints(maxHeight: 24, maxWidth: 24),
-                    ),
-                ],
+                                      },
+                                    )
+                                  ],
+                                )),
+                        icon: const Icon(Icons.delete),
+                        iconSize: 16,
+                        constraints:
+                            const BoxConstraints(maxHeight: 20, maxWidth: 24),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const Divider(),
-        ],
-      ),
+          ],
+        ),
+        const SizedBox(height: 15),
+      ],
     );
   }
 }

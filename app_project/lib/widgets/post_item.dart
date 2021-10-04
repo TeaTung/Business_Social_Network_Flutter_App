@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
 
+import 'package:provider/provider.dart';
+import '../providers/comments.dart';
 import '../providers/post.dart';
 
 //This widget represents for one individual post to load to posts list
@@ -55,7 +56,7 @@ class PostItem extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           backgroundImage: NetworkImage(
-                            post.userAvtUrl,
+                            post.user.avatarUrl,
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -63,7 +64,7 @@ class PostItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.userName,
+                              post.user.userName,
                               textAlign: TextAlign.start,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,

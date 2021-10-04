@@ -1,58 +1,82 @@
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/comments.dart';
+import '../widgets/post_detail_screen_item.dart';
 import '../widgets/comment_field.dart';
 import '../widgets/comment_item.dart';
-import '../widgets/post.dart';
+
+import '../providers/post.dart';
+import '../providers/comments.dart';
 
 class DetailPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const userPostImageUrl =
-        'https://i.pinimg.com/474x/0c/eb/c3/0cebc3e2a01fe5abcff9f68e9d2a06e4.jpg';
-    const postImageUrl = 'https://picsum.photos/200/300.jpg';
-    final listComment = Provider.of<CommentProvider>(context);
+    final post = Provider.of<PostDetail>(context).post;
+    final listComment = Provider.of<Comments>(context);
+    const userId = 'id';
+    const uid = 'uid';
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leadingWidth: 15,
+          title: ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(post.user.avatarUrl),
+              radius: 20,
+            ),
+            title: Text(
+              post.user.userName,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
+            ),
+            subtitle: Text(DateFormat('d MMMM y').format(post.postTime)),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        physics: const ScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
+        body: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Post(
-                userPostImageUrl,
-                'Name',
-                'This is description',
-                postImageUrl,
+              // fake data
+              PostDetailScreenItem(
+                post.user.userName,
+                'This is a very fucking longggggggggggggggggggggg description',
+                'https://picsum.photos/200/300',
               ),
-              CommentField(userPostImageUrl, 'Name'),
-              Flexible(
-                child: ListView.builder(
+              CommentField(
+                post.user.avatarUrl,
+                post.user.userName,
+                post.user.id,
+              ),
+              if (post.comments != null)
+                ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: listComment.listComment.length,
+                  itemCount: listComment.length,
                   itemBuilder: (ctx, i) => CommentItem(
                     listComment.listComment[i].id,
-                    listComment.listComment[i].userName,
-                    listComment.listComment[i].userAvatarUrl,
+                    listComment.listComment[i].user.userName,
+                    listComment.listComment[i].user.avatarUrl,
                     listComment.listComment[i].userCommentText,
-                    //usercommentID = myId
-                    1 == 1,
+                    userId == post.user.id,
                     listComment.listComment[i].date,
                   ),
                 ),
-              ),
             ],
           ),
         ),
