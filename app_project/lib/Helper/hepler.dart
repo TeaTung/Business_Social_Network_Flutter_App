@@ -1,7 +1,7 @@
 import 'package:test_fix/providers/notification.dart';
 import 'package:test_fix/providers/post.dart';
 
-import 'providers/user.dart';
+import '../providers/user.dart';
 
 //
 class Hepler {

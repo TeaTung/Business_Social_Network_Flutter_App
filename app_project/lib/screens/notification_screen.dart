@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/user.dart';
-import 'package:test_fix/this_is_me.dart';
+import 'package:test_fix/Helper/this_is_me.dart';
 import 'package:test_fix/widgets/notification_item.dart';
 
 class NotificationScreen extends StatelessWidget {

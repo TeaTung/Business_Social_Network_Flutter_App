@@ -18,6 +18,7 @@ import './providers/education.dart';
 import './providers/position.dart';
 import './widgets/change_information_item.dart';
 import './screens/account_screen.dart';
+import 'screens/notification_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -81,10 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         controller: controller,
         children: [
           ListPostScreen(),
-          Center(
-            child: Text("Dont where what to put here",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
+          NotificationScreen(),
           Center(
             child: Text("Message",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
