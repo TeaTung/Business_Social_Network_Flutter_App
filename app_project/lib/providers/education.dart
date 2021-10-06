@@ -1,4 +1,6 @@
-class Education {
+import 'package:flutter/material.dart';
+
+class Education with ChangeNotifier {
   String id;
   String uid;
   String title;
