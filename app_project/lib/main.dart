@@ -16,6 +16,7 @@ import '../navigators/bottom_navigator.dart';
 import '../providers/posts.dart';
 import '../widgets/setting_account.dart';
 import 'navigators/bottom_navigator.dart';
+import 'screens/notification_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -84,11 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: controller,
         children: [
-          EducationsSection(),
-          Center(
-            child: Text("Dont where what to put here",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
+          ListPostScreen(),
+          NotificationScreen(),
           Center(
             child: Text("Message",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
