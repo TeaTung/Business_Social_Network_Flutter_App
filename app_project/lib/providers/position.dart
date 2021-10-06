@@ -1,5 +1,7 @@
 //This class create individual position to load to positions list in account section
-class Position {
+import 'package:flutter/material.dart';
+
+class Position with ChangeNotifier {
   String id;
   String uid;
   DateTime startDate;
