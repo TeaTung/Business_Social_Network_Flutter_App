@@ -16,8 +16,11 @@ import '../widgets/setting_account.dart';
 import './providers/post.dart';
 import './providers/education.dart';
 import './providers/position.dart';
+import './providers/process.dart';
 import './widgets/change_information_item.dart';
 import './screens/account_screen.dart';
+import './screens/process_screen.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -44,6 +47,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: PostDetail(),
         ),
+        ChangeNotifierProvider.value(
+          value: Processes(),
+        ),
       ],
       child: MaterialApp(
         title: 'Business Social Network',
@@ -57,7 +63,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: MyHomePage(),
+        home: ProcessScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
           SettingAccount.routeName: (ctx) => const SettingAccount(),
