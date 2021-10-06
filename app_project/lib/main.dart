@@ -1,23 +1,21 @@
-import '../providers/posts.dart';
-import '../screens/list_post_screen.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'navigators/bottom_navigator.dart';
-import './providers/comments.dart';
-import './screens/detail_post_screen.dart';
-import '../navigators/bottom_navigator.dart';
-import './screens/account_screen.dart';
+import 'package:test_fix/providers/educations.dart';
+import 'package:test_fix/providers/positions.dart';
+import 'package:test_fix/widgets/educations_section.dart';
+
 import './providers/account.dart';
-import '../widgets/setting_account.dart';
+import './providers/comments.dart';
 import './providers/post.dart';
-import './providers/education.dart';
-import './providers/position.dart';
-import './widgets/change_information_item.dart';
 import './screens/account_screen.dart';
+import './widgets/change_information_item.dart';
+import '../navigators/bottom_navigator.dart';
+import '../providers/posts.dart';
+import '../widgets/setting_account.dart';
+import 'navigators/bottom_navigator.dart';
 import 'screens/notification_screen.dart';
 
 void main() {
@@ -44,6 +42,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: PostDetail(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Positions(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Educations(),
         ),
       ],
       child: MaterialApp(
