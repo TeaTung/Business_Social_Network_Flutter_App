@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
+
 import './user.dart';
 
-class Comment with ChangeNotifier{
+class Comment with ChangeNotifier {
   final String id;
   final User user;
   final String userCommentText;
@@ -25,9 +26,9 @@ class Comments with ChangeNotifier {
       userCommentText: 'Comment neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
       date: DateTime.now(),
       user: User(
-        id: 'as',
+        uid: 'as',
         userName: 'Nguyễn Võ Đức Thắng',
-        avatarUrl: 'https://picsum.photos/200/300.jpg' ,
+        avatarUrl: 'https://picsum.photos/200/300.jpg',
       ),
     ),
     Comment(
@@ -36,9 +37,9 @@ class Comments with ChangeNotifier {
       userCommentText: 'Comment ne',
       date: DateTime.now(),
       user: User(
-        id: 'as',
+        uid: 'as',
         userName: 'Nguyễn Võ Đức Thắng',
-        avatarUrl: 'https://picsum.photos/200/300.jpg' ,
+        avatarUrl: 'https://picsum.photos/200/300.jpg',
       ),
     ),
   ];

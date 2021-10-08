@@ -1,27 +1,28 @@
-import '../widgets/post_item.dart';
-
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/user.dart';
 import '../providers/post.dart';
 import '../providers/posts.dart';
+import '../providers/user.dart';
+import '../widgets/post_item.dart';
 
 class ListPostScreen extends StatelessWidget {
   Post p = Post(
       postTime: DateTime.now(),
       id: "1",
-      user: User(id: 'id',
+      user: User(
+        uid: 'id',
         userName: 'Bopy',
-        avatarUrl: "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        avatarUrl:
+            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       ),
       content: "Helo",
       likeCount: 1,
       isBusinessPost: false,
       comments: null,
       imageUrl:
-      "https://images.pexels.com/photos/5478188/pexels-photo-5478188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+          "https://images.pexels.com/photos/5478188/pexels-photo-5478188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
 
   // use this to scroll to bottom of listview
   final _controller = ScrollController();
@@ -39,7 +40,6 @@ class ListPostScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             FloatingActionButton(
               elevation: 0,
               backgroundColor: Colors.black,
@@ -87,15 +87,18 @@ class ListPostScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: ListView.builder(
-          controller: _controller,
-          itemCount: listPost.items.length,
-          itemBuilder: (ctx, index) {
-            return ChangeNotifierProvider.value(
-              value: listPost.items[index],
-              child: PostItem(),
-            );
-          }),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        child: ListView.builder(
+            controller: _controller,
+            itemCount: listPost.items.length,
+            itemBuilder: (ctx, index) {
+              return ChangeNotifierProvider.value(
+                value: listPost.items[index],
+                child: PostItem(),
+              );
+            }),
+      ),
     );
   }
 }

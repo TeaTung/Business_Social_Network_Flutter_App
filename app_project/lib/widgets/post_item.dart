@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import 'package:provider/provider.dart';
-import '../providers/comments.dart';
+
 import '../providers/post.dart';
 
 //This widget represents for one individual post to load to posts list
@@ -43,7 +42,7 @@ class PostItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 5,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

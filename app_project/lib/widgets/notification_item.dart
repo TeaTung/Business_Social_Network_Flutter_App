@@ -17,8 +17,9 @@ class NotificationItem extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         return Card(
           color: Colors.white,
-          margin: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 0),
-          elevation: 3,
+          margin:
+              const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 0),
+          elevation: 2,
           child: Column(
             children: [
               Row(
@@ -87,12 +88,11 @@ class NotificationItem extends StatelessWidget {
                           ),
                           FittedBox(
                             fit: BoxFit.contain,
-                            child:
-                            Text(
-                                "mentioned you in ",
-                                style: TextStyle(fontSize: 14, color: myColor),
-                                textAlign: TextAlign.center,
-                              ),
+                            child: Text(
+                              "mentioned you in ",
+                              style: TextStyle(fontSize: 14, color: myColor),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ],
                       ),
