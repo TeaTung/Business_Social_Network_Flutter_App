@@ -19,7 +19,7 @@ class Hepler {
     Post p = Post(
       postTime: mapJson['postTime'].toDate(),
       id: mapJson['id'],
-      user: User(id: "1", userName: "Tran Duc Tam"),
+      user: User(uid: "1", userName: "Tran Duc Tam"),
       /* uid: mapJson['uid'],
       userAvtUrl: mapJson['userImageUrl'],
       userName: mapJson['userName'],*/

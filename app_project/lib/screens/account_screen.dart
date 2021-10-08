@@ -1,68 +1,137 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/widgets/educations_section.dart';
+import 'package:test_fix/widgets/positions_section.dart';
+import 'package:test_fix/widgets/setting_account.dart';
 
 import '../providers/account.dart';
 import '../providers/posts.dart';
-
 import '../widgets/avatar_cover_photo_item.dart';
-import '../widgets/setting_account.dart';
 import '../widgets/post_item.dart';
-import '../widgets/education_item.dart';
-import '../widgets/position_item.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final account = Provider.of<Accounts>(context).account;
+    final account = Provider.of<Account>(context);
     final listPost = Provider.of<Posts>(context);
     final _controller = ScrollController();
 
-    Widget detailInformation(Icon icon, String title, String detail) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            icon,
-            const SizedBox(width: 20),
-            Text(
-              detail,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: const Color.fromRGBO(128, 128, 128, 1),
-                  ),
-            ),
-          ],
+    Widget detailInformation(
+        Icon icon, String title, String detail, VoidCallback? func) {
+      return GestureDetector(
+        onTap: func,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+                child: icon,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                detail,
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ],
+          ),
         ),
       );
     }
+
     Widget listDetailInformation() {
       return Column(
         children: [
-          detailInformation(const Icon(Icons.drive_file_rename_outline),
-            'Name', account.user.userName,),
-          detailInformation(
-            const Icon(Icons.cake_outlined),
-            'Birth Date',
-            DateFormat('d MMM y').format(account.birthDate),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Basic Information',
+                  style: Theme.of(context).textTheme.headline1!,
+                ),
+              ],
+            ),
           ),
-          detailInformation(
-            const Icon(Icons.transgender_outlined),
-            'Gender',
-            account.gender,
+          const SizedBox(height: 4),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Column(
+                children: [
+                  detailInformation(
+                    const Icon(
+                      EvaIcons.edit2,
+                      color: Color.fromRGBO(1, 21, 71, 1),
+                      size: 30,
+                    ),
+                    'Name',
+                    account.user.userName,
+                    null,
+                  ),
+                  detailInformation(
+                    const Icon(
+                      EvaIcons.bell,
+                      color: Color.fromRGBO(1, 21, 71, 1),
+                      size: 30,
+                    ),
+                    'Followers',
+                    account.followersCount().toString() + ' Followers',
+                    null,
+                  ),
+                  detailInformation(
+                    const Icon(
+                      EvaIcons.gift,
+                      color: Color.fromRGBO(1, 21, 71, 1),
+                      size: 30,
+                    ),
+                    'Birth Date',
+                    DateFormat('d MMM y').format(account.birthDate),
+                    null,
+                  ),
+                  detailInformation(
+                    const Icon(
+                      EvaIcons.person,
+                      color: Color.fromRGBO(1, 21, 71, 1),
+                      size: 30,
+                    ),
+                    'Gender',
+                    account.gender,
+                    null,
+                  ),
+                  detailInformation(
+                    const Icon(
+                      EvaIcons.pin,
+                      color: Color.fromRGBO(1, 21, 71, 1),
+                      size: 30,
+                    ),
+                    'Nationality',
+                    account.nationality,
+                    null,
+                  ),
+                ],
+              ),
+            ),
           ),
-          detailInformation(
-            const Icon(Icons.map_outlined),
-            'Nationality',
-            account.nationality,
-          ),
+          const SizedBox(height: 6),
         ],
       );
     }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -91,17 +160,17 @@ class AccountScreen extends StatelessWidget {
         ),
         actions: [
           // check is my uid
-          if (account.user.id == 'id')
-            IconButton(
-              icon: const Icon(Icons.settings, color: Colors.black),
-              onPressed: () {
-                Navigator.of(context).pushNamed(SettingAccount.routeName);
-              },
-            ),
+          //if (account.user.uid == 'id')
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingAccount.routeName);
+            },
+          ),
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12.0),
         child: SingleChildScrollView(
           physics: const ScrollPhysics(),
           child: Column(
@@ -112,22 +181,29 @@ class AccountScreen extends StatelessWidget {
                 account.coverPhotoUrl,
                 account.quote,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Divider(
-                  thickness: 0.6,
-                ),
-              ),
+              const SizedBox(height: 4),
+              const Divider(),
               //user information
               listDetailInformation(),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Divider(
-                  thickness: 0.6,
+              PositionsSection(),
+              EducationsSection(),
+
+              //Post section
+              const SizedBox(height: 6),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Activities',
+                      style: Theme.of(context).textTheme.headline1!,
+                    ),
+                  ],
                 ),
               ),
-              // PositionItem(),
-              // EducationItem(),
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,

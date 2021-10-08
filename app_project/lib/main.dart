@@ -5,8 +5,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/positions.dart';
+import 'package:test_fix/providers/user.dart';
+import 'package:test_fix/screens/account_screen.dart';
 import 'package:test_fix/screens/list_post_screen.dart';
-
 import './navigators/bottom_navigator.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
@@ -36,7 +37,21 @@ class MyApp extends StatelessWidget {
           value: Comments(),
         ),
         ChangeNotifierProvider.value(
-          value: Accounts(),
+          value: Account(
+            id: 'id',
+            user: User(
+              uid: '123',
+              userName: 'Nguyễn Dương Tùng',
+              avatarUrl:
+                  'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1',
+            ),
+            quote: 'This is just long quote',
+            coverPhotoUrl:
+                'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
+            birthDate: DateTime.now(),
+            nationality: 'United States',
+            gender: 'Male',
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => Posts(),
@@ -95,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text("Message",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           ),
+          //FollowerItem(),
           AccountScreen(),
         ],
         onPageChanged: (index) {

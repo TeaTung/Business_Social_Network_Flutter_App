@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,15 +17,15 @@ enum Gender { male, female }
 class _ChangeInformationState extends State<ChangeInformation> {
   @override
   Widget build(BuildContext context) {
-    final account = Provider.of<Accounts>(context);
+    final account = Provider.of<Account>(context);
 
     Gender? _gender;
-    var userName = account.account.user.userName;
-    var nationality = account.account.nationality;
-    var quote = account.account.quote;
-    DateTime birthDate = account.account.birthDate;
+    var userName = account.getUsername;
+    var nationality = account.getNationality;
+    var quote = account.getQuote;
+    DateTime birthDate = account.getBirthDate;
 
-    if (account.account.gender == 'Male') {
+    if (account.getGender == 'Male') {
       _gender = Gender.male;
     } else {
       _gender = Gender.female;
@@ -50,7 +48,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
           birthDate = date;
         });
       }
-      account.changeBirthDate(birthDate);
+      account.setBirthDate(birthDate);
     }
 
     return SafeArea(
@@ -79,9 +77,9 @@ class _ChangeInformationState extends State<ChangeInformation> {
             IconButton(
               onPressed: () {
                 if (userName.isNotEmpty && nationality.isNotEmpty) {
-                  account.changeName(userName);
-                  account.changeNationality(nationality);
-                  account.changeQuote(quote);
+                  account.setUsername(userName);
+                  account.setNationality(nationality);
+                  account.setQuote(quote);
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Save Successfully !')));
                   Navigator.of(context).pop();
@@ -174,7 +172,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
                     groupValue: _gender,
                     onChanged: (Gender? value) {
                       setState(() {
-                        account.changeGender('Male');
+                        account.setGender('Male');
                       });
                     },
                   ),
@@ -191,7 +189,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
                     groupValue: _gender,
                     onChanged: (Gender? value) {
                       setState(() {
-                        account.changeGender('Female');
+                        account.setGender('Female');
                       });
                     },
                   ),

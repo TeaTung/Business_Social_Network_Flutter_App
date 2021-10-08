@@ -14,7 +14,7 @@ class _PositionsSectionState extends State<PositionsSection> {
   bool isSeeMore = false;
   int loadedItemCount = 2;
   String textButton = 'See more';
-  double heightSizedOfSection = 230;
+  double heightSizedOfSection = 225;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _PositionsSectionState extends State<PositionsSection> {
       children: [
         const Divider(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -59,7 +59,7 @@ class _PositionsSectionState extends State<PositionsSection> {
             ],
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 4),
         AnimatedContainer(
           height: heightSizedOfSection,
           duration: const Duration(milliseconds: 200),

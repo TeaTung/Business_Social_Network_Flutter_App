@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import './change_information_item.dart';
-
 import '../providers/account.dart';
 
 class SettingAccount extends StatelessWidget {
@@ -13,7 +12,7 @@ class SettingAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final account = Provider.of<Accounts>(context).account;
+    final account = Provider.of<Account>(context);
     Widget takePicture() {
       return FractionallySizedBox(
         heightFactor: 0.15,
@@ -57,6 +56,7 @@ class SettingAccount extends StatelessWidget {
         ),
       );
     }
+
     void handlerPicture() {
       showModalBottomSheet(
         shape: const RoundedRectangleBorder(
@@ -72,17 +72,20 @@ class SettingAccount extends StatelessWidget {
         isScrollControlled: true,
       );
     }
+
     void handlerInformation() {
       Navigator.of(context).pushNamed(ChangeInformation.routeName);
     }
+
     Widget detailInformation(Icon icon, String title, String detail) {
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           icon,
           const SizedBox(width: 17),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
                 title,
@@ -96,10 +99,10 @@ class SettingAccount extends StatelessWidget {
                 child: Text(
                   detail,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
-                    fontSize: 16,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400,
-                  ),
+                        fontSize: 16,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
               ),
               const SizedBox(height: 7),
@@ -108,26 +111,31 @@ class SettingAccount extends StatelessWidget {
         ],
       );
     }
+
     Widget titleWidget(String title, int count) {
-      return Row(
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headline1,
-          ),
-          const Spacer(),
-          TextButton(
-            onPressed: count <= 2 ? handlerPicture : handlerInformation,
-            child: Text(
-              'Change',
-              style: Theme.of(context).textTheme.headline1!.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.blue,
-                    fontSize: 18,
-                  ),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headline1,
             ),
-          ),
-        ],
+            GestureDetector(
+              onTap: count <= 2 ? handlerPicture : handlerInformation,
+              child: Text(
+                'Change',
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.blue,
+                      fontSize: 18,
+                    ),
+              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -177,13 +185,9 @@ class SettingAccount extends StatelessWidget {
                     maxRadius: 70,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 7),
-                  child: Divider(
-                    thickness: 0.6,
-                  ),
-                ),
+                const SizedBox(height: 4),
                 titleWidget('Cover photo', 2),
+                const SizedBox(height: 6),
                 Center(
                   child: Container(
                     padding: const EdgeInsets.all(30),
@@ -200,12 +204,7 @@ class SettingAccount extends StatelessWidget {
                           ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 7),
-                  child: Divider(
-                    thickness: 0.6,
-                  ),
-                ),
+                const SizedBox(height: 6),
                 titleWidget('Detail information', 3),
                 detailInformation(
                   const Icon(Icons.drive_file_rename_outline),

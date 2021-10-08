@@ -11,62 +11,96 @@ class Account with ChangeNotifier {
   String gender;
   String nationality;
 
-  Account(
-      {required this.id,
-      required this.user,
-      required this.quote,
-      this.coverPhotoUrl = '',
-      required this.birthDate,
-      required this.nationality,
-      required this.gender});
-}
+  //users who this account is following
+  List<String>? uidFollowing;
 
-class Accounts with ChangeNotifier {
-  Account _account = Account(
-      id: 'id',
-      user: User(id: 'id', userName: 'Nguyễn Võ Đức Thắng',),
-      coverPhotoUrl: '',
-      quote: 'Learn, Learn more, Learn forever ',
-      birthDate: DateTime.now(),
-      nationality: 'Viet Nam',
-      gender: 'Male');
+  //users who is following this account
+  List<String>? uidFollowers;
 
-  Account get account {
-    return _account;
+  Account({
+    required this.id,
+    required this.user,
+    required this.quote,
+    this.coverPhotoUrl = '',
+    required this.birthDate,
+    required this.nationality,
+    required this.gender,
+    this.uidFollowers,
+    this.uidFollowing,
+  });
+
+  String get getNationality {
+    return nationality;
   }
 
-  void changeNationality(String newNationality) {
-    _account.nationality = newNationality;
+  String get getGender {
+    return gender;
+  }
+
+  String get getQuote {
+    return quote;
+  }
+
+  DateTime get getBirthDate {
+    return birthDate;
+  }
+
+  String get getAvatarUrl {
+    return user.avatarUrl;
+  }
+
+  String get getCoverPhotoUrl {
+    return coverPhotoUrl;
+  }
+
+  String get getUsername {
+    return user.userName;
+  }
+
+  User get getUser {
+    return user;
+  }
+
+  void setNationality(String newNationality) {
+    nationality = newNationality;
     notifyListeners();
   }
 
-  void changeGender(String newGender) {
-    _account.gender = newGender;
+  void setGender(String newGender) {
+    gender = newGender;
     notifyListeners();
   }
 
-  void changeQuote(String newQuote) {
-    _account.quote = newQuote;
+  void setQuote(String newQuote) {
+    quote = newQuote;
     notifyListeners();
   }
 
-  void changeBirthDate(DateTime newBirthDate) {
-    _account.birthDate = newBirthDate;
+  void setBirthDate(DateTime newBirthDate) {
+    birthDate = newBirthDate;
     notifyListeners();
   }
 
-  void changeAvatarUrl(String newAvatarUrl) {
-    _account.user.avatarUrl = newAvatarUrl;
+  void setAvatarUrl(String newAvatarUrl) {
+    user.avatarUrl = newAvatarUrl;
     notifyListeners();
   }
 
-  void changeCoverPhotoUrl(String newCoverPageUrl) {
-    _account.coverPhotoUrl = newCoverPageUrl;
+  void setCoverPhotoUrl(String newCoverPageUrl) {
+    coverPhotoUrl = newCoverPageUrl;
     notifyListeners();
   }
 
-  void changeName(String newName) {
-    _account.user.userName = newName;
+  void setUsername(String newName) {
+    user.userName = newName;
     notifyListeners();
+  }
+
+  int followersCount() {
+    if (uidFollowers != null) {
+      return uidFollowers!.length;
+    } else {
+      return 0;
+    }
   }
 }
