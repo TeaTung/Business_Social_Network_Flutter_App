@@ -5,18 +5,19 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/positions.dart';
-import 'package:test_fix/widgets/educations_section.dart';
+import 'package:test_fix/screens/list_post_screen.dart';
 
+import './navigators/bottom_navigator.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
 import './providers/post.dart';
+import './providers/posts.dart';
+import './providers/process.dart';
 import './screens/account_screen.dart';
+import './screens/notification_screen.dart';
+import './screens/process_screen.dart';
 import './widgets/change_information_item.dart';
-import '../navigators/bottom_navigator.dart';
-import '../providers/posts.dart';
-import '../widgets/setting_account.dart';
-import 'navigators/bottom_navigator.dart';
-import 'screens/notification_screen.dart';
+import './widgets/setting_account.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: PostDetail(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Processes(),
         ),
         ChangeNotifierProvider.value(
           value: Positions(),
