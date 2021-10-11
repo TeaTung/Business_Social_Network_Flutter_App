@@ -1,14 +1,12 @@
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/post_detail_screen_item.dart';
+import '../providers/comments.dart';
+import '../providers/post.dart';
 import '../widgets/comment_field.dart';
 import '../widgets/comment_item.dart';
-
-import '../providers/post.dart';
-import '../providers/comments.dart';
+import '../widgets/post_detail_screen_item.dart';
 
 class DetailPostScreen extends StatelessWidget {
   @override
@@ -61,7 +59,7 @@ class DetailPostScreen extends StatelessWidget {
               CommentField(
                 post.user.avatarUrl,
                 post.user.userName,
-                post.user.id,
+                post.user.uid,
               ),
               if (post.comments != null)
                 ListView.builder(
@@ -73,7 +71,7 @@ class DetailPostScreen extends StatelessWidget {
                     listComment.listComment[i].user.userName,
                     listComment.listComment[i].user.avatarUrl,
                     listComment.listComment[i].userCommentText,
-                    userId == post.user.id,
+                    userId == post.user.uid,
                     listComment.listComment[i].date,
                   ),
                 ),

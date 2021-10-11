@@ -71,11 +71,11 @@ class PositionItem extends StatelessWidget {
     return Wrap(
       children: [
         Card(
-          elevation: 5,
+          elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
           child: Stack(
             children: [
               Row(

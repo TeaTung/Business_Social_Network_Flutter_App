@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 
 import './user.dart';
 import 'comments.dart';
@@ -39,9 +38,11 @@ class PostDetail with ChangeNotifier {
   Post post = Post(
       postTime: DateTime.now(),
       id: "1",
-      user: User(id: 'id',
+      user: User(
+        uid: 'id',
         userName: 'Bopy',
-        avatarUrl: "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        avatarUrl:
+            "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       ),
       content: "Helo",
       likeCount: 1,
@@ -49,5 +50,5 @@ class PostDetail with ChangeNotifier {
       comments: Comments(),
       isFavourite: false,
       imageUrl:
-      "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+          "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
 }

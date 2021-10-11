@@ -1,28 +1,31 @@
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/screens/detail_message_screen.dart';
 import 'package:test_fix/screens/overview_message_screen.dart';
-
 import '../providers/posts.dart';
 import '../screens/list_post_screen.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'navigators/bottom_navigator.dart';
-import './providers/comments.dart';
-import './screens/detail_post_screen.dart';
-import '../navigators/bottom_navigator.dart';
-import './screens/account_screen.dart';
+import 'package:test_fix/providers/educations.dart';
+import 'package:test_fix/providers/positions.dart';
+import 'package:test_fix/providers/user.dart';
+import 'package:test_fix/screens/account_screen.dart';
+import 'package:test_fix/screens/list_post_screen.dart';
+import './navigators/bottom_navigator.dart';
 import './providers/account.dart';
-import '../widgets/setting_account.dart';
+import './providers/comments.dart';
 import './providers/post.dart';
-import './providers/education.dart';
-import './providers/position.dart';
-import './widgets/change_information_item.dart';
+import './providers/posts.dart';
+import './providers/process.dart';
 import './screens/account_screen.dart';
 import 'widgets/overview_messsage_item.dart';
+import './screens/notification_screen.dart';
+import './screens/process_screen.dart';
+import './widgets/change_information_item.dart';
+import './widgets/setting_account.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -41,7 +44,21 @@ class MyApp extends StatelessWidget {
           value: Comments(),
         ),
         ChangeNotifierProvider.value(
-          value: Accounts(),
+          value: Account(
+            id: 'id',
+            user: User(
+              uid: '123',
+              userName: 'Nguyễn Dương Tùng',
+              avatarUrl:
+                  'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1',
+            ),
+            quote: 'This is just long quote',
+            coverPhotoUrl:
+                'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
+            birthDate: DateTime.now(),
+            nationality: 'United States',
+            gender: 'Male',
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => Posts(),
@@ -51,6 +68,14 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Messages(),
+        ChangeNotifierProvider.value(
+          value: Processes(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Positions(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Educations(),
         ),
       ],
       child: MaterialApp(
@@ -92,6 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
           //ListPostScreen(),
          // DetailMessageScreen(),
           OverviewMessageScreen(),
+          ListPostScreen(),
+          NotificationScreen(),
+          //FollowerItem(),
           AccountScreen(),
         ],
         onPageChanged: (index) {

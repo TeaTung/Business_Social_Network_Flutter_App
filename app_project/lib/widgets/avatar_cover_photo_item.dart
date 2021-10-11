@@ -26,7 +26,6 @@ class AvatarCoverPhoto extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(30),
                     height: 200,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -37,9 +36,15 @@ class AvatarCoverPhoto extends StatelessWidget {
                     ),
                     child: coverPhotoUrl == ''
                         ? null
-                        : Image.network(
-                            coverPhotoUrl,
-                            fit: BoxFit.cover,
+                        : ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(17),
+                              topLeft: Radius.circular(17),
+                            ),
+                            child: Image.network(
+                              coverPhotoUrl,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                   ),
                 ],
@@ -58,7 +63,6 @@ class AvatarCoverPhoto extends StatelessWidget {
         // user name and quote
         Container(
           width: double.infinity,
-          color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -70,6 +74,7 @@ class AvatarCoverPhoto extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
               ),
+              const SizedBox(height: 6),
               Text(
                 quote,
                 style: Theme.of(context).textTheme.headline1!.copyWith(
