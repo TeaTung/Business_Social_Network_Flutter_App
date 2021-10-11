@@ -1,3 +1,7 @@
+import 'package:test_fix/providers/messages.dart';
+import 'package:test_fix/screens/detail_message_screen.dart';
+import 'package:test_fix/screens/overview_message_screen.dart';
+
 import '../providers/posts.dart';
 import '../screens/list_post_screen.dart';
 import 'package:flutter/animation.dart';
@@ -18,6 +22,7 @@ import './providers/education.dart';
 import './providers/position.dart';
 import './widgets/change_information_item.dart';
 import './screens/account_screen.dart';
+import 'widgets/overview_messsage_item.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,6 +49,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: PostDetail(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => Messages(),
+        ),
       ],
       child: MaterialApp(
         title: 'Business Social Network',
@@ -62,6 +70,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SettingAccount.routeName: (ctx) => const SettingAccount(),
           ChangeInformation.routeName: (ctx) => const ChangeInformation(),
+          OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
         },
       ),
     );
@@ -80,15 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: controller,
         children: [
-          ListPostScreen(),
-          Center(
-            child: Text("Dont where what to put here",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
-          Center(
-            child: Text("Message",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
+          //ListPostScreen(),
+         // DetailMessageScreen(),
+          OverviewMessageScreen(),
           AccountScreen(),
         ],
         onPageChanged: (index) {
