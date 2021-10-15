@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/account.dart';
+import '../providers/user.dart';
 
 class ChangeInformation extends StatefulWidget {
   static const routeName = '/ChangeInformation';
@@ -18,9 +19,11 @@ class _ChangeInformationState extends State<ChangeInformation> {
   @override
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
+    final user = Provider.of<User>(context);
+
 
     Gender? _gender;
-    var userName = account.getUsername;
+    var userName = user.getUserName;
     var nationality = account.getNationality;
     var quote = account.getQuote;
     DateTime birthDate = account.getBirthDate;
@@ -77,7 +80,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
             IconButton(
               onPressed: () {
                 if (userName.isNotEmpty && nationality.isNotEmpty) {
-                  account.setUsername(userName);
+                  user.setUserName(userName);
                   account.setNationality(nationality);
                   account.setQuote(quote);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -143,7 +146,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
                   Text(
                     '${birthDate.day}/${birthDate.month}/${birthDate.year}',
                     style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: const Color.fromRGBO(128, 128, 128, 1),
                         ),
@@ -161,7 +164,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
               Row(
                 children: [
                   Text(
-                    'Gender:    ',
+                    'Gender:  ',
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,

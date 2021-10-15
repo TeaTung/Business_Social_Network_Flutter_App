@@ -64,6 +64,8 @@ class _EducationsSectionState extends State<EducationsSection> {
           height: heightSizedOfSection,
           duration: const Duration(milliseconds: 200),
           child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
             itemBuilder: (context, index) {
               return ChangeNotifierProvider.value(
                 value: educations.items[index],

@@ -19,6 +19,7 @@ import './screens/notification_screen.dart';
 import './screens/process_screen.dart';
 import './widgets/change_information_item.dart';
 import './widgets/setting_account.dart';
+import './screens/detail_post_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,18 +40,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Account(
             id: 'id',
-            user: User(
-              uid: '123',
-              userName: 'Nguyễn Dương Tùng',
-              avatarUrl:
-                  'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1',
-            ),
+            uid: 'uid',
             quote: 'This is just long quote',
             coverPhotoUrl:
-                'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
+            'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
             birthDate: DateTime.now(),
             nationality: 'United States',
             gender: 'Male',
+          ),
+        ),
+        ChangeNotifierProvider.value(
+          value: User(
+            uid: '123',
+            userName: 'Nguyễn Dương Tùng',
+            avatarUrl:
+            'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1',
           ),
         ),
         ChangeNotifierProvider(
@@ -81,7 +85,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: MyHomePage(),
+        home: DetailPostScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
           SettingAccount.routeName: (ctx) => const SettingAccount(),

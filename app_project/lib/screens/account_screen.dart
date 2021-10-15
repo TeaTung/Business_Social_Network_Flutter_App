@@ -8,6 +8,8 @@ import 'package:test_fix/widgets/setting_account.dart';
 
 import '../providers/account.dart';
 import '../providers/posts.dart';
+import '../providers/user.dart';
+
 import '../widgets/avatar_cover_photo_item.dart';
 import '../widgets/post_item.dart';
 
@@ -18,6 +20,7 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
     final listPost = Provider.of<Posts>(context);
+    final user = Provider.of<User>(context);
     final _controller = ScrollController();
 
     Widget detailInformation(
@@ -64,11 +67,14 @@ class AccountScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.3,
+              )
             ),
-            elevation: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Column(
@@ -80,7 +86,7 @@ class AccountScreen extends StatelessWidget {
                       size: 30,
                     ),
                     'Name',
-                    account.user.userName,
+                    user.userName,
                     null,
                   ),
                   detailInformation(
@@ -138,7 +144,7 @@ class AccountScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          account.user.userName,
+          user.userName,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black,
@@ -170,14 +176,14 @@ class AccountScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12.0),
+        padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
           physics: const ScrollPhysics(),
           child: Column(
             children: [
               AvatarCoverPhoto(
-                account.user.userName,
-                account.user.avatarUrl,
+                user.userName,
+                user.avatarUrl,
                 account.coverPhotoUrl,
                 account.quote,
               ),
@@ -185,9 +191,8 @@ class AccountScreen extends StatelessWidget {
               const Divider(),
               //user information
               listDetailInformation(),
-              PositionsSection(),
-              EducationsSection(),
-
+              const PositionsSection(),
+              const EducationsSection(),
               //Post section
               const SizedBox(height: 6),
               const Divider(),

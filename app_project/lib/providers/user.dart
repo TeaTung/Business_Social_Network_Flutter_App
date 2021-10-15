@@ -1,10 +1,26 @@
-class User {
+import 'package:flutter/foundation.dart';
+
+class User with ChangeNotifier{
   final String uid;
   String userName;
   String avatarUrl;
 
   String get getAvatarUrl {
     return avatarUrl;
+  }
+
+  String get getUserName {
+    return userName;
+  }
+
+  void setAvatarUrl(String newAvatarUrl) {
+    avatarUrl = newAvatarUrl;
+    notifyListeners();
+  }
+
+  void setUserName(String newUserName) {
+    userName = newUserName;
+    notifyListeners();
   }
 
   User(

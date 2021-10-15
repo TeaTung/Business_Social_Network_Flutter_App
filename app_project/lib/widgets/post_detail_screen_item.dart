@@ -27,7 +27,7 @@ class PostDetailScreenItem extends StatelessWidget {
         ),
         if (postImageUrl.isNotEmpty)
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 17),
+            margin: const EdgeInsets.symmetric(vertical: 17),
             alignment: Alignment.center,
             child: Image.network(
               postImageUrl,

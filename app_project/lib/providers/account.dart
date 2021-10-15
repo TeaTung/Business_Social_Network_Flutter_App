@@ -4,7 +4,7 @@ import './user.dart';
 
 class Account with ChangeNotifier {
   final String id;
-  User user;
+  final String uid;
   String quote;
   String coverPhotoUrl;
   DateTime birthDate;
@@ -19,7 +19,7 @@ class Account with ChangeNotifier {
 
   Account({
     required this.id,
-    required this.user,
+    required this.uid,
     required this.quote,
     this.coverPhotoUrl = '',
     required this.birthDate,
@@ -45,20 +45,9 @@ class Account with ChangeNotifier {
     return birthDate;
   }
 
-  String get getAvatarUrl {
-    return user.avatarUrl;
-  }
 
   String get getCoverPhotoUrl {
     return coverPhotoUrl;
-  }
-
-  String get getUsername {
-    return user.userName;
-  }
-
-  User get getUser {
-    return user;
   }
 
   void setNationality(String newNationality) {
@@ -81,18 +70,8 @@ class Account with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAvatarUrl(String newAvatarUrl) {
-    user.avatarUrl = newAvatarUrl;
-    notifyListeners();
-  }
-
   void setCoverPhotoUrl(String newCoverPageUrl) {
     coverPhotoUrl = newCoverPageUrl;
-    notifyListeners();
-  }
-
-  void setUsername(String newName) {
-    user.userName = newName;
     notifyListeners();
   }
 
@@ -103,4 +82,6 @@ class Account with ChangeNotifier {
       return 0;
     }
   }
+
+
 }
