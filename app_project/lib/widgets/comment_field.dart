@@ -29,56 +29,39 @@ class _CommentFieldState extends State<CommentField> {
     String textComment = '';
     return Column(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: 0.5,
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (post.isFavourite) {
+                    post.likeCount--;
+                  } else {
+                    post.likeCount++;
+                  }
+                  post.isFavourite = !post.isFavourite;
+                });
+              },
+              icon: post.isFavourite
+                  ? const Icon(Icons.favorite)
+                  : const Icon(Icons.favorite_border),
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-          ),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (post.isFavourite) {
-                      post.likeCount--;
-                    } else {
-                      post.likeCount++;
-                    }
-                    post.isFavourite = !post.isFavourite;
-                  });
-                },
-                icon: post.isFavourite
-                    ? const Icon(Icons.favorite)
-                    : const Icon(Icons.favorite_border),
-              ),
-              Text('${post.likeCount}'),
-              const Spacer(),
-              if (listComment.length == 0) const Text('0 comments'),
-              if (listComment.length != 0)
-                Text(listComment.length.toString() + ' comments'),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.share),
-              ),
-            ],
-          ),
+            Text('${post.likeCount}'),
+            const Spacer(),
+            if (listComment.length == 0) const Text('0 comments'),
+            if (listComment.length != 0)
+              Text(listComment.length.toString() + ' comments'),
+            const Spacer(),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.share),
+            ),
+          ],
         ),
-        const SizedBox(height: 7),
-        Container(
-          height: 53,
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: 0.5,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-          ),
-          child: Row(
+        const Divider(
+          thickness: 1,
+        ),
+        Row(
             children: [
               const SizedBox(width: 7),
               CircleAvatar(
@@ -100,7 +83,7 @@ class _CommentFieldState extends State<CommentField> {
                   },
                 ),
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: 3),
               IconButton(
                 icon: const Icon(
                   Icons.send,
@@ -127,8 +110,11 @@ class _CommentFieldState extends State<CommentField> {
               ),
             ],
           ),
+        const SizedBox(height: 3),
+        const Divider(
+          thickness: 1,
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: 10),
       ],
     );
   }

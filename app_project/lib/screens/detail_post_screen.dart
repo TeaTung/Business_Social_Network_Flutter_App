@@ -14,7 +14,6 @@ class DetailPostScreen extends StatelessWidget {
     final post = Provider.of<PostDetail>(context).post;
     final listComment = Provider.of<Comments>(context);
     const userId = 'id';
-    const uid = 'uid';
 
     return SafeArea(
       child: Scaffold(

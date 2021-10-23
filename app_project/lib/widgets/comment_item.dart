@@ -35,31 +35,26 @@ class CommentItem extends StatelessWidget {
         return '${minutes}m';
       }
     }
+
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5,
-              ),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(userAvatarUrl),
-              ),
+            CircleAvatar(
+              backgroundImage: NetworkImage(userAvatarUrl),
             ),
-            const SizedBox(width: 2),
+            const SizedBox(width: 7),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(7),
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.circular(1),
-                  border: Border.all(
-                    color: Colors.black12,
-                    width: 0.5,
-                  ),
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(235, 235, 235, 1),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(3),
+                      bottomRight: Radius.circular(3),
+                      bottomLeft: Radius.circular(3)),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +65,7 @@ class CommentItem extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '${userName}  ',
+                              '$userName  ',
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -78,11 +73,13 @@ class CommentItem extends StatelessWidget {
                             ),
                             Text(
                               returnTimePost(),
-                              style:
-                                  Theme.of(context).textTheme.headline1!.copyWith(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
                             )
                           ],
                         ),
@@ -90,12 +87,14 @@ class CommentItem extends StatelessWidget {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.68,
                           child: Text(userCommentText,
-                              style:
-                                  Theme.of(context).textTheme.headline1!.copyWith(
-                                        color: Colors.black87,
-                                        fontSize: 14.5,
-                                        fontWeight: FontWeight.w400,
-                                      )),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    color: Colors.black87,
+                                    fontSize: 14.5,
+                                    fontWeight: FontWeight.w400,
+                                  )),
                         ),
                       ],
                     ),

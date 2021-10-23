@@ -1,9 +1,12 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import './change_information_item.dart';
 import '../providers/account.dart';
+import '../providers/user.dart';
 
 class SettingAccount extends StatelessWidget {
   static const routeName = '/SettingAccount';
@@ -13,14 +16,19 @@ class SettingAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
+    final user = Provider.of<User>(context);
+
     Widget takePicture() {
       return FractionallySizedBox(
-        heightFactor: 0.15,
+        heightFactor: 0.17,
         child: Column(
           children: [
+            const SizedBox(height: 12),
             TextButton(
               onPressed: () {},
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(width: 7),
                   const Icon(Icons.image, color: Colors.black),
@@ -38,6 +46,8 @@ class SettingAccount extends StatelessWidget {
             TextButton(
               onPressed: () {},
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(width: 7),
                   const Icon(Icons.camera_alt, color: Colors.black),
@@ -80,9 +90,10 @@ class SettingAccount extends StatelessWidget {
     Widget detailInformation(Icon icon, String title, String detail) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           icon,
-          const SizedBox(width: 17),
+          const SizedBox(width: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -94,6 +105,7 @@ class SettingAccount extends StatelessWidget {
                     .headline1!
                     .copyWith(fontSize: 18),
               ),
+              const SizedBox(height: 3),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.67,
                 child: Text(
@@ -113,29 +125,87 @@ class SettingAccount extends StatelessWidget {
     }
 
     Widget titleWidget(String title, int count) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            GestureDetector(
-              onTap: count <= 2 ? handlerPicture : handlerInformation,
-              child: Text(
-                'Change',
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blue,
-                      fontSize: 18,
-                    ),
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headline1,
               ),
+              GestureDetector(
+                onTap: count <= 2 ? handlerPicture : handlerInformation,
+                child: Text(
+                  'Change',
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.blue,
+                        fontSize: 18,
+                      ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+        ],
+      );
+    }
+
+    Widget listDetailInformation() {
+      return Column(
+        children: [
+          detailInformation(
+            const Icon(
+              EvaIcons.edit2,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
             ),
-          ],
-        ),
+            'Name',
+            user.userName,
+          ),
+          const SizedBox(height: 3),
+          detailInformation(
+            const Icon(
+              EvaIcons.gift,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Birth Date',
+            DateFormat('d MMM y').format(account.birthDate),
+          ),
+          const SizedBox(height: 3),
+          detailInformation(
+            const Icon(
+              EvaIcons.person,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Gender',
+            account.gender,
+          ),
+          const SizedBox(height: 3),
+          detailInformation(
+            const Icon(
+              EvaIcons.pin,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Nationality',
+            account.nationality,
+          ),
+          const SizedBox(height: 3),
+          detailInformation(
+            const Icon(
+              EvaIcons.text,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Quote',
+            account.quote,
+          ),
+        ],
       );
     }
 
@@ -145,7 +215,7 @@ class SettingAccount extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          account.user.userName,
+          user.userName,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black,
@@ -172,71 +242,44 @@ class SettingAccount extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
+                vertical: 10,
               ),
               child: Column(children: [
                 titleWidget('Avatar', 1),
                 Center(
                   child: CircleAvatar(
                     backgroundImage: NetworkImage(
-                      account.user.avatarUrl.isEmpty
+                      user.avatarUrl.isEmpty
                           ? 'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1'
-                          : account.user.avatarUrl,
+                          : user.avatarUrl,
                     ),
                     maxRadius: 70,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const Divider(height: 35, thickness: 0.6),
                 titleWidget('Cover photo', 2),
-                const SizedBox(height: 6),
                 Center(
-                  child: Container(
-                    padding: const EdgeInsets.all(30),
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(17),
-                      color: const Color.fromRGBO(224, 224, 224, 1),
-                    ),
-                    child: account.coverPhotoUrl == ''
-                        ? null
-                        : Image.network(
-                            account.coverPhotoUrl,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
+                  child: account.coverPhotoUrl == ''
+                      ? Container(
+                          height: 178,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17),
+                            color: const Color.fromRGBO(224, 224, 224, 1),
+                          ))
+                      : ClipRRect(
+                        borderRadius: BorderRadius.circular(17),
+                        child: SizedBox(
+                          height: 178,
+                          child: Image.network(
+                              account.coverPhotoUrl,
+                              fit: BoxFit.cover,
+                            ),
+                        ),
+                      ),
                 ),
-                const SizedBox(height: 6),
+                const Divider(height: 35, thickness: 0.6),
                 titleWidget('Detail information', 3),
-                detailInformation(
-                  const Icon(Icons.drive_file_rename_outline),
-                  'Name',
-                  account.user.userName,
-                ),
-                detailInformation(
-                  const Icon(Icons.cake_outlined),
-                  'Birth Date',
-                  DateFormat('d MMM y').format(account.birthDate),
-                ),
-                detailInformation(
-                  const Icon(Icons.transgender_outlined),
-                  'Gender',
-                  account.gender,
-                ),
-                detailInformation(
-                  const Icon(Icons.map_outlined),
-                  'Nationality',
-                  account.nationality,
-                ),
-                detailInformation(
-                  const Icon(Icons.format_quote_outlined),
-                  'Quote',
-                  account.quote,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 7),
-                  child: Divider(
-                    thickness: 0.6,
-                  ),
-                ),
+                listDetailInformation(),
               ]),
             ),
           ],

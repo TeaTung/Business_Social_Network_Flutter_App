@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 
+import '../providers/user.dart';
 class FollowerItem extends StatefulWidget {
   const FollowerItem({Key? key}) : super(key: key);
 
@@ -14,6 +15,8 @@ class _FollowerItemState extends State<FollowerItem> {
   @override
   Widget build(BuildContext context) {
     Account account = Provider.of<Account>(context);
+    User user = Provider.of<User>(context);
+
     return Wrap(
       children: [
         GestureDetector(
@@ -31,7 +34,7 @@ class _FollowerItemState extends State<FollowerItem> {
                   CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 20,
-                    backgroundImage: NetworkImage(account.getUser.getAvatarUrl),
+                    backgroundImage: NetworkImage(user.getAvatarUrl),
                   ),
                   const SizedBox(width: 12),
                   Column(
@@ -39,7 +42,7 @@ class _FollowerItemState extends State<FollowerItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        account.getUsername,
+                        user.getUserName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
