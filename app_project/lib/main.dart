@@ -1,3 +1,8 @@
+import 'package:test_fix/providers/messages.dart';
+import 'package:test_fix/screens/detail_message_screen.dart';
+import 'package:test_fix/screens/overview_message_screen.dart';
+import '../providers/posts.dart';
+import '../screens/list_post_screen.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,10 +20,12 @@ import './providers/post.dart';
 import './providers/posts.dart';
 import './providers/process.dart';
 import './screens/account_screen.dart';
+import 'widgets/overview_messsage_item.dart';
 import './screens/notification_screen.dart';
 import './screens/process_screen.dart';
 import './widgets/change_information_item.dart';
 import './widgets/setting_account.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -59,6 +66,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: PostDetail(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => Messages(),
         ChangeNotifierProvider.value(
           value: Processes(),
         ),
@@ -86,6 +95,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SettingAccount.routeName: (ctx) => const SettingAccount(),
           ChangeInformation.routeName: (ctx) => const ChangeInformation(),
+          OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
         },
       ),
     );
@@ -104,12 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: controller,
         children: [
+          //ListPostScreen(),
+         // DetailMessageScreen(),
+          OverviewMessageScreen(),
           ListPostScreen(),
           NotificationScreen(),
-          Center(
-            child: Text("Message",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-          ),
           //FollowerItem(),
           AccountScreen(),
         ],
