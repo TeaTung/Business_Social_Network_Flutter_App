@@ -11,13 +11,13 @@ class CommentItem extends StatelessWidget {
   final DateTime postDate;
 
   CommentItem(
-    this.id,
-    this.userName,
-    this.userAvatarUrl,
-    this.userCommentText,
-    this.isMyComment,
-    this.postDate,
-  );
+      this.id,
+      this.userName,
+      this.userAvatarUrl,
+      this.userCommentText,
+      this.isMyComment,
+      this.postDate,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +77,9 @@ class CommentItem extends StatelessWidget {
                                   .textTheme
                                   .headline1!
                                   .copyWith(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
                             )
                           ],
                         ),
@@ -91,10 +91,10 @@ class CommentItem extends StatelessWidget {
                                   .textTheme
                                   .headline1!
                                   .copyWith(
-                                    color: Colors.black87,
-                                    fontSize: 14.5,
-                                    fontWeight: FontWeight.w400,
-                                  )),
+                                color: Colors.black87,
+                                fontSize: 14.5,
+                                fontWeight: FontWeight.w400,
+                              )),
                         ),
                       ],
                     ),
@@ -104,28 +104,28 @@ class CommentItem extends StatelessWidget {
                         onPressed: () => showDialog(
                             context: context,
                             builder: (ctx) => AlertDialog(
-                                  title: const Text("Are your sure ?"),
-                                  content: const Text(
-                                      'Do you want to delete this comment ?'),
-                                  actions: [
-                                    TextButton(
-                                        child: const Text('Yes'),
-                                        onPressed: () {
-                                          listComment.removeComment(id);
-                                          Navigator.of(ctx).pop();
-                                        }),
-                                    TextButton(
-                                      child: const Text('No'),
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                    )
-                                  ],
-                                )),
+                              title: const Text("Are your sure ?"),
+                              content: const Text(
+                                  'Do you want to delete this comment ?'),
+                              actions: [
+                                TextButton(
+                                    child: const Text('Yes'),
+                                    onPressed: () {
+                                      listComment.removeComment(id);
+                                      Navigator.of(ctx).pop();
+                                    }),
+                                TextButton(
+                                  child: const Text('No'),
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop();
+                                  },
+                                )
+                              ],
+                            )),
                         icon: const Icon(Icons.delete),
                         iconSize: 16,
                         constraints:
-                            const BoxConstraints(maxHeight: 20, maxWidth: 24),
+                        const BoxConstraints(maxHeight: 20, maxWidth: 24),
                       ),
                   ],
                 ),

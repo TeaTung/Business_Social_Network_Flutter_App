@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Round {
   final String roundName;
   final bool isFinished;
@@ -12,7 +14,7 @@ class Round {
   });
 }
 
-class Rounds {
+class Rounds with ChangeNotifier{
   List<Round> _listRound = [
     Round(
       roundName: 'CV',

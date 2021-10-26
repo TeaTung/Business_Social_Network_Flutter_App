@@ -5,29 +5,30 @@ import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 import 'package:test_fix/providers/mesage.dart';
 import 'package:test_fix/providers/messages.dart';
+import 'package:test_fix/providers/user.dart';
 import 'package:test_fix/widgets/detail_message_item_belong_to_me.dart';
-import 'package:test_fix/widgets/overview_messsage_item.dart';
+import 'package:test_fix/widgets/overview_message_item.dart';
 
 class OverviewMessageScreen extends StatelessWidget {
   const OverviewMessageScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final userMe = Provider.of<Accounts>(context).account.user;
+    final userMe = Provider.of<User>(context);
     var messagesTotal = Provider.of<Messages>(context).messages.toList();
 
     var listOther = messagesTotal
         .where((element) =>
-            (element.hasBeenRead == true && element.factorId == userMe.id))
+            (element.hasBeenRead == true && element.factorId == userMe.uid))
         .toList();
 
     final listSent = messagesTotal
         .where((element) =>
-            (element.hasBeenRead == true && element.uid == userMe.id))
+            (element.hasBeenRead == true && element.uid == userMe.uid))
         .toList();
 
     final listUnread = messagesTotal.where((element) =>
-        (element.hasBeenRead == false && element.uid != userMe.id)).toList();
+        (element.hasBeenRead == false && element.uid != userMe.uid)).toList();
 
     listOther.removeWhere((element) {
       bool f = false;

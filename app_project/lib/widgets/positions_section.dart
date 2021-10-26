@@ -22,7 +22,7 @@ class _PositionsSectionState extends State<PositionsSection> {
 
     return Column(
       children: [
-        const Divider(),
+        const Divider(thickness: 1),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 2),
           child: Row(

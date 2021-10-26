@@ -11,10 +11,10 @@ class CommentField extends StatefulWidget {
   final String uid;
 
   CommentField(
-    this.userImageUrl,
-    this.userName,
-    this.uid,
-  );
+      this.userImageUrl,
+      this.userName,
+      this.uid,
+      );
 
   @override
   _CommentFieldState createState() => _CommentFieldState();
@@ -62,54 +62,54 @@ class _CommentFieldState extends State<CommentField> {
           thickness: 1,
         ),
         Row(
-            children: [
-              const SizedBox(width: 7),
-              CircleAvatar(
-                backgroundImage: NetworkImage(widget.userImageUrl),
-              ),
-              const SizedBox(width: 7),
-              Expanded(
-                child: TextField(
-                  textCapitalization: TextCapitalization.sentences,
-                  controller: textController,
-                  decoration: const InputDecoration(
-                    hintText: 'Leave some comment...',
-                  ),
-                  onChanged: (val) {
-                    textComment = val.toString();
-                  },
-                  onSubmitted: (val) {
-                    textComment = val.toString();
-                  },
+          children: [
+            const SizedBox(width: 7),
+            CircleAvatar(
+              backgroundImage: NetworkImage(widget.userImageUrl),
+            ),
+            const SizedBox(width: 7),
+            Expanded(
+              child: TextField(
+                textCapitalization: TextCapitalization.sentences,
+                controller: textController,
+                decoration: const InputDecoration(
+                  hintText: 'Leave some comment...',
                 ),
-              ),
-              const SizedBox(width: 3),
-              IconButton(
-                icon: const Icon(
-                  Icons.send,
-                  size: 20,
-                ),
-                onPressed: () {
-                  if (textComment.isEmpty) return;
-                  listComment.addComment(
-                    Comment(
-                      id: DateTime.now().toString(),
-                      user: User(
-                        uid: widget.uid,
-                        userName: widget.userName,
-                        avatarUrl: widget.userImageUrl,
-                      ),
-                      date: DateTime.now(),
-                      numberOfLike: 0,
-                      userCommentText: textComment.trim(),
-                    ),
-                  );
-                  textController.clear();
-                  FocusScope.of(context).unfocus();
+                onChanged: (val) {
+                  textComment = val.toString();
+                },
+                onSubmitted: (val) {
+                  textComment = val.toString();
                 },
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 3),
+            IconButton(
+              icon: const Icon(
+                Icons.send,
+                size: 20,
+              ),
+              onPressed: () {
+                if (textComment.isEmpty) return;
+                listComment.addComment(
+                  Comment(
+                    id: DateTime.now().toString(),
+                    user: User(
+                      uid: widget.uid,
+                      userName: widget.userName,
+                      avatarUrl: widget.userImageUrl,
+                    ),
+                    date: DateTime.now(),
+                    numberOfLike: 0,
+                    userCommentText: textComment.trim(),
+                  ),
+                );
+                textController.clear();
+                FocusScope.of(context).unfocus();
+              },
+            ),
+          ],
+        ),
         const SizedBox(height: 3),
         const Divider(
           thickness: 1,

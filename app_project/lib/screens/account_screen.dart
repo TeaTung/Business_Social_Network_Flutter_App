@@ -14,6 +14,8 @@ import '../widgets/avatar_cover_photo_item.dart';
 import '../widgets/post_item.dart';
 
 class AccountScreen extends StatelessWidget {
+  static const routeName = '/AccountScreen';
+
   const AccountScreen({Key? key}) : super(key: key);
 
   @override
@@ -22,6 +24,9 @@ class AccountScreen extends StatelessWidget {
     final listPost = Provider.of<Posts>(context);
     final user = Provider.of<User>(context);
     final _controller = ScrollController();
+
+    //This is user id
+    final id = ModalRoute.of(context)!.settings.arguments;
 
     Widget detailInformation(
         Icon icon, String title, String detail, VoidCallback? func) {
@@ -67,76 +72,63 @@ class AccountScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3),
-              border: Border.all(
-                color: Colors.grey,
-                width: 0.3,
-              )
+          detailInformation(
+            const Icon(
+              EvaIcons.edit2,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: Column(
-                children: [
-                  detailInformation(
-                    const Icon(
-                      EvaIcons.edit2,
-                      color: Color.fromRGBO(1, 21, 71, 1),
-                      size: 30,
-                    ),
-                    'Name',
-                    user.userName,
-                    null,
-                  ),
-                  detailInformation(
-                    const Icon(
-                      EvaIcons.bell,
-                      color: Color.fromRGBO(1, 21, 71, 1),
-                      size: 30,
-                    ),
-                    'Followers',
-                    account.followersCount().toString() + ' Followers',
-                    null,
-                  ),
-                  detailInformation(
-                    const Icon(
-                      EvaIcons.gift,
-                      color: Color.fromRGBO(1, 21, 71, 1),
-                      size: 30,
-                    ),
-                    'Birth Date',
-                    DateFormat('d MMM y').format(account.birthDate),
-                    null,
-                  ),
-                  detailInformation(
-                    const Icon(
-                      EvaIcons.person,
-                      color: Color.fromRGBO(1, 21, 71, 1),
-                      size: 30,
-                    ),
-                    'Gender',
-                    account.gender,
-                    null,
-                  ),
-                  detailInformation(
-                    const Icon(
-                      EvaIcons.pin,
-                      color: Color.fromRGBO(1, 21, 71, 1),
-                      size: 30,
-                    ),
-                    'Nationality',
-                    account.nationality,
-                    null,
-                  ),
-                ],
-              ),
+            'Name',
+            user.userName,
+            null,
+          ),
+          detailInformation(
+            const Icon(
+              EvaIcons.bell,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
             ),
+            'Followers',
+            account.followersCount().toString() + ' Followers',
+            null,
+          ),
+          detailInformation(
+            const Icon(
+              EvaIcons.gift,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Birth Date',
+            DateFormat('d MMM y').format(account.birthDate),
+            null,
+          ),
+          detailInformation(
+            const Icon(
+              EvaIcons.person,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Gender',
+            account.gender,
+            null,
+          ),
+          detailInformation(
+            const Icon(
+              EvaIcons.pin,
+              color: Color.fromRGBO(1, 21, 71, 1),
+              size: 30,
+            ),
+            'Nationality',
+            account.nationality,
+            null,
           ),
           const SizedBox(height: 6),
         ],
       );
     }
+
+    //User click follow button to follow
+    void followUser() {}
 
     return Scaffold(
       appBar: AppBar(
@@ -153,10 +145,13 @@ class AccountScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        //Check if id is my id
+        leading: id == null
+            ? null
+            : IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
         bottom: PreferredSize(
           child: Container(
             color: Colors.grey,
@@ -166,62 +161,93 @@ class AccountScreen extends StatelessWidget {
         ),
         actions: [
           // check is my uid
-          //if (account.user.uid == 'id')
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.black),
-            onPressed: () {
-              Navigator.of(context).pushNamed(SettingAccount.routeName);
-            },
-          ),
+          if (id == null)
+            IconButton(
+              icon: const Icon(Icons.settings, color: Colors.black),
+              onPressed: () {
+                Navigator.of(context).pushNamed(SettingAccount.routeName);
+              },
+            ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(15),
-        child: SingleChildScrollView(
-          physics: const ScrollPhysics(),
-          child: Column(
-            children: [
-              AvatarCoverPhoto(
-                user.userName,
-                user.avatarUrl,
-                account.coverPhotoUrl,
-                account.quote,
-              ),
-              const SizedBox(height: 4),
-              const Divider(),
-              //user information
-              listDetailInformation(),
-              const PositionsSection(),
-              const EducationsSection(),
-              //Post section
-              const SizedBox(height: 6),
-              const Divider(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Activities',
-                      style: Theme.of(context).textTheme.headline1!,
+      body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  AvatarCoverPhoto(
+                    user.userName,
+                    user.avatarUrl,
+                    account.coverPhotoUrl,
+                    account.quote,
+                  ),
+                  //Check if id isn't my id, we can follow him
+                  if (id != null)
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 7,
+                        horizontal: 17,
+                      ),
+                      height: 35,
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                      ),
+                      child: const Text(
+                        "Follow",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Helvetica',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
-                  ],
-                ),
+                  const SizedBox(height: 4),
+                  const Divider(thickness: 1),
+                  //user information
+                  listDetailInformation(),
+                  const PositionsSection(),
+                  const EducationsSection(),
+                ],
               ),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  controller: _controller,
-                  itemCount: listPost.items.length,
-                  itemBuilder: (ctx, index) {
-                    return ChangeNotifierProvider.value(
-                      value: listPost.items[index],
-                      child: const PostItem(),
-                    );
-                  }),
-            ],
-          ),
+            ),
+            //Post of user
+            const Divider(thickness: 1),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Activities',
+                    style: Theme.of(context).textTheme.headline1!,
+                  ),
+                ],
+              ),
+            ),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              controller: _controller,
+              itemCount: listPost.items.length,
+              itemBuilder: (ctx, index) {
+                return ChangeNotifierProvider.value(
+                  value: listPost.items[index],
+                  child: const PostItem(),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) => Container(
+                height: 7,
+                color: const Color.fromRGBO(200, 200, 200, 1),
+              ),
+            ),
+          ],
         ),
       ),
     );

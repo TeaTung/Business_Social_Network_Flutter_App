@@ -133,13 +133,9 @@ class ProcessItem extends StatelessWidget {
       // Tap to open detail process
       onTap: () {},
       child: Container(
-        margin: const EdgeInsets.all(25),
         padding: const EdgeInsets.all(15),
         width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(4)),
-          border: Border.all(color: Colors.grey, width: 0.5),
-        ),
+
         child: Column(
           children: [
             // title

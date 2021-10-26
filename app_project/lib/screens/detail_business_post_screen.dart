@@ -4,14 +4,15 @@ import 'package:provider/provider.dart';
 
 import '../providers/comments.dart';
 import '../providers/post.dart';
+
 import '../widgets/comment_field.dart';
 import '../widgets/comment_item.dart';
-import '../widgets/post_detail_screen_item.dart';
+import '../widgets/detail_business_item.dart';
 
-class DetailPostScreen extends StatelessWidget {
-  static const routeName = '/DetailPostScreen';
+class DetailBusinessPostScreen extends StatelessWidget {
+  static const routeName = '/DetailBusinessPostScreen';
 
-  const DetailPostScreen({Key? key}) : super(key: key);
+  const DetailBusinessPostScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,8 @@ class DetailPostScreen extends StatelessWidget {
 
     final post = Provider.of<PostDetail>(context).post;
     final listComment = Provider.of<Comments>(context);
+
+    //fake data
     const userId = 'id';
 
     return SafeArea(
@@ -27,7 +30,7 @@ class DetailPostScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          // leadingWidth: 15,
+          leadingWidth: 15,
           title: ListTile(
             leading: CircleAvatar(
               backgroundImage: NetworkImage(post.user.avatarUrl),
@@ -42,6 +45,15 @@ class DetailPostScreen extends StatelessWidget {
             ),
             subtitle: Text(DateFormat('d MMMM y').format(post.postTime)),
           ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: SingleChildScrollView(
           physics: const ScrollPhysics(),
@@ -50,16 +62,14 @@ class DetailPostScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // fake data
-              PostDetailScreenItem(
-                post.user.userName,
-                'This is a very fucking longggggggggggggggggggggg description',
-                'https://picsum.photos/200/300',
-              ),
+              DetailBusinessItem(),
+              const SizedBox(height: 5),
               CommentField(
                 post.user.avatarUrl,
                 post.user.userName,
                 post.user.uid,
               ),
+              //fake comment
               if (post.comments != null)
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
@@ -73,7 +83,6 @@ class DetailPostScreen extends StatelessWidget {
                     userId == post.user.uid,
                     listComment.listComment[i].date,
                   ),
-
                 ),
             ],
           ),
