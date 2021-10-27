@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class CustomAnimatedBottomBar extends StatelessWidget {
-  const CustomAnimatedBottomBar({
+  CustomAnimatedBottomBar({
     Key? key,
     this.selectedIndex = 0,
     this.showElevation = true,
@@ -108,7 +108,7 @@ class _ItemWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color:
               /*isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor*/
-              Colors.transparent,
+          Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: SingleChildScrollView(
@@ -131,7 +131,7 @@ class _ItemWidget extends StatelessWidget {
                             ? item.activeColor
                             : item.inactiveColor,
                   ),
-                  child: isSelected ? item.iconSelect : item.icon,
+                  child: isSelected?  item.iconSelect : item.icon ,
                 ),
                 if (isSelected)
                   Expanded(
@@ -144,7 +144,7 @@ class _ItemWidget extends StatelessWidget {
                         ),
                         maxLines: 1,
                         textAlign: item.textAlign,
-                        child: item.title,
+                        child:   item.title,
                       ),
                     ),
                   ),

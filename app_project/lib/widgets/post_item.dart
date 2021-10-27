@@ -4,6 +4,10 @@ import 'package:like_button/like_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/detail_post_screen.dart';
+import '../screens/detail_business_post_screen.dart';
+import '../screens/account_screen.dart';
+
 import '../providers/post.dart';
 
 //This widget represents for one individual post to load to posts list
@@ -35,27 +39,38 @@ class PostItem extends StatelessWidget {
           'https://lwlies.com/wp-content/uploads/2017/04/avatar-2009-1108x0-c-default.jpg',
     );*/
     Post post = Provider.of<Post>(context);
+
+    void navigateToDetailPost() {
+      if (post.isBusinessPost) {
+        Navigator.of(context).pushNamed(DetailBusinessPostScreen.routeName, arguments: post.id);
+      } else {
+        Navigator.of(context).pushNamed(DetailPostScreen.routeName, arguments: post.id);
+      }
+    }
+
     return Wrap(
       children: [
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 5,
-          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 12.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 12.0),
+              child: InkWell(
+                onTap: navigateToDetailPost,
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            post.user.avatarUrl,
+                        InkWell(
+                          onTap: () {
+                            // open post detail screen with post id
+                            Navigator.of(context).pushNamed(AccountScreen.routeName, arguments: post.user.uid);
+                          },
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              post.user.avatarUrl,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -87,59 +102,58 @@ class PostItem extends StatelessWidget {
                     Text(
                       post.content,
                       textAlign: TextAlign.start,
-                      style: const TextStyle(fontWeight: FontWeight.normal),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
+                      ),
                     ),
                   ],
                 ),
               ),
-              if (post.imageUrl != null)
-                Image.network(
-                  post.imageUrl!,
-                  height: 320,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-              /*const Divider(),*/
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    if (!post.isBusinessPost) ...[
-                      _LikePostButton(
-                        tapHandler: () {},
-                      ),
-                      _CommentPostButton(
-                        tapHandler: () {},
-                      ),
-                      _SharePostButton(
-                        tapHandler: () {},
-                      ),
-                    ],
-                    if (post.isBusinessPost) ...[
-                      _BusinessButton(
-                        icon: const Icon(
-                          MdiIcons.accountCheckOutline,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        label: 'Interested',
-                        tapHandler: () {},
-                      ),
-                    ]
-                  ],
-                ),
-              )
-            ],
-          ),
+            ),
+            if (post.imageUrl != null)
+              Image.network(
+                post.imageUrl!,
+                height: 320,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            /*const Divider(),*/
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ...[
+                  _LikePostButton(
+                    tapHandler: () {},
+                  ),
+                  _CommentPostButton(
+                    tapHandler: () {},
+                  ),
+                  _SharePostButton(
+                    tapHandler: () {},
+                  ),
+                ],
+                if (post.isBusinessPost) ...[
+                  _BusinessButton(
+                    icon: const Icon(
+                      MdiIcons.accountCheckOutline,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                    label: '',
+                    tapHandler: () {},
+                  ),
+                ]
+              ],
+            ),
+          ],
         ),
       ],
     );
   }
 }
+
+//when user press
 
 class _PostButton extends StatelessWidget {
   final Icon icon;
@@ -395,7 +409,7 @@ class _BusinessButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Material(
-        color: Colors.blue,
+        color: Colors.white,
         child: InkWell(
           onTap: tapHandler,
           child: SizedBox(
@@ -405,10 +419,7 @@ class _BusinessButton extends StatelessWidget {
               children: [
                 icon,
                 const SizedBox(width: 5),
-                Text(
-                  label,
-                  style: const TextStyle(color: Colors.white),
-                ),
+                Text(label),
               ],
             ),
           ),

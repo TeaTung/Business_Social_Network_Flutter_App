@@ -1,31 +1,32 @@
-import 'package:test_fix/providers/messages.dart';
-import 'package:test_fix/screens/detail_message_screen.dart';
-import 'package:test_fix/screens/overview_message_screen.dart';
-import '../providers/posts.dart';
-import '../screens/list_post_screen.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/educations.dart';
+import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/providers/user.dart';
 import 'package:test_fix/screens/account_screen.dart';
 import 'package:test_fix/screens/list_post_screen.dart';
+import 'package:test_fix/widgets/follower_item.dart';
 import './navigators/bottom_navigator.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
 import './providers/post.dart';
+import './providers/round.dart';
 import './providers/posts.dart';
 import './providers/process.dart';
 import './screens/account_screen.dart';
-import 'widgets/overview_messsage_item.dart';
 import './screens/notification_screen.dart';
 import './screens/process_screen.dart';
 import './widgets/change_information_item.dart';
 import './widgets/setting_account.dart';
 import './screens/detail_post_screen.dart';
+import './screens/detail_business_post_screen.dart';
+import './widgets/overview_message_item.dart';
+import './screens/detail_message_screen.dart';
+import './screens/overview_message_screen.dart';
 
 
 void main() {
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
             uid: 'uid',
             quote: 'This is just long quote',
             coverPhotoUrl:
-            'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
+                'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
             birthDate: DateTime.now(),
             nationality: 'United States',
             gender: 'Male',
@@ -70,8 +71,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: PostDetail(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => Messages(),
         ChangeNotifierProvider.value(
           value: Processes(),
         ),
@@ -80,6 +79,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Educations(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Rounds(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Messages(),
         ),
       ],
       child: MaterialApp(
@@ -93,12 +98,17 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
+          primaryColor: Colors.blue,
         ),
-        home: DetailPostScreen(),
+        home: MyHomePage(),
         debugShowCheckedModeBanner: false,
         routes: {
           SettingAccount.routeName: (ctx) => const SettingAccount(),
           ChangeInformation.routeName: (ctx) => const ChangeInformation(),
+          DetailBusinessPostScreen.routeName: (ctx) =>
+              const DetailBusinessPostScreen(),
+          DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),
+          AccountScreen.routeName: (ctx) => const AccountScreen(),
           OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
         },
       ),
@@ -118,12 +128,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: controller,
         children: [
-          //ListPostScreen(),
-         // DetailMessageScreen(),
-          OverviewMessageScreen(),
           ListPostScreen(),
+          ProcessScreen(),
+          OverviewMessageScreen(),
           NotificationScreen(),
-          //FollowerItem(),
+          // FollowerItem(),
           AccountScreen(),
         ],
         onPageChanged: (index) {
@@ -166,9 +175,9 @@ class _MyHomePageState extends State<MyHomePage> {
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(MdiIcons.heartOutline),
-          iconSelect: Icon(MdiIcons.heart),
-          title: Text('Users'),
+          icon: Icon(Icons.work_outline),
+          title: Text('Job'),
+          iconSelect: Icon(Icons.work),
           activeColor: Colors.black,
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,
@@ -177,6 +186,14 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(MdiIcons.messageOutline),
           iconSelect: Icon(MdiIcons.message),
           title: Text('Messages'),
+          activeColor: Colors.black,
+          inactiveColor: Colors.black,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(MdiIcons.heartOutline),
+          iconSelect: Icon(MdiIcons.heart),
+          title: Text('Notification'),
           activeColor: Colors.black,
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,

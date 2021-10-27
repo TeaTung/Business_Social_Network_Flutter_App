@@ -44,7 +44,7 @@ class PostDetail with ChangeNotifier {
         avatarUrl:
             "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       ),
-      content: "Helo",
+      content: "Hello world !!! This is a very long description in a post <3",
       likeCount: 1,
       isBusinessPost: false,
       comments: Comments(),

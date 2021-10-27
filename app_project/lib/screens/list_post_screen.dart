@@ -17,7 +17,7 @@ class ListPostScreen extends StatelessWidget {
         avatarUrl:
             "https://images.pexels.com/photos/2002719/pexels-photo-2002719.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       ),
-      content: "Helo",
+      content: "Hello",
       likeCount: 1,
       isBusinessPost: false,
       comments: null,
@@ -33,71 +33,62 @@ class ListPostScreen extends StatelessWidget {
     final listPost = Provider.of<Posts>(context);
 
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        margin: EdgeInsets.all(0),
-        width: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FloatingActionButton(
-              elevation: 0,
-              backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(5),
-                ),
-              ),
-              onPressed: () {
-                listPost.addPost(p);
-                _controller.animateTo(
-                  _controller.position.maxScrollExtent,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastOutSlowIn,
-                );
-              },
-              child: Icon(
-                Icons.add,
-                size: 22,
-                color: Colors.white,
-              ),
-            ),
-            FloatingActionButton(
-              elevation: 0,
-              backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(5),
-                ),
-              ),
-              onPressed: () {
-                listPost.removePost(listPost.items.length - 1);
-                _controller.animateTo(
-                  _controller.position.maxScrollExtent,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastOutSlowIn,
-                );
-              },
-              child: Icon(
-                MdiIcons.minus,
-                size: 22,
-                color: Colors.white,
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: const Text(
+          "Business Social",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Helvetica',
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        bottom: PreferredSize(
+          child: Container(
+            color: Colors.grey,
+            height: 0.6,
+          ),
+          preferredSize: const Size.fromHeight(3),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-        child: ListView.builder(
-            controller: _controller,
-            itemCount: listPost.items.length,
-            itemBuilder: (ctx, index) {
-              return ChangeNotifierProvider.value(
-                value: listPost.items[index],
-                child: PostItem(),
-              );
-            }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButton: SizedBox(
+        height: 50,
+        width: 50,
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          onPressed: () {
+            listPost.addPost(p);
+            _controller.animateTo(
+              _controller.position.maxScrollExtent,
+              duration: const Duration(seconds: 1),
+              curve: Curves.fastOutSlowIn,
+            );
+          },
+          child: const Icon(
+            Icons.add,
+            size: 22,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      body: ListView.separated(
+        // controller: _controller,
+        itemCount: listPost.items.length,
+        itemBuilder: (ctx, index) {
+          return ChangeNotifierProvider.value(
+            value: listPost.items[index],
+            child: PostItem(),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => Container(
+          height: 7,
+          color: const Color.fromRGBO(200, 200, 200, 1),
+        ),
       ),
     );
   }

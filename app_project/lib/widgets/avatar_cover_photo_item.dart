@@ -61,7 +61,7 @@ class AvatarCoverPhoto extends StatelessWidget {
           ),
         ),
         // user name and quote
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

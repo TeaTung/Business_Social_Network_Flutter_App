@@ -20,7 +20,7 @@ class DetailMessageScreen extends StatelessWidget {
   void sendMessage(Messages messages, User userMe, String userImTextingToId) {
     messages.sendMessage(
       _textInputControler.value.text,
-      userMe.id,
+      userMe.uid,
       userImTextingToId,
       DateTime.now(),
     );
@@ -31,13 +31,13 @@ class DetailMessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userImTextingToId =
         ModalRoute.of(context)!.settings.arguments as String;
-    final userMe = Provider.of<Accounts>(context).account.user;
+    final userMe = Provider.of<User>(context);
 
     //get message depend in id
     final messageOver = Provider.of<Messages>(context);
     final userImTextingToMessages =
         Provider.of<Messages>(context).messages.where((element) {
-      return ((element.factorId == userMe.id &&
+      return ((element.factorId == userMe.uid &&
           element.uid == userImTextingToId));
     }).toList();
 
@@ -91,7 +91,7 @@ class DetailMessageScreen extends StatelessWidget {
                     child: ListView.builder(
                       controller: _controller,
                       itemBuilder: (context, index) {
-                        if (messageList[index].uid == userMe.id)
+                        if (messageList[index].uid == userMe.uid)
                           return DetailMessageItemBelongToMe(
                               messageList[index]);
                         return DetailMessageItemNotBelongToMe(

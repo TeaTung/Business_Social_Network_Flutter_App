@@ -1,12 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/providers/user.dart';
 
 import './change_information_item.dart';
 import '../providers/account.dart';
-import '../providers/user.dart';
 
 class SettingAccount extends StatelessWidget {
   static const routeName = '/SettingAccount';
@@ -17,18 +16,14 @@ class SettingAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
     final user = Provider.of<User>(context);
-
     Widget takePicture() {
       return FractionallySizedBox(
-        heightFactor: 0.17,
+        heightFactor: 0.15,
         child: Column(
           children: [
-            const SizedBox(height: 12),
             TextButton(
               onPressed: () {},
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(width: 7),
                   const Icon(Icons.image, color: Colors.black),
@@ -46,8 +41,6 @@ class SettingAccount extends StatelessWidget {
             TextButton(
               onPressed: () {},
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(width: 7),
                   const Icon(Icons.camera_alt, color: Colors.black),
@@ -111,10 +104,10 @@ class SettingAccount extends StatelessWidget {
                 child: Text(
                   detail,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontSize: 16,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    fontSize: 16,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               const SizedBox(height: 7),
@@ -124,7 +117,7 @@ class SettingAccount extends StatelessWidget {
       );
     }
 
-    Widget titleWidget(String title, int count) {
+    Widget titleWidget(String title, bool takePicture) {
       return Column(
         children: [
           Row(
@@ -136,14 +129,14 @@ class SettingAccount extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline1,
               ),
               GestureDetector(
-                onTap: count <= 2 ? handlerPicture : handlerInformation,
+                onTap: takePicture ? handlerPicture : handlerInformation,
                 child: Text(
                   'Change',
                   style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.blue,
-                        fontSize: 18,
-                      ),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.blue,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ],
@@ -237,51 +230,64 @@ class SettingAccount extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: Column(children: [
-                titleWidget('Avatar', 1),
-                Center(
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      user.avatarUrl.isEmpty
-                          ? 'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1'
-                          : user.avatarUrl,
-                    ),
-                    maxRadius: 70,
-                  ),
+            titleWidget('Avatar', true),
+            Center(
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  user.avatarUrl.isEmpty
+                      ? 'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1'
+                      : user.avatarUrl,
                 ),
-                const Divider(height: 35, thickness: 0.6),
-                titleWidget('Cover photo', 2),
-                Center(
-                  child: account.coverPhotoUrl == ''
-                      ? Container(
-                          height: 178,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: const Color.fromRGBO(224, 224, 224, 1),
-                          ))
-                      : ClipRRect(
+                maxRadius: 70,
+              ),
+            ),
+            const SizedBox(height: 6),
+            const Divider(thickness: 1),
+            titleWidget('Cover photo', true),
+            Center(
+              child: account.coverPhotoUrl == ''
+                  ? Container(
+                      padding: const EdgeInsets.all(30),
+                      height: 200,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(17),
-                        child: SizedBox(
-                          height: 178,
-                          child: Image.network(
-                              account.coverPhotoUrl,
-                              fit: BoxFit.cover,
+                        color: const Color.fromRGBO(224, 224, 224, 1),
+                      ),
+                      child: account.coverPhotoUrl == ''
+                          ? null
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(27),
+                              child: Image.network(
+                                account.coverPhotoUrl,
+                                fit: BoxFit.cover,
+                              ),
                             ),
+                    )
+                  : Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(27),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(27),
+                        child: Image.network(
+                          account.coverPhotoUrl,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                ),
-                const Divider(height: 35, thickness: 0.6),
-                titleWidget('Detail information', 3),
-                listDetailInformation(),
-              ]),
+                    ),
             ),
+            const SizedBox(height: 12),
+            const Divider(thickness: 1),
+            titleWidget('Detail information', false),
+            listDetailInformation(),
           ],
         ),
       ),
