@@ -2,7 +2,7 @@
 ### Clean-Code convention
 + In this project we use Pascal and Camel naming convention for variable name and function name
 + Access Modifiers must be clearly
-+ Describe everything easy to confuse, cross class function & variables, dependences, helpers in comment clearly in English
++ Describe everything easy to confuse, cross class function & variables, dependencies, helpers in comment clearly in English
 + Add comma ',' after every parameter
 
 ### Git rules
@@ -52,7 +52,7 @@ if any error occur, try:
 > git add .
 > git commit -m 'What are added, changed, removed, name of feature'
 
-NOTICE [What are added, changed, removed, name of feature] must writen in English clearly and detail.
+NOTICE [What are added, changed, removed, name of feature] must written in English clearly and detail.
 ![image](https://user-images.githubusercontent.com/67773933/115964244-b6a0fa00-a54d-11eb-8852-c526bf111946.png)
 
 #Step 8: Push from local to remote
