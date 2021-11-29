@@ -39,6 +39,16 @@ dependencies:
   image_picker: ^0.8.4+2
   collection: ^1.15.0
   eva_icons_flutter: ^3.0.2
+  flutter_lints: ^1.0.0
+  simple_animations: ^4.0.1
+  email_validator: ^2.0.1
+  flutter_datetime_picker: ^1.5.1
+  gender_picker: ^1.1.0
+  flutter_svg: ^0.23.0+1
+  firebase_auth: ^3.2.0
+  firebase_storage: ^10.1.0
+  firebase_core: ^0.4.0+9
+  cloud_firestore: ^0.12.9+5
 
 
 dev_dependencies:

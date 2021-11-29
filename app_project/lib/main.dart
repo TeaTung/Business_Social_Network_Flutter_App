@@ -27,6 +27,7 @@ import './screens/detail_business_post_screen.dart';
 import './widgets/overview_message_item.dart';
 import './screens/detail_message_screen.dart';
 import './screens/overview_message_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
 
 
 void main() {
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
           DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),
           AccountScreen.routeName: (ctx) => const AccountScreen(),
           OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
+          OnBoardingScreen.roundName: (ctx) => OnBoardingScreen(),
         },
       ),
     );

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "300306657447",
+    "project_id": "working-social-network",
+    "storage_bucket": "working-social-network.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300306657447:android:2841337ff63159c846ab82",
+        "android_client_info": {
+          "package_name": "com.example.test_fix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300306657447-3c5vk0spd793tbrqq77q81pvfeu449kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtnNdhAtDUdMmR2o7QD3K9aOwuLscfm4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300306657447-3c5vk0spd793tbrqq77q81pvfeu449kl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
