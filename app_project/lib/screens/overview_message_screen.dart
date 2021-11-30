@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 import 'package:test_fix/providers/mesage.dart';
 import 'package:test_fix/providers/messages.dart';
-import 'package:test_fix/providers/user.dart';
+import 'package:test_fix/providers/user_info.dart';
 import 'package:test_fix/widgets/detail_message_item_belong_to_me.dart';
 import 'package:test_fix/widgets/overview_message_item.dart';
 
@@ -14,7 +14,7 @@ class OverviewMessageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userMe = Provider.of<User>(context);
+    final userMe = Provider.of<UserInfoLocal>(context);
     var messagesTotal = Provider.of<Messages>(context).messages.toList();
 
     var listOther = messagesTotal

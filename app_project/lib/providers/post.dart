@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 
-import './user.dart';
+import './user_info.dart';
 import 'comments.dart';
 
 //This class create individual post to load to posts list
 class Post with ChangeNotifier {
   final String id;
-  final User user;
+  final UserInfoLocal userInfo;
   final String content;
   int likeCount;
   final String? imageUrl;
@@ -23,7 +23,7 @@ class Post with ChangeNotifier {
     this.isFavourite = false,
     required this.postTime,
     required this.id,
-    required this.user,
+    required this.userInfo,
     required this.content,
     required this.likeCount,
     required this.isBusinessPost,
@@ -38,7 +38,7 @@ class PostDetail with ChangeNotifier {
   Post post = Post(
       postTime: DateTime.now(),
       id: "1",
-      user: User(
+      userInfo: UserInfoLocal(
         uid: 'id',
         userName: 'Bopy',
         avatarUrl:

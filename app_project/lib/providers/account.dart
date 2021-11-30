@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import './user.dart';
+import './user_info.dart';
 
 class Account with ChangeNotifier {
   final String id;

@@ -65,11 +65,11 @@ class PostItem extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             // open post detail screen with post id
-                            Navigator.of(context).pushNamed(AccountScreen.routeName, arguments: post.user.uid);
+                            Navigator.of(context).pushNamed(AccountScreen.routeName, arguments: post.userInfo.uid);
                           },
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(
-                              post.user.avatarUrl,
+                              post.userInfo.avatarUrl,
                             ),
                           ),
                         ),
@@ -78,7 +78,7 @@ class PostItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.user.userName,
+                              post.userInfo.userName,
                               textAlign: TextAlign.start,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,

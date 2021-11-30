@@ -5,7 +5,7 @@ import './onboarding_model.dart';
 import 'steps_button.dart';
 
 class OnBoardingScreen extends StatefulWidget {
-  static const String roundName = 'OnBoardingScreen';
+  static const String routeName = 'OnBoardingScreen';
   const OnBoardingScreen({Key? key}) : super(key: key);
 
   @override

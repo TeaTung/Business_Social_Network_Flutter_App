@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
-
 class CompleteSignUpScreen extends StatelessWidget {
-  static const String routeName = '/sign_in';
+  static const String routeName = '/complete_sign_up';
 
   const CompleteSignUpScreen({Key? key}) : super(key: key);
 
@@ -13,15 +12,17 @@ class CompleteSignUpScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: const IconButton(
-          icon: Icon(
+        leading: IconButton(
+          icon: const Icon(
             Icons.arrow_back_ios,
             size: 20,
           ),
-          onPressed: null,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Sign Up',
         ),
       ),

@@ -1,11 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gender_picker/source/enums.dart';
+import 'package:test_fix/helpers/auth_services.dart';
 import 'form_error.dart';
 import 'orange_button.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:gender_picker/gender_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({Key? key}) : super(key: key);
@@ -17,10 +22,12 @@ class SignForm extends StatefulWidget {
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
-  late String name;
-  late DateTime? birthday;
-  late String nationality;
-
+  String name = '';
+  DateTime? birthday = DateTime.now();
+  String nationality = 'Vietnam';
+  String email = '';
+  String password = '';
+  String sex = '';
   late FocusNode birthdayFocusNode;
 
   void _onFocusChange() {
@@ -29,11 +36,15 @@ class _SignFormState extends State<SignForm> {
       DatePicker.showDatePicker(context,
           showTitleActions: true,
           minTime: DateTime(2018, 3, 5),
-          maxTime: DateTime(2021, 6, 7), onChanged: (date) {
-        print('change $date');
-      }, onConfirm: (date) {
-        print('confirm $date');
-      }, currentTime: DateTime.now(), locale: LocaleType.zh);
+          maxTime: DateTime(2021, 6, 7),
+          onChanged: (date) {
+            print('change $date');
+          },
+          onConfirm: (date) {
+            print('confirm $date');
+          },
+          currentTime: DateTime.now(),
+          locale: LocaleType.zh);
     }
   }
 
@@ -57,6 +68,12 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
+    final authInformation = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as Map;
+    email = authInformation['email'];
+    password = authInformation['password'];
     return Form(
       key: _formKey,
       child: Column(
@@ -71,7 +88,18 @@ class _SignFormState extends State<SignForm> {
           GenderPickerWithImage(
             showOtherGender: true,
             verticalAlignedText: true,
-            onChanged: null,
+            onChanged: (Gender? gender) {
+              print('gender');
+              if (gender! == Gender.Male){
+                sex = 'male';
+              }
+              else if (gender == Gender.Female){
+                sex = 'female';
+              }
+              else {
+                sex = 'other';
+              }
+            },
             equallyAligned: true,
             animationDuration: const Duration(milliseconds: 300),
             unSelectedGenderTextStyle: const TextStyle(
@@ -85,13 +113,28 @@ class _SignFormState extends State<SignForm> {
               fontSize: 18,
             ),
             size: 60,
+
           ),
           const SizedBox(height: 36),
           OrangeButton(
-            text: 'Continue',
+            text: 'Sign Up',
             onPress: () {
-              if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.validate();
+              if (errors.isEmpty) {
                 _formKey.currentState!.save();
+                context.read<AuthService>().signUp(email, password).then((
+                    value) async {
+                  User user = FirebaseAuth.instance.currentUser!;
+                  await FirebaseFirestore.instance.collection('users').doc(
+                      user.uid).set({
+                    'uid': user.uid,
+                    'email': user.email,
+                    'password': password,
+                    'name': name,
+                    'birthday': birthday,
+                    'gender': sex,
+                  });
+                });
               } else {}
             },
             isSolid: true,
@@ -106,6 +149,7 @@ class _SignFormState extends State<SignForm> {
     return TextFormField(
       onSaved: (newValue) => name = newValue!,
       onChanged: (value) {
+        name = value;
         if (validCharacters.hasMatch(value) &&
             errors.contains('Invalid characters in your name')) {
           setState(() {
@@ -115,7 +159,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       validator: (value) {
-        if (!validCharacters.hasMatch(value!)) {
+        if (validCharacters.hasMatch(value!)) {
           setState(() {
             errors.add('Invalid characters in your name');
           });
@@ -164,6 +208,7 @@ class _SignFormState extends State<SignForm> {
     return TextFormField(
       onSaved: (newValue) => nationality = newValue!,
       onChanged: (value) {
+        nationality = value;
         if (validCharacters.hasMatch(value) &&
             errors.contains('Invalid characters in your nationality')) {
           setState(() {
@@ -180,7 +225,6 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      obscureText: true,
       decoration: InputDecoration(
         hintText: 'Enter your nationality',
         labelText: 'Nationality',
@@ -223,8 +267,22 @@ class _SignFormState extends State<SignForm> {
       //focusNode: birthdayFocusNode,
       //onSaved: (newValue) => birthday = newValue!,
       controller: birthdayController,
-      onChanged: (value) {},
-      validator: (value) {},
+      onChanged: (value) {
+        if (value.isNotEmpty && errors.contains('Please enter your birthday')) {
+          setState(() {
+            errors.remove('Please enter your birthday');
+          });
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          setState(() {
+            errors.add('Please enter your birthday');
+          });
+        }
+        return null;
+      },
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());
 

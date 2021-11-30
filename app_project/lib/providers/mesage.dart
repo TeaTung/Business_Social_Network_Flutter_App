@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './user.dart';
+import './user_info.dart';
 import '../widgets/detail_message_item_belong_to_me.dart';
 
 class Message with ChangeNotifier {

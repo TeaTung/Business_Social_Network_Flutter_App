@@ -30,11 +30,11 @@ class DetailPostScreen extends StatelessWidget {
           // leadingWidth: 15,
           title: ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(post.user.avatarUrl),
+              backgroundImage: NetworkImage(post.userInfo.avatarUrl),
               radius: 20,
             ),
             title: Text(
-              post.user.userName,
+              post.userInfo.userName,
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -51,14 +51,14 @@ class DetailPostScreen extends StatelessWidget {
             children: [
               // fake data
               PostDetailScreenItem(
-                post.user.userName,
+                post.userInfo.userName,
                 'This is a very fucking longggggggggggggggggggggg description',
                 'https://picsum.photos/200/300',
               ),
               CommentField(
-                post.user.avatarUrl,
-                post.user.userName,
-                post.user.uid,
+                post.userInfo.avatarUrl,
+                post.userInfo.userName,
+                post.userInfo.uid,
               ),
               if (post.comments != null)
                 ListView.builder(
@@ -67,10 +67,10 @@ class DetailPostScreen extends StatelessWidget {
                   itemCount: listComment.length,
                   itemBuilder: (ctx, i) => CommentItem(
                     listComment.listComment[i].id,
-                    listComment.listComment[i].user.userName,
-                    listComment.listComment[i].user.avatarUrl,
+                    listComment.listComment[i].userInfo.userName,
+                    listComment.listComment[i].userInfo.avatarUrl,
                     listComment.listComment[i].userCommentText,
-                    userId == post.user.uid,
+                    userId == post.userInfo.uid,
                     listComment.listComment[i].date,
                   ),
 

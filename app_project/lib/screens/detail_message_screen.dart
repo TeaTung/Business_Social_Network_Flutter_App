@@ -6,7 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 import 'package:test_fix/providers/messages.dart';
-import 'package:test_fix/providers/user.dart';
+import 'package:test_fix/providers/user_info.dart';
 import 'package:test_fix/widgets/detail_messagee_item_not_belong_to_me.dart';
 import 'package:test_fix/widgets/detail_message_item_belong_to_me.dart';
 
@@ -17,7 +17,7 @@ class DetailMessageScreen extends StatelessWidget {
   final _controller = ScrollController();
   final _textInputControler = TextEditingController();
 
-  void sendMessage(Messages messages, User userMe, String userImTextingToId) {
+  void sendMessage(Messages messages, UserInfoLocal userMe, String userImTextingToId) {
     messages.sendMessage(
       _textInputControler.value.text,
       userMe.uid,
@@ -31,7 +31,7 @@ class DetailMessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userImTextingToId =
         ModalRoute.of(context)!.settings.arguments as String;
-    final userMe = Provider.of<User>(context);
+    final userMe = Provider.of<UserInfoLocal>(context);
 
     //get message depend in id
     final messageOver = Provider.of<Messages>(context);

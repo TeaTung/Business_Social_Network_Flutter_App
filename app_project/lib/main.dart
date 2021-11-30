@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,8 +8,10 @@ import 'package:provider/provider.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
-import 'package:test_fix/providers/user.dart';
+import 'package:test_fix/providers/user_info.dart';
 import 'package:test_fix/screens/account_screen.dart';
+import 'package:test_fix/screens/authentication/sign_up_screen/complete_sign_up_screen/complete_sign_up_screen.dart';
+import 'package:test_fix/screens/authentication/welcome_screen.dart';
 import 'package:test_fix/screens/list_post_screen.dart';
 import 'package:test_fix/widgets/follower_item.dart';
 import './navigators/bottom_navigator.dart';
@@ -27,10 +31,15 @@ import './screens/detail_business_post_screen.dart';
 import './widgets/overview_message_item.dart';
 import './screens/detail_message_screen.dart';
 import './screens/overview_message_screen.dart';
+import 'helpers/auth_services.dart';
+import 'screens/authentication/sigin_in_screen/sign_in_screen.dart';
+import 'screens/authentication/sign_up_screen/sign_up_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -43,6 +52,12 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<AuthService>().authStateChanges, initialData: null,
+        ),
         ChangeNotifierProvider.value(
           value: Comments(),
         ),
@@ -59,7 +74,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProvider.value(
-          value: User(
+          value: UserInfoLocal(
             uid: '123',
             userName: 'Nguyễn Dương Tùng',
             avatarUrl:
@@ -91,6 +106,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Business Social Network',
         theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            color: Colors.white,
+            elevation: 0,
+            systemOverlayStyle: SystemUiOverlayStyle.light,
+            iconTheme: IconThemeData(color: Colors.black),
+            titleTextStyle: TextStyle(color: Colors.black54, fontSize: 18, fontWeight: FontWeight.w500),
+          ),
           textTheme: const TextTheme(
             headline1: TextStyle(
               color: Colors.black,
@@ -111,7 +133,10 @@ class MyApp extends StatelessWidget {
           DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),
           AccountScreen.routeName: (ctx) => const AccountScreen(),
           OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
-          OnBoardingScreen.roundName: (ctx) => OnBoardingScreen(),
+          OnBoardingScreen.routeName: (ctx) => OnBoardingScreen(),
+          SignUpScreen.routeName: (ctx) => SignUpScreen(),
+          CompleteSignUpScreen.routeName: (ctx) => CompleteSignUpScreen(),
+          SignInScreen.routeName: (ctx) => SignInScreen(),
         },
       ),
     );
@@ -145,6 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: _buildBottomBar(),
     );
+    // return Scaffold(
+    //   backgroundColor: Colors.white,
+    //   body: WelcomeScreen(),
+    // );
   }
 
   int _currentIndex = 0;

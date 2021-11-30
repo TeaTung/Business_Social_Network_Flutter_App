@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/comments.dart';
 import '../providers/post.dart';
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 
 class CommentField extends StatefulWidget {
   final String userImageUrl;
@@ -94,7 +94,7 @@ class _CommentFieldState extends State<CommentField> {
                 listComment.addComment(
                   Comment(
                     id: DateTime.now().toString(),
-                    user: User(
+                    userInfo: UserInfoLocal(
                       uid: widget.uid,
                       userName: widget.userName,
                       avatarUrl: widget.userImageUrl,

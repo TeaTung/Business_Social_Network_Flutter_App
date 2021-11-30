@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_fix/screens/authentication/sign_up_screen/complete_sign_up_screen/complete_sign_up_screen.dart';
 import 'form_error.dart';
 import 'orange_button.dart';
 import 'package:email_validator/email_validator.dart';
+
 class SignForm extends StatefulWidget {
   const SignForm({Key? key}) : super(key: key);
 
@@ -13,10 +15,11 @@ class SignForm extends StatefulWidget {
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
-  late String email;
-  late String password;
-  late String confirmPassword;
+  String email = '';
+  String password = '';
+  String confirmPassword = '';
   bool rememberMe = false;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -34,8 +37,20 @@ class _SignFormState extends State<SignForm> {
           OrangeButton(
             text: 'Continue',
             onPress: () {
-              if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.validate();
+              if (errors.isEmpty) {
                 _formKey.currentState!.save();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CompleteSignUpScreen(),
+                    // Pass the arguments as part of the RouteSettings. The
+                    // DetailScreen reads the arguments from these settings.
+                    settings: RouteSettings(
+                      arguments: {'email': email, 'password': password},
+                    ),
+                  ),
+                );
               } else {}
             },
             isSolid: true,
@@ -117,11 +132,13 @@ class _SignFormState extends State<SignForm> {
     return TextFormField(
       onSaved: (newValue) => password = newValue!,
       onChanged: (value) {
+        password = value;
         if (value.isNotEmpty && errors.contains('Please enter your password')) {
           setState(() {
             errors.remove('Please enter your password');
           });
-        } else if (value.length > 8 &&
+        } else if (value.isNotEmpty &&
+            value.length >= 8 &&
             errors.contains('Your password is too short')) {
           setState(() {
             errors.remove('Your password is too short');
@@ -180,10 +197,12 @@ class _SignFormState extends State<SignForm> {
       ),
     );
   }
+
   TextFormField buildConfirmPasswordFormField() {
     return TextFormField(
       onSaved: (newValue) => password = newValue!,
       onChanged: (value) {
+        confirmPassword = value;
         if (value.isNotEmpty && errors.contains('Please enter your password')) {
           setState(() {
             errors.remove('Please enter your password');
@@ -192,11 +211,15 @@ class _SignFormState extends State<SignForm> {
           setState(() {
             errors.remove('Your confirm password is not matched');
           });
+        } else if (value.isNotEmpty &&
+            errors.contains('Please re-enter your password')) {
+          errors.remove('Please re-enter your password');
         }
         return;
       },
       validator: (value) {
-        if (value!.isEmpty && !errors.contains('Please re-enter your password')) {
+        if (value!.isEmpty &&
+            !errors.contains('Please re-enter your password')) {
           setState(() {
             errors.add('Please re-enter your password');
           });

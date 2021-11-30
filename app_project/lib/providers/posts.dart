@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../providers/post.dart';
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 
 //This class get every post relate to user to load to main screen
 class Posts with ChangeNotifier {
@@ -9,7 +9,7 @@ class Posts with ChangeNotifier {
     Post(
         postTime: DateTime.now(),
         id: "1",
-        user: User(
+        userInfo: UserInfoLocal(
           uid: 'id',
           userName: 'Bopy',
           avatarUrl:
@@ -24,7 +24,7 @@ class Posts with ChangeNotifier {
     Post(
         postTime: DateTime.now(),
         id: "1",
-        user: User(
+        userInfo: UserInfoLocal(
           uid: 'Hello world !!! This is a very long description in a post <3',
           userName: 'Bopy',
           avatarUrl:
@@ -38,7 +38,7 @@ class Posts with ChangeNotifier {
     Post(
         postTime: DateTime.now(),
         id: "1",
-        user: User(
+        userInfo: UserInfoLocal(
           uid: 'id',
           userName: 'Bopy',
           avatarUrl:

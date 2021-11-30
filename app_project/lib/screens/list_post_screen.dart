@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 
 import '../providers/post.dart';
 import '../providers/posts.dart';
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 import '../widgets/post_item.dart';
 
 class ListPostScreen extends StatelessWidget {
   Post p = Post(
       postTime: DateTime.now(),
       id: "1",
-      user: User(
+      userInfo: UserInfoLocal(
         uid: 'id',
         userName: 'Bopy',
         avatarUrl:
