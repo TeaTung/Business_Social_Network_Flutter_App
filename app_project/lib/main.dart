@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/SMS/rooms.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
@@ -123,6 +124,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return AuthWrapper();
+    return RoomsPage();
   }
 }
