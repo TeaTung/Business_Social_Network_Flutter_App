@@ -11,7 +11,9 @@ class SkipButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/welcome');
+            },
             child: const Text(
               'Skip',
               style: TextStyle(

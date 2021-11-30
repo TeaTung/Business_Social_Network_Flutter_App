@@ -53,7 +53,9 @@ class _StepsButtonState extends State<StepsButton> {
                     duration: const Duration(microseconds: 1000),
                     curve: Curves.easeInCirc,
                   );
-                } else {}
+                } else {
+                  Navigator.pushNamed(context, '/welcome');
+                }
               },
               child: Container(
                 width: 65,

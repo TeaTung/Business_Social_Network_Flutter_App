@@ -121,7 +121,7 @@ class _SignFormState extends State<SignForm> {
               _formKey.currentState!.validate();
               if (errors.isEmpty) {
                 _formKey.currentState!.save();
-                context.read<AuthService>().signUp(email, password).then((
+                context.read<AuthService>().signUpWithEmailAndPassword(email, password).then((
                     value) async {
                   User user = FirebaseAuth.instance.currentUser!;
                   await FirebaseFirestore.instance.collection('users').doc(

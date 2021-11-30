@@ -29,7 +29,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const SkipButton(),
+            SkipButton(),
             Expanded(
               child: PageView.builder(
                 controller: _controller,

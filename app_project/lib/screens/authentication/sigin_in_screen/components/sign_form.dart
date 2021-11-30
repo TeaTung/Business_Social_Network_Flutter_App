@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_fix/helpers/auth_services.dart';
 import 'form_error.dart';
 import 'orange_button.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:provider/provider.dart';
+
 class SignForm extends StatefulWidget {
   const SignForm({Key? key}) : super(key: key);
 
@@ -16,6 +19,7 @@ class _SignFormState extends State<SignForm> {
   late String email;
   late String password;
   bool rememberMe = false;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -33,7 +37,7 @@ class _SignFormState extends State<SignForm> {
                 value: rememberMe,
                 activeColor: const Color.fromRGBO(248, 145, 71, 1),
                 onChanged: (value) {
-                  setState((){
+                  setState(() {
                     rememberMe = value!;
                   });
                 },
@@ -53,9 +57,19 @@ class _SignFormState extends State<SignForm> {
           OrangeButton(
             text: 'Sign In',
             onPress: () {
-              if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.validate();
+              if (errors.isEmpty) {
                 _formKey.currentState!.save();
-              } else {}
+                context
+                    .read<AuthService>()
+                    .signInWithEmailAndPassword(email, password)
+                    .then((value) async {
+                  if (value.isEmpty) {
+                  } else {
+                    Navigator.pushNamed(context, '/auth_wrapper');
+                  }
+                });
+              }
             },
             isSolid: true,
           ),
@@ -69,6 +83,7 @@ class _SignFormState extends State<SignForm> {
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue!,
       onChanged: (value) {
+        email = value;
         if (value.isNotEmpty && errors.contains('Please enter your email')) {
           setState(() {
             errors.remove('Please enter your email');
@@ -136,6 +151,7 @@ class _SignFormState extends State<SignForm> {
     return TextFormField(
       onSaved: (newValue) => password = newValue!,
       onChanged: (value) {
+        password = value;
         if (value.isNotEmpty && errors.contains('Please enter your password')) {
           setState(() {
             errors.remove('Please enter your password');
