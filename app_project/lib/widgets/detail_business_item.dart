@@ -4,15 +4,17 @@ import 'package:provider/provider.dart';
 import './post_detail_screen_item.dart';
 import './process_item.dart';
 
-import '../providers/round.dart';
+import '../providers/process.dart';
 
 class DetailBusinessItem extends StatelessWidget {
+  const DetailBusinessItem({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     //When user click apply job button
     void applyJob() {}
 
-    final listRound = Provider.of<Rounds>(context).listItem;
+    final process = Provider.of<Process>(context);
     return Column(
       children: [
         PostDetailScreenItem(
@@ -26,9 +28,7 @@ class DetailBusinessItem extends StatelessWidget {
           child: Column(
             children: [
               ProcessItem(
-                companyName: 'VND',
-                position: "Director",
-                listItem: listRound,
+                process: process,
               ),
               SizedBox(
                 width: 320,

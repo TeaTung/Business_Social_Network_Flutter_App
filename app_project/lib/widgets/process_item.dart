@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/round.dart';
+import '../screens/process_detail_screen.dart';
+import '../providers/process.dart';
 
 class ProcessItem extends StatelessWidget {
-  final String companyName;
-  final String position;
-  final List<Round> listItem;
+  final Process process;
 
-  const ProcessItem({
-    Key? key,
-    required this.companyName,
-    required this.position,
-    required this.listItem,
-  }) : super(key: key);
+  const ProcessItem({Key? key, required this.process,})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,37 +88,51 @@ class ProcessItem extends StatelessWidget {
                 children: [
                   Text(
                     listItem[index].roundName,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                  const SizedBox(
-                    width: 10
-                  ),
+                  const SizedBox(width: 10),
                   Text(
                     DateFormat('d MMM y').format(listItem[index].deadline),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey,
-                        ),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 3,),
+              const SizedBox(
+                height: 3,
+              ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.7,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.7,
                 child: Text(
                   listItem[index].description,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontSize: 14,
-                        color: const Color.fromRGBO(128, 128, 128, 1),
-                        fontWeight: FontWeight.w400,
-                      ),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(
+                    fontSize: 14,
+                    color: const Color.fromRGBO(128, 128, 128, 1),
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-
             ],
           ),
         ],
@@ -131,11 +141,20 @@ class ProcessItem extends StatelessWidget {
 
     return InkWell(
       // Tap to open detail process
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ProcessDetailScreen(
+                  process: process,
+                ),
+          ),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.all(15),
         width: double.infinity,
-
         child: Column(
           children: [
             // title
@@ -145,8 +164,9 @@ class ProcessItem extends StatelessWidget {
                 const Icon(Icons.business),
                 const SizedBox(width: 8),
                 Text(
-                  companyName,
-                  style: Theme.of(context)
+                  process.companyName,
+                  style: Theme
+                      .of(context)
                       .textTheme
                       .headline1!
                       .copyWith(fontSize: 20),
@@ -155,21 +175,26 @@ class ProcessItem extends StatelessWidget {
                 const Icon(Icons.work_outline),
                 const SizedBox(width: 8),
                 Text(
-                  position,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
+                  process.position,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 14),
             //Round
             ListView.builder(
-              itemCount: listItem.length,
+              itemCount: process.listRound.length,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemBuilder: (context, index) => listRound(listItem, index),
+              itemBuilder: (context, index) =>
+                  listRound(process.listRound, index),
             )
           ],
         ),
