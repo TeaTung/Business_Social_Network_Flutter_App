@@ -11,6 +11,7 @@ class ProcessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listProcess = Provider.of<Processes>(context).items;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -41,9 +42,7 @@ class ProcessScreen extends StatelessWidget {
               border: Border.all(color: Colors.grey, width: 0.5),
             ),
             child: ProcessItem(
-              position: listProcess[index].position,
-              companyName: listProcess[index].companyName,
-              listItem: listProcess[index].listRound,
+              process: listProcess[index],
             ),
           ),
           separatorBuilder: (BuildContext context, int index) =>
