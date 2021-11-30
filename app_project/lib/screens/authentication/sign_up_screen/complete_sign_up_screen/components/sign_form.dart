@@ -89,8 +89,7 @@ class _SignFormState extends State<SignForm> {
             showOtherGender: true,
             verticalAlignedText: true,
             onChanged: (Gender? gender) {
-              print('gender');
-              if (gender! == Gender.Male){
+              if (gender == Gender.Male){
                 sex = 'male';
               }
               else if (gender == Gender.Female){

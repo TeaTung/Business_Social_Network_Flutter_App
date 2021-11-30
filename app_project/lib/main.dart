@@ -151,29 +151,29 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: controller,
-        children: [
-          ListPostScreen(),
-          ProcessScreen(),
-          OverviewMessageScreen(),
-          NotificationScreen(),
-          // FollowerItem(),
-          AccountScreen(),
-        ],
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-      bottomNavigationBar: _buildBottomBar(),
-    );
     // return Scaffold(
-    //   backgroundColor: Colors.white,
-    //   body: WelcomeScreen(),
+    //   body: PageView(
+    //     controller: controller,
+    //     children: [
+    //       ListPostScreen(),
+    //       ProcessScreen(),
+    //       OverviewMessageScreen(),
+    //       NotificationScreen(),
+    //       // FollowerItem(),
+    //       AccountScreen(),
+    //     ],
+    //     onPageChanged: (index) {
+    //       setState(() {
+    //         _currentIndex = index;
+    //       });
+    //     },
+    //   ),
+    //   bottomNavigationBar: _buildBottomBar(),
     // );
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: WelcomeScreen(),
+    );
   }
 
   int _currentIndex = 0;
