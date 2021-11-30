@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 class FollowerItem extends StatefulWidget {
   const FollowerItem({Key? key}) : super(key: key);
 
@@ -15,7 +15,7 @@ class _FollowerItemState extends State<FollowerItem> {
   @override
   Widget build(BuildContext context) {
     Account account = Provider.of<Account>(context);
-    User user = Provider.of<User>(context);
+    UserInfoLocal user = Provider.of<UserInfoLocal>(context);
 
     return Wrap(
       children: [

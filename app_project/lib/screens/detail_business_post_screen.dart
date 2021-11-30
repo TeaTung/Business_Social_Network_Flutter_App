@@ -33,11 +33,11 @@ class DetailBusinessPostScreen extends StatelessWidget {
           leadingWidth: 15,
           title: ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(post.user.avatarUrl),
+              backgroundImage: NetworkImage(post.userInfo.avatarUrl),
               radius: 20,
             ),
             title: Text(
-              post.user.userName,
+              post.userInfo.userName,
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -65,9 +65,9 @@ class DetailBusinessPostScreen extends StatelessWidget {
               DetailBusinessItem(),
               const SizedBox(height: 5),
               CommentField(
-                post.user.avatarUrl,
-                post.user.userName,
-                post.user.uid,
+                post.userInfo.avatarUrl,
+                post.userInfo.userName,
+                post.userInfo.uid,
               ),
               //fake comment
               if (post.comments != null)
@@ -77,10 +77,10 @@ class DetailBusinessPostScreen extends StatelessWidget {
                   itemCount: listComment.length,
                   itemBuilder: (ctx, i) => CommentItem(
                     listComment.listComment[i].id,
-                    listComment.listComment[i].user.userName,
-                    listComment.listComment[i].user.avatarUrl,
+                    listComment.listComment[i].userInfo.userName,
+                    listComment.listComment[i].userInfo.avatarUrl,
                     listComment.listComment[i].userCommentText,
-                    userId == post.user.uid,
+                    userId == post.userInfo.uid,
                     listComment.listComment[i].date,
                   ),
                 ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/account.dart';
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 
 class ChangeInformation extends StatefulWidget {
   static const routeName = '/ChangeInformation';
@@ -19,7 +19,7 @@ class _ChangeInformationState extends State<ChangeInformation> {
   @override
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserInfoLocal>(context);
 
 
     Gender? _gender;

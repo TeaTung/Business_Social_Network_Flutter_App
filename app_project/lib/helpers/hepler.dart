@@ -1,7 +1,7 @@
 import 'package:test_fix/providers/notification.dart';
 import 'package:test_fix/providers/post.dart';
 
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 
 //
 class Hepler {
@@ -19,7 +19,7 @@ class Hepler {
     Post p = Post(
       postTime: mapJson['postTime'].toDate(),
       id: mapJson['id'],
-      user: User(uid: "1", userName: "Tran Duc Tam"),
+      userInfo: UserInfoLocal(uid: "1", userName: "Tran Duc Tam"),
       /* uid: mapJson['uid'],
       userAvtUrl: mapJson['userImageUrl'],
       userName: mapJson['userName'],*/

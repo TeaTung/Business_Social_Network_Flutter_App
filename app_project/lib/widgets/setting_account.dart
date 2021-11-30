@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:test_fix/providers/user.dart';
+import 'package:test_fix/providers/user_info.dart';
 
 import './change_information_item.dart';
 import '../providers/account.dart';
@@ -15,7 +15,7 @@ class SettingAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserInfoLocal>(context);
     Widget takePicture() {
       return FractionallySizedBox(
         heightFactor: 0.15,

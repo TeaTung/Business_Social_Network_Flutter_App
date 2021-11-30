@@ -49,7 +49,9 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: OrangeButton(
                 text: 'Sign In',
-                onPress: () {},
+                onPress: () {
+                  Navigator.pushNamed(context, '/sign_in');
+                },
                 isSolid: true,
               ),
             ),
@@ -60,7 +62,9 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: OrangeButton(
                 text: 'Sign Up',
-                onPress: () {},
+                onPress: () {
+                  Navigator.pushNamed(context, '/sign_up');
+                },
                 isSolid: false,
               ),
             ),

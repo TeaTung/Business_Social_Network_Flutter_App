@@ -13,12 +13,12 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: const IconButton(
+        leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             size: 20,
           ),
-          onPressed: null,
+          onPressed: () {Navigator.pop(context);},
         ),
         centerTitle: true,
         title: const Text(

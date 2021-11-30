@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class User with ChangeNotifier{
+class UserInfoLocal with ChangeNotifier{
   final String uid;
   String userName;
   String avatarUrl;
@@ -23,7 +23,7 @@ class User with ChangeNotifier{
     notifyListeners();
   }
 
-  User(
+  UserInfoLocal(
       {required this.uid,
       required this.userName,
       this.avatarUrl =

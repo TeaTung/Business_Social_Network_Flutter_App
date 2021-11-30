@@ -8,7 +8,7 @@ import 'package:test_fix/widgets/setting_account.dart';
 
 import '../providers/account.dart';
 import '../providers/posts.dart';
-import '../providers/user.dart';
+import '../providers/user_info.dart';
 
 import '../widgets/avatar_cover_photo_item.dart';
 import '../widgets/post_item.dart';
@@ -22,7 +22,7 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context);
     final listPost = Provider.of<Posts>(context);
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserInfoLocal>(context);
     final _controller = ScrollController();
 
     //This is user id

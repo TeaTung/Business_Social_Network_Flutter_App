@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 
-import './user.dart';
+import './user_info.dart';
 
 class Comment with ChangeNotifier {
   final String id;
-  final User user;
+  final UserInfoLocal userInfo;
   final String userCommentText;
   final int numberOfLike;
   final DateTime date;
 
   Comment({
     required this.id,
-    required this.user,
+    required this.userInfo,
     required this.userCommentText,
     required this.numberOfLike,
     required this.date,
@@ -25,7 +25,7 @@ class Comments with ChangeNotifier {
       id: 'id',
       userCommentText: 'Comment neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
       date: DateTime.now(),
-      user: User(
+      userInfo: UserInfoLocal(
         uid: 'as',
         userName: 'Nguyễn Võ Đức Thắng',
         avatarUrl: 'https://picsum.photos/200/300.jpg',
@@ -36,7 +36,7 @@ class Comments with ChangeNotifier {
       id: 'id',
       userCommentText: 'Comment ne',
       date: DateTime.now(),
-      user: User(
+      userInfo: UserInfoLocal(
         uid: 'as',
         userName: 'Nguyễn Võ Đức Thắng',
         avatarUrl: 'https://picsum.photos/200/300.jpg',

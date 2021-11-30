@@ -55,8 +55,8 @@ class Body extends StatelessWidget {
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Don\'t have an account? ',
                     style: TextStyle(
                       color: Colors.black54,
@@ -64,12 +64,17 @@ class Body extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: Color.fromRGBO(248, 145, 71, 1),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/sign_up');
+                    },
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        color: Color.fromRGBO(248, 145, 71, 1),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ],
