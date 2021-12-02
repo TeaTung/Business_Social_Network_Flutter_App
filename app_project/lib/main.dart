@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/providers/user_info.dart';
+import 'package:test_fix/screens/account_screen.dart';
 import 'package:test_fix/screens/auth_wrapper.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
@@ -44,22 +46,20 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Account(
-            id: 'id',
-            uid: 'uid',
-            quote: 'This is just long quote',
-            coverPhotoUrl:
-                'https://elead.com.vn/wp-content/uploads/2020/04/13624171783_9f287bafdb_o.jpg',
+            id: '',
+            uid: '',
+            quote: '',
+            coverPhotoUrl: '',
             birthDate: DateTime.now(),
-            nationality: 'United States',
-            gender: 'Male',
+            nationality: '',
+            gender: '',
           ),
         ),
         ChangeNotifierProvider.value(
           value: UserInfoLocal(
-            uid: '123',
-            userName: 'Nguyễn Dương Tùng',
-            avatarUrl:
-                'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1',
+            uid: '',
+            userName: '',
+            avatarUrl:'',
           ),
         ),
         ChangeNotifierProvider(
@@ -121,8 +121,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
-    return AuthWrapper();
+    return const AuthWrapper();
   }
 }

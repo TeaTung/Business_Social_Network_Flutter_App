@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,55 +19,114 @@ enum Gender { male, female }
 class _ChangeInformationState extends State<ChangeInformation> {
   @override
   Widget build(BuildContext context) {
-    final account = Provider.of<Account>(context);
-    final user = Provider.of<UserInfoLocal>(context);
+    final _formKey = GlobalKey<FormState>();
 
+    late String name;
+    late String nationality;
+    late String quote;
+    late String gender;
+    late DateTime birthDate;
 
-    Gender? _gender;
-    var userName = user.getUserName;
-    var nationality = account.getNationality;
-    var quote = account.getQuote;
-    DateTime birthDate = account.getBirthDate;
+    String checkText = '';
 
-    if (account.getGender == 'Male') {
-      _gender = Gender.male;
-    } else {
-      _gender = Gender.female;
+    OutlineInputBorder myInputBorder() {
+      return const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(
+            color: Color.fromRGBO(248, 145, 71, 1),
+            width: 1.5,
+          ));
     }
-    final _userNameController = TextEditingController();
-    _userNameController.text = userName;
-    final _nationalityController = TextEditingController();
-    _nationalityController.text = nationality;
-    final _quoteController = TextEditingController();
-    _quoteController.text = quote;
-    _pickedDate() async {
-      DateTime? date = await showDatePicker(
-        context: context,
-        firstDate: DateTime(DateTime.now().year - 100),
-        lastDate: DateTime(DateTime.now().year + 1),
-        initialDate: birthDate,
+
+    OutlineInputBorder myFocusBorder() {
+      return const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderSide: BorderSide(
+            color: Colors.black12,
+            width: 1.5,
+          ));
+    }
+
+    Widget nameTF () {
+      return TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Name',
+          labelStyle: const  TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+          border: myInputBorder(),
+          enabledBorder: myInputBorder(),
+          focusedBorder: myFocusBorder(),
+          prefixIcon:const  Icon(Icons.person_outline_outlined,size: 30,),
+        ),
+        textCapitalization: TextCapitalization.words,
+        onChanged: (value) {
+          name = value;
+          print(name);
+        },
       );
-      if (date != null) {
-        setState(() {
-          birthDate = date;
-        });
-      }
-      account.setBirthDate(birthDate);
+
     }
+
+    Widget nationalityTF () {
+      return TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Nationality',
+          labelStyle: const  TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+          border: myInputBorder(),
+          enabledBorder: myInputBorder(),
+          focusedBorder: myFocusBorder(),
+          prefixIcon:const  Icon(Icons.person_outline_outlined,size: 30,),
+        ),
+        textCapitalization: TextCapitalization.words,
+        onChanged: (value) {
+          name = value;
+          print(name);
+        },
+      );
+
+    }
+
+    Widget quoteTF () {
+      return TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Quote',
+          labelStyle: const  TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+          border: myInputBorder(),
+          enabledBorder: myInputBorder(),
+          focusedBorder: myFocusBorder(),
+          prefixIcon:const  Icon(EvaIcons.pin,size: 30,),
+        ),
+        textCapitalization: TextCapitalization.sentences,
+        onChanged: (value) {
+          name = value;
+          print(name);
+        },
+      );
+
+    }
+
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: const Color.fromRGBO(248, 145, 71, 1),
           title: Text(
             'Change information',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.white),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           bottom: PreferredSize(
@@ -79,134 +139,39 @@ class _ChangeInformationState extends State<ChangeInformation> {
           actions: [
             IconButton(
               onPressed: () {
-                if (userName.isNotEmpty && nationality.isNotEmpty) {
-                  user.setUserName(userName);
-                  account.setNationality(nationality);
-                  account.setQuote(quote);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Save Successfully !')));
-                  Navigator.of(context).pop();
-                  return;
-                }
+                // if (userName.isNotEmpty && nationality.isNotEmpty) {
+                //   user.setUserName(userName);
+                //   account.setNationality(nationality);
+                //   account.setQuote(quote);
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //       const SnackBar(content: Text('Save Successfully !')));
+                //   Navigator.of(context).pop();
+                //   return;
+                // }
+                print(checkText);
               },
               icon: const Icon(
                 Icons.save_rounded,
-                color: Colors.black,
+                color: Colors.white,
               ),
             )
           ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              TextField(
-                controller: _userNameController,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                ),
-                onChanged: (value) {
-                  userName = value;
-                },
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _nationalityController,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Nationality',
-                ),
-                onChanged: (value) {
-                  nationality = value;
-                },
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _quoteController,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Quote',
-                  // border: OutlineInputBorder(),
-                ),
-                onChanged: (value) {
-                  quote = value;
-                },
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Text(
-                    'Birth Date:  ',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                  ),
-                  Text(
-                    '${birthDate.day}/${birthDate.month}/${birthDate.year}',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                  ),
-                  IconButton(
-                    onPressed: _pickedDate,
-                    icon: const Icon(Icons.drive_file_rename_outline),
-                  ),
-                ],
-              ),
-              const Divider(
-                thickness: 0.7,
-                color: Color.fromRGBO(128, 128, 128, 1),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Gender:  ',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                  ),
-                  Radio<Gender>(
-                    value: Gender.male,
-                    groupValue: _gender,
-                    onChanged: (Gender? value) {
-                      setState(() {
-                        account.setGender('Male');
-                      });
-                    },
-                  ),
-                  Text(
-                    'Male',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                  ),
-                  Radio<Gender>(
-                    value: Gender.female,
-                    groupValue: _gender,
-                    onChanged: (Gender? value) {
-                      setState(() {
-                        account.setGender('Female');
-                      });
-                    },
-                  ),
-                  Text(
-                    'Female',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                  ),
-                ],
-              )
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column (
+              children: [
+                nameTF(),
+                const SizedBox(height: 15),
+                nationalityTF(),
+                const SizedBox(height: 15),
+                quoteTF(),
+                const SizedBox(height: 15),
+
+              ],
+            ),
           ),
         ),
       ),

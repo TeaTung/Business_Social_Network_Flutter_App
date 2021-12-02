@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import './user_info.dart';
@@ -29,6 +31,25 @@ class Account with ChangeNotifier {
     this.uidFollowing,
   });
 
+  void getMyAccount(String myId) async {
+    print('day la id cua toi' + myId);
+    print('set my account run');
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(myId)
+        .get()
+        .then((value) {
+      print(value['gender']);
+      gender = value['gender'];
+      quote = value['quote'];
+      birthDate = value['birhtday'];
+      nationality = value['nationality'];
+      coverPhotoUrl = value['coverphotourl'];
+    });
+    // notifyListeners();
+    print('finish my account run');
+  }
+
   String get getNationality {
     return nationality;
   }
@@ -44,7 +65,6 @@ class Account with ChangeNotifier {
   DateTime get getBirthDate {
     return birthDate;
   }
-
 
   String get getCoverPhotoUrl {
     return coverPhotoUrl;
@@ -82,6 +102,4 @@ class Account with ChangeNotifier {
       return 0;
     }
   }
-
-
 }

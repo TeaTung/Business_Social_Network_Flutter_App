@@ -50,7 +50,7 @@ class _FollowerItemState extends State<FollowerItem> {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        account.getGender,
+                        account.gender,
                         style: const TextStyle(
                           fontSize: 15,
                         ),

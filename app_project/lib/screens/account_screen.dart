@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -20,13 +22,14 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final account = Provider.of<Account>(context);
-    final listPost = Provider.of<Posts>(context);
-    final user = Provider.of<UserInfoLocal>(context);
-    final _controller = ScrollController();
+    final id = FirebaseAuth.instance.currentUser?.uid.toString();
+    final myAccount = Provider.of<Account>(context);
+    myAccount.getMyAccount(id as String);
+    print('Day la gender ne' + myAccount.gender);
+    final myUser = Provider.of<UserInfoLocal>(context);
 
-    //This is user id
-    final id = ModalRoute.of(context)!.settings.arguments;
+    final listPost = Provider.of<Posts>(context);
+    final _controller = ScrollController();
 
     Widget detailInformation(
         Icon icon, String title, String detail, VoidCallback? func) {
@@ -79,7 +82,7 @@ class AccountScreen extends StatelessWidget {
               size: 30,
             ),
             'Name',
-            user.userName,
+            myUser.userName,
             null,
           ),
           detailInformation(
@@ -89,7 +92,7 @@ class AccountScreen extends StatelessWidget {
               size: 30,
             ),
             'Followers',
-            account.followersCount().toString() + ' Followers',
+            myAccount.followersCount().toString() + ' Followers',
             null,
           ),
           detailInformation(
@@ -99,7 +102,7 @@ class AccountScreen extends StatelessWidget {
               size: 30,
             ),
             'Birth Date',
-            DateFormat('d MMM y').format(account.birthDate),
+            DateFormat('d MMM y').format(myAccount.birthDate),
             null,
           ),
           detailInformation(
@@ -109,7 +112,7 @@ class AccountScreen extends StatelessWidget {
               size: 30,
             ),
             'Gender',
-            account.gender,
+            myAccount.gender,
             null,
           ),
           detailInformation(
@@ -119,7 +122,7 @@ class AccountScreen extends StatelessWidget {
               size: 30,
             ),
             'Nationality',
-            account.nationality,
+            myAccount.nationality,
             null,
           ),
           const SizedBox(height: 6),
@@ -136,7 +139,7 @@ class AccountScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          user.userName,
+          myUser.userName,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black,
@@ -150,8 +153,10 @@ class AccountScreen extends StatelessWidget {
             ? null
             : IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
+                onPressed: () {
+                  // Navigator.of(context).pop();
+                  print(myAccount.coverPhotoUrl);
+                }),
         bottom: PreferredSize(
           child: Container(
             color: Colors.grey,
@@ -161,13 +166,12 @@ class AccountScreen extends StatelessWidget {
         ),
         actions: [
           // check is my uid
-          if (id == null)
-            IconButton(
-              icon: const Icon(Icons.settings, color: Colors.black),
-              onPressed: () {
-                Navigator.of(context).pushNamed(SettingAccount.routeName);
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingAccount.routeName);
+            },
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -178,35 +182,34 @@ class AccountScreen extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
-                  AvatarCoverPhoto(
-                    user.userName,
-                    user.avatarUrl,
-                    account.coverPhotoUrl,
-                    account.quote,
-                  ),
+                  // AvatarCoverPhoto(
+                  //   myUser.userName,
+                  //   myUser.avatarUrl,
+                  //   myAccount.coverPhotoUrl,
+                  //   myAccount.quote,
+                  // ),
                   //Check if id isn't my id, we can follow him
-                  if (id != null)
-                    Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 7,
-                        horizontal: 17,
-                      ),
-                      height: 35,
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(7)),
-                      ),
-                      child: const Text(
-                        "Follow",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Helvetica',
-                          fontWeight: FontWeight.w400,
-                        ),
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 7,
+                      horizontal: 17,
+                    ),
+                    height: 35,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                    ),
+                    child: const Text(
+                      "Follow",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Helvetica',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
+                  ),
                   const SizedBox(height: 4),
                   const Divider(thickness: 1),
                   //user information
