@@ -26,7 +26,7 @@ class AccountScreen extends StatelessWidget {
     final myAccount = Provider.of<Account>(context);
     myAccount.getMyAccount(id as String);
     print('Day la gender ne' + myAccount.gender);
-    final myUser = Provider.of<UserInfoLocal>(context);
+    final myUser = Provider.of<UserInfoLocal>(context, listen: false);
 
     final listPost = Provider.of<Posts>(context);
     final _controller = ScrollController();

@@ -39,14 +39,14 @@ class Account with ChangeNotifier {
         .doc(myId)
         .get()
         .then((value) {
-      print(value['gender']);
       gender = value['gender'];
       quote = value['quote'];
-      birthDate = value['birhtday'];
+      birthDate = (value['birthday'].toDate());
       nationality = value['nationality'];
       coverPhotoUrl = value['coverphotourl'];
+      print(quote);
     });
-    // notifyListeners();
+    notifyListeners();
     print('finish my account run');
   }
 
