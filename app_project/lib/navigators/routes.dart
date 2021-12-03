@@ -14,7 +14,6 @@ import 'package:test_fix/widgets/overview_message_item.dart';
 import 'package:test_fix/widgets/setting_account.dart';
 
 var routes = <String, WidgetBuilder>{
-  SettingAccount.routeName: (ctx) => const SettingAccount(),
   ChangeInformation.routeName: (ctx) => const ChangeInformation(),
   DetailBusinessPostScreen.routeName: (ctx) => const DetailBusinessPostScreen(),
   DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),

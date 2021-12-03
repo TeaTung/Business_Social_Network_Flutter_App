@@ -5,13 +5,15 @@ import 'package:flutter/foundation.dart';
 import './user_info.dart';
 
 class Account with ChangeNotifier {
-  final String id;
-  final String uid;
+  String id;
+  String uid;
   String quote;
   String coverPhotoUrl;
   DateTime birthDate;
   String gender;
   String nationality;
+  String userName;
+  String avatarUrl;
 
   //users who this account is following
   List<String>? uidFollowing;
@@ -19,35 +21,46 @@ class Account with ChangeNotifier {
   //users who is following this account
   List<String>? uidFollowers;
 
-  Account({
-    required this.id,
-    required this.uid,
-    required this.quote,
-    this.coverPhotoUrl = '',
-    required this.birthDate,
-    required this.nationality,
-    required this.gender,
-    this.uidFollowers,
-    this.uidFollowing,
-  });
+  Account(
+      {required this.id,
+      required this.uid,
+      required this.quote,
+      this.coverPhotoUrl = '',
+      required this.birthDate,
+      required this.nationality,
+      required this.gender,
+      this.uidFollowers,
+      this.uidFollowing,
+      required this.userName,
+      this.avatarUrl = ''});
 
   void getMyAccount(String myId) async {
-    print('day la id cua toi' + myId);
     print('set my account run');
     await FirebaseFirestore.instance
         .collection("users")
         .doc(myId)
         .get()
         .then((value) {
+      id = myId;
+      uid = myId;
       gender = value['gender'];
       quote = value['quote'];
       birthDate = (value['birthday'].toDate());
       nationality = value['nationality'];
       coverPhotoUrl = value['coverphotourl'];
-      print(quote);
+      userName = value['name'];
+      avatarUrl = value['avatarUrl'];
     });
     notifyListeners();
-    print('finish my account run');
+    print('finish my account');
+  }
+
+  String get getAvatarUrl {
+    return avatarUrl;
+  }
+
+  String get getUserName {
+    return userName;
   }
 
   String get getNationality {
@@ -68,6 +81,16 @@ class Account with ChangeNotifier {
 
   String get getCoverPhotoUrl {
     return coverPhotoUrl;
+  }
+
+  void setAvatarUrl(String newAvatarUrl) {
+    avatarUrl = newAvatarUrl;
+    notifyListeners();
+  }
+
+  void setUserName(String newUserName) {
+    userName = newUserName;
+    notifyListeners();
   }
 
   void setNationality(String newNationality) {

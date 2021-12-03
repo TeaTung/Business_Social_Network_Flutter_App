@@ -8,13 +8,11 @@ import 'package:test_fix/widgets/title_change_in_setting_item.dart';
 
 class UserInformationInSettingItem extends StatelessWidget {
   final Account account;
-  final UserInfoLocal user;
   final VoidCallback changeInformation;
 
   const UserInformationInSettingItem({
     Key? key,
     required this.account,
-    required this.user,
     required this.changeInformation,
   }) : super(key: key);
 
@@ -77,7 +75,7 @@ class UserInformationInSettingItem extends StatelessWidget {
                 size: 30,
               ),
               'Name',
-              user.userName,
+              account.userName,
             ),
             const SizedBox(height: 5),
             detailInformation(

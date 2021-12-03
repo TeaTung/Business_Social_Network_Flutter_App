@@ -11,17 +11,15 @@ import '../providers/account.dart';
 import 'cover_photo_in_setting_item.dart';
 
 class SettingAccount extends StatelessWidget {
-  static const routeName = '/SettingAccount';
+  final Account account;
 
-  const SettingAccount({Key? key}) : super(key: key);
+  const SettingAccount({
+    Key? key,
+    required this.account,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final account = Provider.of<Account>(context);
-    final user = Provider.of<UserInfoLocal>(context);
-
-    print(account.coverPhotoUrl);
-
     Widget takePicture() {
       return FractionallySizedBox(
         heightFactor: 0.15,
@@ -92,10 +90,10 @@ class SettingAccount extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          user.userName,
+          account.userName,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            color: const Color.fromRGBO(248, 145, 71, 1),
+            color: Color.fromRGBO(248, 145, 71, 1),
             fontFamily: 'Helvetica',
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -117,7 +115,7 @@ class SettingAccount extends StatelessWidget {
         child: Column(
           children: [
             AvatarInSettingItem(
-              avatarUrl: user.avatarUrl,
+              avatarUrl: account.avatarUrl,
               changePicture: handlerPicture,
             ),
             const SizedBox(height: 10),
@@ -128,7 +126,6 @@ class SettingAccount extends StatelessWidget {
             const SizedBox(height: 10),
             UserInformationInSettingItem(
               account: account,
-              user: user,
               changeInformation: handlerInformation,
             )
           ],
