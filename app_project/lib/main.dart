@@ -15,6 +15,8 @@ import './providers/round.dart';
 import './providers/posts.dart';
 import './providers/process.dart';
 import 'helpers/auth_services.dart';
+import 'helpers/facebook_auth_controller.dart';
+import 'helpers/google_auth_controller.dart';
 import 'navigators/routes.dart';
 
 void main() async {
@@ -82,6 +84,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Messages(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => GoogleAuthController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FacebookAuthController(),
         ),
       ],
       child: MaterialApp(

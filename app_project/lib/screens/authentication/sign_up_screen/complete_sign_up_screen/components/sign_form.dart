@@ -133,8 +133,9 @@ class _SignFormState extends State<SignForm> {
                     'birthday': birthday,
                     'gender': sex,
                   });
+                  Navigator.pushNamed(context, '/auth_wrapper');
                 });
-              } else {}
+              }
             },
             isSolid: true,
           ),
