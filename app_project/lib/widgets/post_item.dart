@@ -37,23 +37,18 @@ class PostItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        postProvider.imageUrl != null
-                            ? CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    postProvider.imageUrl.toString()),
-                              )
-                            : Image.network(
-                                "https://picsum.photos/200/300",
-                                height: 45,
-                                width: 45,
-                                fit: BoxFit.cover,
-                              ),
+                        // postProvider.imageUrl != null
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              postProvider.userInfoLocal!.avatarUrl.toString()),
+                        ),
+
                         const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              postProvider.content,
+                              postProvider.userInfoLocal!.userName,
                               textAlign: TextAlign.start,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -353,7 +348,7 @@ class CommentPostButton extends StatelessWidget {
                 DetailPostScreen.routeName,
                 arguments: postProvider,
               );
-              return Future.value(true);
+              return Future.value(liked);
             },
             isLiked: postProvider.isCommentAlready(),
             circleColor: const CircleColor(
@@ -417,12 +412,11 @@ class CommentPostButton extends StatelessWidget {
               );
             } else {
               showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
                   context: context,
                   builder: (builder) {
                     return Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
+                      decoration: const BoxDecoration(),
                       child: ChangeNotifierProvider(
                         create: (BuildContext context) => CommentsProvider(),
                         child: ListComments(

@@ -12,12 +12,12 @@ class UserInfoLocal with ChangeNotifier {
     return types.User(id: uid, firstName: userName, imageUrl: avatarUrl);
   }
 
-  static UserInfoLocal fromFirebase() {
+  static Future<UserInfoLocal> fromFirebase() async {
     DocumentReference users = FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseChatCore.instance.firebaseUser!.uid);
     UserInfoLocal userInfoLocal = UserInfoLocal(uid: '', userName: '');
-    users.get().then((value) {
+    await users.get().then((value) {
       Map<String, dynamic> data = value.data() as Map<String, dynamic>;
 
       userInfoLocal = UserInfoLocal(

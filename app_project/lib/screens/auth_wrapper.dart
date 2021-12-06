@@ -47,6 +47,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
       body: PageView(
         controller: controller,
         children: [
+          RoomsPage(),
           ListPostScreen(),
         ],
         onPageChanged: (index) {

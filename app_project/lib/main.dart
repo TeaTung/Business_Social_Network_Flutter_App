@@ -68,13 +68,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => FriendProvider(),
         ),
-        ChangeNotifierProvider.value(
-          value: UserInfoLocal(
-            uid: 'cSE9ecZUoNaFxSNKeluFHz9k5W92',
-            userName: 'Tran Duc Tam',
-            avatarUrl:
-                'https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
-          ),
+        FutureProvider.value(
+          value: UserInfoLocal.fromFirebase(),
+          initialData: null,
         ),
         ChangeNotifierProvider(
           create: (_) => PostsProvider(),

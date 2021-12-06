@@ -34,6 +34,8 @@ class PostProvider with ChangeNotifier {
   final List<String> commentUsers;
   final int commentCount;
 
+  UserInfoLocal? userInfoLocal;
+
   PostProvider({
     required this.postCreatedUserId,
     this.isFavourite = false,
@@ -45,6 +47,7 @@ class PostProvider with ChangeNotifier {
     this.comments,
     this.email,
     this.phoneNumber,
+    this.userInfoLocal,
     required this.imageUrl,
     required this.shareUsers,
     required this.likedUsers,
@@ -52,6 +55,29 @@ class PostProvider with ChangeNotifier {
     required this.commentCount,
     required this.commentUsers,
   });
+
+  static PostProvider fromDocumentSnapshot(
+      {required Map<String, dynamic> data}) {
+    return PostProvider(
+      commentCount: data['commentCount'],
+      commentUsers: (List.from(data['commentUsers'])),
+      content: data['content'],
+      id: data['id'],
+      imageUrl: data['imageUrl'],
+      isBusinessPost: data['isBusinessPost'],
+      likeCount: data['likeCount'],
+      likedUsers: (List.from(data['likedUsers'])),
+      postCreatedUserId: data['postCreatedUserId'],
+      postTime: (data['postTime'].toDate()),
+      shareCount: data['shareCount'],
+      shareUsers: (List.from(data['shareUsers'])),
+      userInfoLocal: (UserInfoLocal(
+        uid: data['postCreatedUserId'],
+        userName: data['userName'],
+        avatarUrl: data['userAvatarUrl'],
+      )),
+    );
+  }
 
   // SHARE
   void updateLikeCount({

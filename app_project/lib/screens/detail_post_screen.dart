@@ -35,83 +35,7 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
     var userAvatarUrl;
     var userId;
 
-    var Avatar = FutureBuilder<DocumentSnapshot>(
-      future: widget.post.getPostUserInfoLocal(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          userName = data['name'];
-          userAvatarUrl = data['avatarUrl'];
-          userId = data['uid'];
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: 100,
-                      margin: const EdgeInsets.only(top: 10),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(userAvatarUrl),
-                          backgroundColor: Colors.black12,
-                          radius: 20,
-                        ),
-                        title: Text(
-                          data['name'],
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        // subtitle:
-                        //     Text(DateFormat('d MMMM y').format(post.postTime)),
-                      ),
-                    ),
-                  ),
-                  LikePostButton(
-                    postProvider: widget.post,
-                    darkTheme: true,
-                  ),
-                  CommentPostButton(
-                    postProvider: widget.post,
-                    darkTheme: true,
-                  ),
-                ],
-              ),
-              ChangeNotifierProvider(
-                create: (BuildContext context) => CommentsProvider(),
-                child: CommentField(
-                  userImageUrl: userAvatarUrl,
-                  userName: userName,
-                  uid: userId,
-                  post: widget.post,
-                ),
-              )
-            ],
-          );
-        }
-
-        return const Padding(
-          padding: EdgeInsets.only(left: 8.0),
-          child: Text("loading"),
-        );
-      },
-    );
-
-    final postA = Provider.of<PostsProvider>(context);
+    final postsProvider = Provider.of<PostsProvider>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -173,16 +97,16 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                   ? getUserAvatarNameColor(widget.post.id)
                   : null,
             ),
-            child: FutureBuilder<DocumentSnapshot>(
-              future: widget.post.getPostUserInfoLocal(),
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: postsProvider.getPostById(postId: widget.post.id),
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.hasError) {
-                  return Text('Something went wrong');
+                  return Center(child: Text('Something went wrong'));
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text("Loading");
+                  return Center(child: Text("Loading"));
                 }
 
                 Map<String, dynamic> data =
@@ -200,12 +124,12 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                             child: ListTile(
                               leading: CircleAvatar(
                                 backgroundImage:
-                                    NetworkImage(data['avatarUrl']),
+                                    NetworkImage(data['userAvatarUrl']),
                                 backgroundColor: Colors.black12,
                                 radius: 20,
                               ),
                               title: Text(
-                                data['name'],
+                                data['userName'],
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -221,11 +145,13 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                           ),
                         ),
                         LikePostButton(
-                          postProvider: widget.post,
+                          postProvider:
+                              PostProvider.fromDocumentSnapshot(data: data),
                           darkTheme: true,
                         ),
                         CommentPostButton(
-                          postProvider: widget.post,
+                          postProvider:
+                              PostProvider.fromDocumentSnapshot(data: data),
                           darkTheme: true,
                         ),
                       ],
@@ -245,7 +171,7 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                         userImageUrl: userAvatarUrl,
                         userName: userName,
                         uid: userId,
-                        post: widget.post,
+                        post: PostProvider.fromDocumentSnapshot(data: data),
                       ),
                     )
                   ],

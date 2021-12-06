@@ -16,9 +16,52 @@ class ListPostScreen extends StatelessWidget {
 
   late AnimationController controller;
 
+  //  var oldThings =
+  //     StreamBuilder(
+  //       stream: listPost.getPost(),
+  //       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //         if (snapshot.hasError) {
+  //           return Text(snapshot.error.toString());
+  //         }
+
+  //         if (snapshot.connectionState == ConnectionState.waiting) {
+  //           return const Center(child: CircularProgressIndicator());
+  //         }
+  //         // ignore: avoid_print
+  //         return ListView(
+  //           shrinkWrap: true,
+  //           controller: _controller,
+  //           children: snapshot.data!.docs.map((DocumentSnapshot document) {
+  //             Map<String, dynamic> data =
+  //                 document.data()! as Map<String, dynamic>;
+  //             return PostItem(
+  //               postProvider: PostProvider(
+  //                 postCreatedUserId: data['postCreatedUserId'],
+  //                 id: data['id'],
+  //                 content: data['content'],
+  //                 isBusinessPost: data['isBusinessPost'],
+  //                 likeCount: (int.parse(data['likeCount'].toString())),
+  //                 postTime: (data['postTime'].toDate()),
+  //                 likedUsers: (List<String>.from(
+  //                   data["likedUsers"],
+  //                 )),
+  //                 shareUsers: (List<String>.from(
+  //                   data['shareUsers'],
+  //                 )),
+  //                 shareCount: data['shareCount'],
+  //                 commentCount: data['commentCount'],
+  //                 commentUsers: (List<String>.from(
+  //                   data["commentUsers"],
+  //                 )),
+  //                 imageUrl: data['imageUrl'],
+  //               ),
+  //             );
+  //           }).toList(),
+  //         );
+  //       },
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     final listPost = Provider.of<PostsProvider>(context);
     final userInfoLocal = Provider.of<UserInfoLocal>(context);
 
@@ -41,7 +84,7 @@ class ListPostScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                listPost.createPost('Content 1', null);
+                listPost.createPost('Content 1', null, userInfoLocal);
                 _controller.animateTo(
                   _controller.position.maxScrollExtent,
                   duration: const Duration(seconds: 1),
@@ -79,48 +122,23 @@ class ListPostScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: StreamBuilder(
+      body: StreamBuilder<List<PostProvider>>(
         stream: listPost.getPost(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          // ignore: avoid_print
-          return ListView(
-            shrinkWrap: true,
-            controller: _controller,
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-              return PostItem(
-                postProvider: PostProvider(
-                  postCreatedUserId: data['postCreatedUserId'],
-                  id: data['id'],
-                  content: data['content'],
-                  isBusinessPost: data['isBusinessPost'],
-                  likeCount: (int.parse(data['likeCount'].toString())),
-                  postTime: (data['postTime'].toDate()),
-                  likedUsers: (List<String>.from(
-                    data["likedUsers"],
-                  )),
-                  shareUsers: (List<String>.from(
-                    data['shareUsers'],
-                  )),
-                  shareCount: data['shareCount'],
-                  commentCount: data['commentCount'],
-                  commentUsers: (List<String>.from(
-                    data["commentUsers"],
-                  )),
-                  imageUrl: data['imageUrl'],
-                ),
-              );
-            }).toList(),
-          );
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              controller: _controller,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return PostItem(
+                  postProvider: snapshot.data![index],
+                );
+              },
+            );
+          } else
+            return Center(
+              child: Text('Loading'),
+            );
         },
       ),
     );
