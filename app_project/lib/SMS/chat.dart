@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:bubble/bubble.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,16 +13,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:test_fix/SMS/providers/chat_provider.dart';
+import 'package:test_fix/SMS/providers/room_provider.dart';
+import 'package:test_fix/providers/user_info.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
     Key? key,
-    required this.room,
-    required this.userAuth,
+    required this.roomId,
+    required this.otherUserId,
   }) : super(key: key);
 
-  final types.Room room;
-  final User? userAuth;
+  final String roomId;
+  final String otherUserId;
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -31,6 +34,10 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   bool _isAttachmentUploading = false;
+  ChatProvider? _chatProvider;
+  UserInfoLocal? _userInforProvider;
+  var _userTalkingToId;
+  var _userTalkingToName;
 
   void _handleAtachmentPressed() {
     showModalBottomSheet<void>(
@@ -100,7 +107,7 @@ class _ChatPageState extends State<ChatPage> {
           uri: uri,
         );
 
-        FirebaseChatCore.instance.sendMessage(message, widget.room.id);
+        FirebaseChatCore.instance.sendMessage(message, widget.roomId);
         _setAttachmentUploading(false);
       } finally {
         _setAttachmentUploading(false);
@@ -138,7 +145,7 @@ class _ChatPageState extends State<ChatPage> {
 
         FirebaseChatCore.instance.sendMessage(
           message,
-          widget.room.id,
+          widget.roomId,
         );
         _setAttachmentUploading(false);
       } finally {
@@ -174,13 +181,13 @@ class _ChatPageState extends State<ChatPage> {
   ) {
     final updatedMessage = message.copyWith(previewData: previewData);
 
-    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id);
+    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.roomId);
   }
 
   void _handleSendPressed(types.PartialText message) {
     FirebaseChatCore.instance.sendMessage(
       message,
-      widget.room.id,
+      widget.roomId,
     );
   }
 
@@ -197,14 +204,14 @@ class _ChatPageState extends State<ChatPage> {
   }) {
     return Bubble(
       child: child,
-      color: widget.userAuth!.uid != message.author.id ||
+      color: _userTalkingToId != widget.otherUserId ||
               message.type == types.MessageType.image
-          ? Colors.black
+          ? Colors.blueGrey.shade300
           : const Color.fromRGBO(248, 145, 71, 0.9),
       margin: nextMessageInGroup
           ? const BubbleEdges.symmetric(horizontal: 6, vertical: 8)
           : null,
-      nip: FirebaseChatCore.instance.firebaseUser?.uid != message.author.id
+      nip: FirebaseChatCore.instance.firebaseUser?.uid != widget.otherUserId
           ? BubbleNip.leftBottom
           : BubbleNip.rightBottom,
     );
@@ -212,10 +219,22 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    var userTalkingTo;
-    widget.room.users.forEach((user) => {
-          if (user.id != widget.userAuth!.uid) {userTalkingTo = user}
-        });
+    _chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    _userInforProvider = Provider.of<UserInfoLocal>(context, listen: false);
+    // _chatProvider!
+    //     .getUserTalkingTo(widget.roomId, _userInforProvider!.uid)
+    //     .then((data) {
+    //   _userTalkingToId = data.id;
+    //   _userTalkingToName = data.firstName;
+    // });
+
+    // var data =
+    //     _chatProvider!.getUserTalkingTo(widget.roomId, _userInforProvider!.uid);
+    // _userTalkingToId = data['id'];
+    // _userTalkingToName = data['name'];
+
+    final roomsProvider = Provider.of<RoomProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -223,12 +242,14 @@ class _ChatPageState extends State<ChatPage> {
         foregroundColor: Colors.black,
         systemOverlayStyle: SystemUiOverlayStyle.light,
         title: Text(
-          "${userTalkingTo.firstName} ${userTalkingTo.lastName}",
+          "${_userTalkingToName}",
+          style: GoogleFonts.workSans().copyWith(
+            color: Colors.black,
+          ),
         ),
       ),
       body: StreamBuilder<types.Room>(
-        initialData: widget.room,
-        stream: FirebaseChatCore.instance.room(widget.room.id),
+        stream: FirebaseChatCore.instance.room(widget.roomId),
         builder: (context, snapshot) {
           return StreamBuilder<List<types.Message>>(
             initialData: const [],
@@ -243,6 +264,10 @@ class _ChatPageState extends State<ChatPage> {
                       color: Colors.white,
                     ),
                     receivedMessageBodyTextStyle: GoogleFonts.ubuntu().copyWith(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    inputTextStyle: GoogleFonts.ubuntu().copyWith(
                       fontSize: 16,
                       color: Colors.white,
                     ),

@@ -1,5 +1,5 @@
 import 'package:test_fix/providers/notification.dart';
-import 'package:test_fix/providers/post.dart';
+import 'package:test_fix/providers/post_provider.dart';
 
 import '../providers/user_info.dart';
 
@@ -15,19 +15,19 @@ class Hepler {
   }
 
   // TURN in to json to put in firebase
-  static Post mapToPost(Map mapJson) {
-    Post p = Post(
-      postTime: mapJson['postTime'].toDate(),
-      id: mapJson['id'],
-      userInfo: UserInfoLocal(uid: "1", userName: "Tran Duc Tam"),
-      /* uid: mapJson['uid'],
-      userAvtUrl: mapJson['userImageUrl'],
-      userName: mapJson['userName'],*/
-      content: mapJson['content'],
-      likeCount: mapJson['likeCount'],
-      isBusinessPost: mapJson['isBusinessPost'],
-      comments: mapJson['comments'],
-    );
-    return p;
-  }
+  // static PostProvider mapToPost(Map mapJson) {
+  //   Post p = Post(
+  //     postTime: mapJson['postTime'].toDate(),
+  //     id: mapJson['id'],
+  //     userInfo: UserInfoLocal(uid: "1", userName: "Tran Duc Tam"),
+  //     /* uid: mapJson['uid'],
+  //     userAvtUrl: mapJson['userImageUrl'],
+  //     userName: mapJson['userName'],*/
+  //     content: mapJson['content'],
+  //     likeCount: mapJson['likeCount'],
+  //     isBusinessPost: mapJson['isBusinessPost'],
+  //     comments: mapJson['comments'],
+  //   );
+  //   return p;
+  // }
 }

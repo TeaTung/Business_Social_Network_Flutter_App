@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:test_fix/helpers/auth_services.dart';
@@ -36,15 +37,11 @@ class _SignFormState extends State<SignForm> {
       DatePicker.showDatePicker(context,
           showTitleActions: true,
           minTime: DateTime(2018, 3, 5),
-          maxTime: DateTime(2021, 6, 7),
-          onChanged: (date) {
-            print('change $date');
-          },
-          onConfirm: (date) {
-            print('confirm $date');
-          },
-          currentTime: DateTime.now(),
-          locale: LocaleType.zh);
+          maxTime: DateTime(2021, 6, 7), onChanged: (date) {
+        print('change $date');
+      }, onConfirm: (date) {
+        print('confirm $date');
+      }, currentTime: DateTime.now(), locale: LocaleType.zh);
     }
   }
 
@@ -68,10 +65,7 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
-    final authInformation = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Map;
+    final authInformation = ModalRoute.of(context)!.settings.arguments as Map;
     email = authInformation['email'];
     password = authInformation['password'];
     return Form(
@@ -89,13 +83,11 @@ class _SignFormState extends State<SignForm> {
             showOtherGender: true,
             verticalAlignedText: true,
             onChanged: (Gender? gender) {
-              if (gender == Gender.Male){
+              if (gender == Gender.Male) {
                 sex = 'male';
-              }
-              else if (gender == Gender.Female){
+              } else if (gender == Gender.Female) {
                 sex = 'female';
-              }
-              else {
+              } else {
                 sex = 'other';
               }
             },
@@ -112,7 +104,6 @@ class _SignFormState extends State<SignForm> {
               fontSize: 18,
             ),
             size: 60,
-
           ),
           const SizedBox(height: 36),
           OrangeButton(
@@ -121,11 +112,19 @@ class _SignFormState extends State<SignForm> {
               _formKey.currentState!.validate();
               if (errors.isEmpty) {
                 _formKey.currentState!.save();
-                context.read<AuthService>().signUpWithEmailAndPassword(email, password).then((
-                    value) async {
+                context
+                    .read<AuthService>()
+                    .signUpWithEmailAndPassword(
+                      email,
+                      password,
+                      name,
+                    )
+                    .then((value) async {
                   User user = FirebaseAuth.instance.currentUser!;
-                  await FirebaseFirestore.instance.collection('users').doc(
-                      user.uid).set({
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user.uid)
+                      .set({
                     'uid': user.uid,
                     'email': user.email,
                     'password': password,

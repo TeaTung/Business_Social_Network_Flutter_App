@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:test_fix/SMS/rooms.dart';
 import 'package:test_fix/navigators/bottom_navigator.dart';
 import 'account_screen.dart';
 import 'list_post_screen.dart';
@@ -47,11 +48,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
         controller: controller,
         children: [
           ListPostScreen(),
-          ProcessScreen(),
-          OverviewMessageScreen(),
-          NotificationScreen(),
-          // FollowerItem(),
-          AccountScreen(),
         ],
         onPageChanged: (index) {
           setState(() {
@@ -103,14 +99,14 @@ class _AuthWrapperState extends State<AuthWrapper> {
           inactiveColor: Colors.black,
           textAlign: TextAlign.center,
         ),
-        BottomNavyBarItem(
-          icon: const Icon(MdiIcons.heartOutline),
-          iconSelect: const Icon(MdiIcons.heart),
-          title: const Text('Notification'),
-          activeColor: Colors.black,
-          inactiveColor: Colors.black,
-          textAlign: TextAlign.center,
-        ),
+        // BottomNavyBarItem(
+        //   icon: const Icon(MdiIcons.heartOutline),
+        //   iconSelect: const Icon(MdiIcons.heart),
+        //   title: const Text('Notification'),
+        //   activeColor: Colors.black,
+        //   inactiveColor: Colors.black,
+        //   textAlign: TextAlign.center,
+        // ),
         BottomNavyBarItem(
           icon: const Icon(MdiIcons.accountSettingsOutline),
           iconSelect: const Icon(MdiIcons.accountSettings),

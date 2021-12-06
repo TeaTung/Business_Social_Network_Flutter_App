@@ -16,9 +16,8 @@ import 'package:test_fix/widgets/setting_account.dart';
 var routes = <String, WidgetBuilder>{
   SettingAccount.routeName: (ctx) => const SettingAccount(),
   ChangeInformation.routeName: (ctx) => const ChangeInformation(),
-  DetailBusinessPostScreen.routeName: (ctx) => const DetailBusinessPostScreen(),
-  DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),
-  AccountScreen.routeName: (ctx) => const AccountScreen(),
+  //DetailBusinessPostScreen.routeName: (ctx) => const DetailBusinessPostScreen(),
+  //AccountScreen.routeName: (ctx) => const AccountScreen(),
   OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
   OnBoardingScreen.routeName: (ctx) => OnBoardingScreen(),
   SignUpScreen.routeName: (ctx) => SignUpScreen(),

@@ -57,6 +57,8 @@ dependencies:
   firebase_storage: ^10.1.0
   faker: ^2.0.0
   bubble: ^1.2.1
+  overlay_support: ^1.2.1
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:

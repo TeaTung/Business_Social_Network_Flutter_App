@@ -3,17 +3,21 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/SMS/providers/chat_provider.dart';
+import 'package:test_fix/SMS/providers/friend_provider.dart';
+import 'package:test_fix/SMS/providers/room_provider.dart';
 import 'package:test_fix/SMS/rooms.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/providers/user_info.dart';
 import 'package:test_fix/screens/auth_wrapper.dart';
+import 'package:test_fix/screens/detail_post_screen.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
-import './providers/post.dart';
+import 'providers/post_provider.dart';
 import './providers/round.dart';
-import './providers/posts.dart';
+import 'providers/posts_provider.dart';
 import './providers/process.dart';
 import 'helpers/auth_services.dart';
 import 'navigators/routes.dart';
@@ -43,6 +47,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Comments(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RoomProvider(),
+        ),
         ChangeNotifierProvider.value(
           value: Account(
             id: 'id',
@@ -55,16 +65,19 @@ class MyApp extends StatelessWidget {
             gender: 'Male',
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => FriendProvider(),
+        ),
         ChangeNotifierProvider.value(
           value: UserInfoLocal(
-            uid: '123',
-            userName: 'Nguyễn Dương Tùng',
+            uid: 'cSE9ecZUoNaFxSNKeluFHz9k5W92',
+            userName: 'Tran Duc Tam',
             avatarUrl:
-                'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1',
+                'https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
           ),
         ),
         ChangeNotifierProvider(
-          create: (_) => Posts(),
+          create: (_) => PostsProvider(),
         ),
         ChangeNotifierProvider.value(
           value: PostDetail(),
@@ -111,6 +124,17 @@ class MyApp extends StatelessWidget {
         home: MyHomePage(),
         debugShowCheckedModeBanner: false,
         routes: routes,
+        onGenerateRoute: (settings) {
+          final args = settings.arguments as PostProvider;
+          print(args);
+          return MaterialPageRoute(
+            builder: (context) {
+              return DetailPostScreen(
+                post: args,
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -124,6 +148,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return RoomsPage();
+    return AuthWrapper();
   }
 }

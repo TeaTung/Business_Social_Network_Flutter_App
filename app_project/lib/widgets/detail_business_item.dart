@@ -15,33 +15,35 @@ class DetailBusinessItem extends StatelessWidget {
     void applyJob() {}
 
     final process = Provider.of<Process>(context);
-    return Column(
-      children: [
-        PostDetailScreenItem(
-          'Bopy',
-          'This is a very fucking longggggggggggggggggggggg description',
-          'https://picsum.photos/200/300',
-        ),
-        //Fake data ? Of course
-        Card(
-          elevation: 5,
-          child: Column(
-            children: [
-              ProcessItem(
-                process: process,
-              ),
-              SizedBox(
-                width: 320,
-                child: ElevatedButton(
-                  onPressed: applyJob,
-                  child: const Text("Apply now"),
-                ),
-              ),
-              const SizedBox(height: 7),
-            ],
-          ),
-        ),
-      ],
-    );
+    // return Column(
+    //   children: [
+    //     PostDetailScreenItem(
+    //       'Bopy',
+    //       'This is a very fucking longggggggggggggggggggggg description',
+    //       'https://picsum.photos/200/300',
+    //     ),
+    //     //Fake data ? Of course
+    //     Card(
+    //       elevation: 5,
+    //       child: Column(
+    //         children: [
+    //           ProcessItem(
+    //             process: process,
+    //           ),
+    //           SizedBox(
+    //             width: 320,
+    //             child: ElevatedButton(
+    //               onPressed: applyJob,
+    //               child: const Text("Apply now"),
+    //             ),
+    //           ),
+    //           const SizedBox(height: 7),
+    //         ],
+    //       ),
+    //     ),
+    //   ],
+    // );
+
+    return Container();
   }
 }
