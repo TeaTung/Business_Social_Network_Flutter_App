@@ -44,10 +44,15 @@ class _SignFormState extends State<SignForm> {
               ),
               const Text('Remember me'),
               const Spacer(),
-              const Text(
-                'Forgot password',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, '/forgot_password');
+                },
+                child: const Text(
+                  'Forgot password',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
               const SizedBox(width: 18),

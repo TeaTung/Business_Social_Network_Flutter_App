@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_fix/screens/account_screen.dart';
 import 'package:test_fix/screens/auth_wrapper.dart';
+import 'package:test_fix/screens/authentication/forgot_password_screen/forgot_password_screen.dart';
 import 'package:test_fix/screens/authentication/sigin_in_screen/sign_in_screen.dart';
 import 'package:test_fix/screens/authentication/sign_up_screen/complete_sign_up_screen/complete_sign_up_screen.dart';
 import 'package:test_fix/screens/authentication/sign_up_screen/sign_up_screen.dart';
@@ -20,10 +21,11 @@ var routes = <String, WidgetBuilder>{
   DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),
   AccountScreen.routeName: (ctx) => const AccountScreen(),
   OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
-  OnBoardingScreen.routeName: (ctx) => OnBoardingScreen(),
-  SignUpScreen.routeName: (ctx) => SignUpScreen(),
-  CompleteSignUpScreen.routeName: (ctx) => CompleteSignUpScreen(),
-  SignInScreen.routeName: (ctx) => SignInScreen(),
-  WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
-  AuthWrapper.routeName: (ctx) => AuthWrapper(),
+  OnBoardingScreen.routeName: (ctx) => const OnBoardingScreen(),
+  SignUpScreen.routeName: (ctx) => const SignUpScreen(),
+  CompleteSignUpScreen.routeName: (ctx) => const CompleteSignUpScreen(),
+  SignInScreen.routeName: (ctx) => const SignInScreen(),
+  WelcomeScreen.routeName: (ctx) => const WelcomeScreen(),
+  AuthWrapper.routeName: (ctx) => const AuthWrapper(),
+  ForgotPasswordScreen.routeName: (ctx) => const ForgotPasswordScreen(),
 };
