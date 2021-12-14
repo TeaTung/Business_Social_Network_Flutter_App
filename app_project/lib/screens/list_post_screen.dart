@@ -82,7 +82,7 @@ class ListPostScreen extends StatelessWidget {
         itemBuilder: (ctx, index) {
           return ChangeNotifierProvider.value(
             value: listPost.items[index],
-            child: PostItem(),
+            child: const PostItem(),
           );
         },
         separatorBuilder: (BuildContext context, int index) => Container(

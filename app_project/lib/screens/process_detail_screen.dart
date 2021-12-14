@@ -61,6 +61,7 @@ class ProcessDetailScreen extends StatelessWidget {
               CustomerButton(
                 isSolid: true,
                 text: 'Unapply',
+                onPress: onPressButton,
               ),
             ],
           ),
