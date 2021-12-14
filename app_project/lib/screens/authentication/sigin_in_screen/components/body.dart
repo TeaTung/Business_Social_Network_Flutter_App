@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:test_fix/helpers/facebook_auth_controller.dart';
+import 'package:test_fix/helpers/google_auth_controller.dart';
 
 import 'sign_form.dart';
 import 'social_button.dart';
@@ -44,11 +46,15 @@ class Body extends StatelessWidget {
                 children: [
                   SocialButton(
                     icon: 'assets/icons/google-icon.svg',
-                    press: () {},
+                    press: () {
+                      loginWithGoogle(context);
+                    },
                   ),
                   SocialButton(
                     icon: 'assets/icons/facebook-2.svg',
-                    press: () {},
+                    press: () {
+                      loginWithFacebook(context);
+                    },
                   ),
                 ],
               ),

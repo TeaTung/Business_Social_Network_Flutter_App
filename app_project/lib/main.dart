@@ -10,6 +10,8 @@ import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/providers/user_info.dart';
 import 'package:test_fix/screens/account_screen.dart';
 import 'package:test_fix/screens/auth_wrapper.dart';
+import 'package:test_fix/screens/authentication/forgot_password_screen/forgot_password_screen.dart';
+import 'package:test_fix/screens/onboarding/onboarding_screen.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
 import './providers/post.dart';
@@ -17,6 +19,8 @@ import './providers/round.dart';
 import './providers/posts.dart';
 import './providers/process.dart';
 import 'helpers/auth_services.dart';
+import 'helpers/facebook_auth_controller.dart';
+import 'helpers/google_auth_controller.dart';
 import 'navigators/routes.dart';
 
 void main() async {
@@ -88,6 +92,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Messages(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => GoogleAuthController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FacebookAuthController(),
+        ),
       ],
       child: MaterialApp(
         title: 'Business Social Network',
@@ -128,6 +138,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const AuthWrapper();
+    return OnBoardingScreen();
   }
 }
