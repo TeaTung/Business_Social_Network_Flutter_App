@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:test_fix/helpers/auth_services.dart';
 import './orange_button.dart';
-
+import 'package:provider/provider.dart';
 import 'form_error.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
@@ -13,11 +15,13 @@ class ForgotPasswordForm extends StatefulWidget {
 }
 
 class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
+
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
   late String email;
   late String password;
   bool rememberMe = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +35,22 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           const SizedBox(height: 46),
           OrangeButton(
             text: 'Send Link',
-            onPress: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-              } else {}
+            onPress: (){
+              _formKey.currentState!.validate();
+              if (errors.isEmpty) {
+                try {
+                  context
+                      .read<AuthService>().sendPasswordResetEmail(email);
+                  const snackBar =
+                  SnackBar(content: Text('We have sent recovery email for you'));
+                  Navigator.pushNamed(context, '/sign_in');
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }catch(e){
+                  const snackBar =
+                  SnackBar(content: Text('Problem with authentication process'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              }
             },
             isSolid: true,
           ),
@@ -48,6 +64,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue!,
       onChanged: (value) {
+        email = value;
         if (value.isNotEmpty && errors.contains('Please enter your email')) {
           setState(() {
             errors.remove('Please enter your email');

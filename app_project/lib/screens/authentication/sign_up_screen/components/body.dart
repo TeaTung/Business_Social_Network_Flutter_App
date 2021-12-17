@@ -1,8 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:test_fix/helpers/auth_services.dart';
+import 'package:test_fix/helpers/facebook_auth_controller.dart';
+import 'package:test_fix/helpers/google_auth_controller.dart';
+import 'package:test_fix/screens/authentication/sign_up_screen/complete_sign_up_screen/complete_sign_up_screen.dart';
 
+import '../../../auth_wrapper.dart';
 import 'sign_form.dart';
 import 'social_button.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -43,13 +51,15 @@ class Body extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SocialButton(
-                    icon: 'assets/icons/google-icon.svg',
-                    press: () {},
-                  ),
+                      icon: 'assets/icons/google-icon.svg',
+                      press: () async {
+                        loginWithGoogle(context);
+                      }),
                   SocialButton(
-                    icon: 'assets/icons/facebook-2.svg',
-                    press: () {},
-                  ),
+                      icon: 'assets/icons/facebook-2.svg',
+                      press: () async {
+                        loginWithFacebook(context);
+                      }),
                 ],
               ),
               const SizedBox(height: 16),

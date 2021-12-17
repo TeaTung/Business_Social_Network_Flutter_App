@@ -3,6 +3,7 @@ import 'package:test_fix/screens/account_screen.dart';
 import 'package:test_fix/screens/add_education_screen.dart';
 import 'package:test_fix/screens/add_position_screen.dart';
 import 'package:test_fix/screens/auth_wrapper.dart';
+import 'package:test_fix/screens/authentication/forgot_password_screen/forgot_password_screen.dart';
 import 'package:test_fix/screens/authentication/sigin_in_screen/sign_in_screen.dart';
 import 'package:test_fix/screens/authentication/sign_up_screen/complete_sign_up_screen/complete_sign_up_screen.dart';
 import 'package:test_fix/screens/authentication/sign_up_screen/sign_up_screen.dart';
@@ -40,4 +41,5 @@ var routes = <String, WidgetBuilder>{
   PositionScreen.routeName: (ctx) => const PositionScreen(),
   AddPositionScreen.routeName: (ctx) => const AddPositionScreen(),
   ChangePictureScreen.routeName: (ctx) => const ChangePictureScreen(),
+  ForgotPasswordScreen.routeName: (ctx) => const ForgotPasswordScreen(),
 };
