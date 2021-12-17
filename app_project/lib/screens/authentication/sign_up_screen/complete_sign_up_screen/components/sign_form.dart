@@ -128,10 +128,14 @@ class _SignFormState extends State<SignForm> {
                       user.uid).set({
                     'uid': user.uid,
                     'email': user.email,
-                    'password': password,
                     'name': name,
                     'birthday': birthday,
                     'gender': sex,
+                    'id': '',
+                    'quote': '',
+                    'nationality': '',
+                    'coverPhotoUrl': '',
+                    'avatarUrl': '',
                   });
                 });
               } else {}

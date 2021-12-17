@@ -19,6 +19,7 @@ import 'package:test_fix/widgets/change_information_item.dart';
 import 'package:test_fix/screens/change_information_screen.dart';
 import 'package:test_fix/widgets/overview_message_item.dart';
 import 'package:test_fix/screens/setting_account_screen.dart';
+import 'package:test_fix/widgets/selected_item.dart';
 
 var routes = <String, WidgetBuilder>{
   DetailBusinessPostScreen.routeName: (ctx) => const DetailBusinessPostScreen(),
