@@ -1,63 +1,90 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 import 'position.dart';
 
 //This class get every position relate to user to load to position section in Account screen
 class Positions with ChangeNotifier {
-  List<Position> _items = [
-    Position(
-      id: '123',
-      uid: '321',
-      startDate: DateTime.now(),
-      company: 'Duong Tung Company',
-      jobTitle: 'CEO',
-      companyUrl: 'https://www.google.com',
-    ),
-    Position(
-      id: '123',
-      uid: '321',
-      startDate: DateTime.now(),
-      company: 'Duong Tung Company',
-      jobTitle: 'CEO',
-      companyUrl: 'https://www.google.com',
-    ),
-    Position(
-        id: '123',
-        uid: '321',
-        startDate: DateTime.now(),
-        company: 'Duong Tung Company',
-        jobTitle: 'CEO'),
-    Position(
-        id: '123',
-        uid: '321',
-        startDate: DateTime.now(),
-        company: 'Duong Tung Company',
-        jobTitle: 'CEO'),
-    Position(
-        id: '123',
-        uid: '321',
-        startDate: DateTime.now(),
-        company: 'Duong Tung Company',
-        jobTitle: 'CEO'),
-    Position(
-        id: '123',
-        uid: '321',
-        startDate: DateTime.now(),
-        company: 'Duong Tung Company',
-        jobTitle: 'CEO'),
-  ];
+  List<Position> listPosition = [];
 
-  List<Position> get items {
-    return [..._items];
+  Future<List<Position>> getListPosition(String id) async {
+    if (listPosition.isEmpty) {
+      await FirebaseFirestore.instance
+          .collection('positions')
+          .doc(id)
+          .collection('position')
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        for (var doc in querySnapshot.docs) {
+          listPosition.add(Position(
+            id: doc['id'],
+            company: doc['company'],
+            endDate: doc['endDate'].toDate(),
+            startDate: doc['startDate'].toDate(),
+            jobTitle: doc['jobTitle'],
+          ));
+        }
+      });
+    }
+    return listPosition;
   }
 
-  void addPosition(Position position) {
-    _items.add(position);
-    notifyListeners();
+  Future<void> addPosition(
+    String company,
+    String jobTitle,
+    DateTime startDate,
+    DateTime endDate,
+    String uid,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('positions')
+        .doc(uid)
+        .collection('position')
+        .add({
+      'company': company,
+      'jobTitle': jobTitle,
+      'startDate': startDate,
+      'endDate': endDate,
+    }).then((value) {
+      FirebaseFirestore.instance
+          .collection('positions')
+          .doc(uid)
+          .collection('position')
+          .doc(value.id)
+          .set({
+        'id': value.id,
+        'company': company,
+        'jobTitle': jobTitle,
+        'startDate': startDate,
+        'endDate': endDate,
+      });
+      listPosition.add(Position(
+        id: value.id,
+        jobTitle: jobTitle,
+        startDate: startDate,
+        endDate: endDate,
+        company: company,
+      ));
+    }).whenComplete(() {
+      notifyListeners();
+    });
   }
 
-  void removePosition(int index) {
-    if (index > 0 && index < items.length) _items.removeAt(index);
-    notifyListeners();
+  Future<void> removePosition(
+    int index,
+    String uid,
+    String itemId,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('positions')
+        .doc(uid)
+        .collection('position')
+        .doc(itemId)
+        .delete()
+        .then((value) {})
+        .whenComplete(() {
+      listPosition.removeAt(index);
+      notifyListeners();
+    });
   }
 }

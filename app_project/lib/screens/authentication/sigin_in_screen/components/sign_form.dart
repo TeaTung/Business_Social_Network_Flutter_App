@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_fix/helpers/auth_services.dart';
@@ -68,12 +69,14 @@ class _SignFormState extends State<SignForm> {
                 context
                     .read<AuthService>()
                     .signInWithEmailAndPassword(email, password)
-                    .then((value) async {
-                  if (value.isEmpty) {
-                  } else {
-                    Navigator.pushNamed(context, '/auth_wrapper');
-                  }
-                });
+                    .then(
+                  (value) async {
+                    if (value.isEmpty) {
+                    } else {
+                      Navigator.pushNamed(context, '/auth_wrapper');
+                    }
+                  },
+                );
               }
             },
             isSolid: true,

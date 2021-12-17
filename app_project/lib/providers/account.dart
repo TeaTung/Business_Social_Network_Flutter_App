@@ -1,15 +1,24 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 import './user_info.dart';
 
 class Account with ChangeNotifier {
-  final String id;
-  final String uid;
+  String id;
+  String uid;
   String quote;
   String coverPhotoUrl;
   DateTime birthDate;
   String gender;
   String nationality;
+  String email;
+  String userName;
+  String avatarUrl;
 
   //users who this account is following
   List<String>? uidFollowing;
@@ -17,63 +26,149 @@ class Account with ChangeNotifier {
   //users who is following this account
   List<String>? uidFollowers;
 
-  Account({
-    required this.id,
-    required this.uid,
-    required this.quote,
-    this.coverPhotoUrl = '',
-    required this.birthDate,
-    required this.nationality,
-    required this.gender,
-    this.uidFollowers,
-    this.uidFollowing,
-  });
+  Account(
+      {required this.id,
+      required this.uid,
+      required this.quote,
+      this.coverPhotoUrl = '',
+      required this.birthDate,
+      required this.nationality,
+      required this.gender,
+      this.uidFollowers,
+      this.uidFollowing,
+      required this.userName,
+      required this.email,
+      this.avatarUrl = ''});
 
-  String get getNationality {
-    return nationality;
+  Future<Account> getMyAccount(String myId) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(myId)
+        .get()
+        .then((value) {
+      id = myId;
+      uid = myId;
+      email = value['email'];
+      gender = value['gender'];
+      quote = value['quote'];
+      birthDate = (value['birthday'].toDate());
+      nationality = value['nationality'];
+      coverPhotoUrl = value['coverPhotoUrl'];
+      userName = value['name'];
+      avatarUrl = value['avatarUrl'];
+      notifyListeners();
+    }).catchError((error) {
+      throw error;
+    });
+    return Account(
+      id: id,
+      uid: uid,
+      email: email,
+      gender: gender,
+      quote: quote,
+      birthDate: birthDate,
+      nationality: nationality,
+      coverPhotoUrl: coverPhotoUrl,
+      userName: userName,
+      avatarUrl: avatarUrl,
+    );
   }
 
-  String get getGender {
-    return gender;
+  Future<void> fetchAndSetBasicInformation(
+    String newName,
+    String newNationality,
+    String newQuote,
+    String newGender,
+    DateTime newBirthdate,
+    String id,
+  ) async {
+    await FirebaseFirestore.instance.collection('users').doc(id).update({
+      'name': newName,
+      'nationality': newNationality,
+      'quote': newQuote,
+      'gender': newGender,
+      'birthday': newBirthdate,
+    }).then((_) {
+      userName = newName;
+      nationality = newNationality;
+      quote = newQuote;
+      gender = newGender;
+      birthDate = newBirthdate;
+      notifyListeners();
+    }).catchError((error) {
+      throw error;
+    }).whenComplete(() {
+      notifyListeners();
+    });
   }
 
-  String get getQuote {
-    return quote;
+  Future<bool> validateCurrentPassword(String password, String email) async {
+    var user = FirebaseAuth.instance.currentUser;
+
+    var authCredentials = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+
+    try {
+      var authResult = await user!.reauthenticateWithCredential(authCredentials);
+      return authResult.user != null;
+    } catch (errors) {
+      print("errors");
+      return false;
+    }
+
   }
 
-  DateTime get getBirthDate {
-    return birthDate;
+  Future<void> updatePassword(String newPassword) async{
+    var user = FirebaseAuth.instance.currentUser;
+
+    await user!.updatePassword(newPassword);
   }
 
+  void setAndFetchAvatar (File image) async {
+    var user = FirebaseAuth.instance.currentUser;
+    var newAvatarUrl = '';
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child(user!.uid + '.jpg');
 
-  String get getCoverPhotoUrl {
-    return coverPhotoUrl;
+    await ref.putFile(image);
+
+    await ref.getDownloadURL().then((p0) {
+      newAvatarUrl = p0;
+    }).whenComplete(() {
+      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'avatarUrl': newAvatarUrl,
+      });
+      avatarUrl = newAvatarUrl;
+      notifyListeners();
+    });;
+
   }
 
-  void setNationality(String newNationality) {
-    nationality = newNationality;
-    notifyListeners();
+  void setAndFetchCoverPhoto (File image) async {
+    var user = FirebaseAuth.instance.currentUser;
+    var newCoverPhotoUrl = '';
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('user_image')
+        .child(user!.uid + '.jpg');
+
+    await ref.putFile(image);
+
+    await ref.getDownloadURL().then((p0) {
+      newCoverPhotoUrl = p0;
+    }).whenComplete(() {
+      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'coverPhotoUrl': newCoverPhotoUrl,
+      });
+      coverPhotoUrl = newCoverPhotoUrl;
+      notifyListeners();
+    });
   }
 
-  void setGender(String newGender) {
-    gender = newGender;
-    notifyListeners();
-  }
-
-  void setQuote(String newQuote) {
-    quote = newQuote;
-    notifyListeners();
-  }
-
-  void setBirthDate(DateTime newBirthDate) {
-    birthDate = newBirthDate;
-    notifyListeners();
-  }
-
-  void setCoverPhotoUrl(String newCoverPageUrl) {
-    coverPhotoUrl = newCoverPageUrl;
-    notifyListeners();
-  }
 
   int followersCount() {
     if (uidFollowers != null) {
@@ -82,6 +177,4 @@ class Account with ChangeNotifier {
       return 0;
     }
   }
-
-
 }

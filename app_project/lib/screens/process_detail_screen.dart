@@ -33,10 +33,12 @@ class ProcessDetailScreen extends StatelessWidget {
         title: Text(
           'Process Detail',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.headline1!.copyWith(
+            color: Colors.white,
+          ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         bottom: PreferredSize(
@@ -59,6 +61,7 @@ class ProcessDetailScreen extends StatelessWidget {
               CustomerButton(
                 isSolid: true,
                 text: 'Unapply',
+                onPress: onPressButton,
               ),
             ],
           ),

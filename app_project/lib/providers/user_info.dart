@@ -1,9 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-class UserInfoLocal with ChangeNotifier{
-  final String uid;
+class UserInfoLocal with ChangeNotifier {
+  String uid;
   String userName;
   String avatarUrl;
+
+  UserInfoLocal({
+    required this.uid,
+    required this.userName,
+    this.avatarUrl = '',
+  });
 
   String get getAvatarUrl {
     return avatarUrl;
@@ -22,10 +30,4 @@ class UserInfoLocal with ChangeNotifier{
     userName = newUserName;
     notifyListeners();
   }
-
-  UserInfoLocal(
-      {required this.uid,
-      required this.userName,
-      this.avatarUrl =
-          'https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1'});
 }

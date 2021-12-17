@@ -7,124 +7,48 @@ import '../providers/education.dart';
 
 //This widget will be loaded into education section in Account screen
 class EducationItem extends StatelessWidget {
-  const EducationItem({Key? key}) : super(key: key);
+  final Education education;
+
+  const EducationItem({Key? key, required this.education}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Education education = Provider.of<Education>(context);
-
-    //This code below test widget without data
-    // Education education = Education(
-    //   id: '123',
-    //   uid: '321',
-    //   title: 'Toeic Reading & Listening',
-    //   issueYear: DateTime.now(),
-    //   organization: 'IIG Vietnam',
-    //   credentialUrl: 'https:google.com',
-    //   description: 'This certificate prove my English skills',
-    // );
-
-    String getEndDate() {
-      if (education.expirationYear == null) {
-        return 'No expiration';
-      } else {
-        return DateFormat('MM-yyyy').format(education.expirationYear!);
-      }
-    }
-
-    openUrl() async {
-      if (education.credentialUrl != null) {
-        if (await canLaunch(education.credentialUrl!)) {
-          //SimpleUrlPreview(url: position.companyUrl!);
-          launch(education.credentialUrl!);
-        } else {
-          throw 'Can not launch credential url';
-        }
-      }
-    }
-
-    //This function will be deployed later
-    void launchOrganizationPage() {}
-
-    return Wrap(
-      children: [
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 7,
+        horizontal: 13,
+      ),
+      child: Row(
+        children: [
+          const CircleAvatar(
+            radius: 25,
+            backgroundImage: AssetImage('assets/images/certificate.png'),
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
-          child: Stack(
+          const SizedBox(width: 13),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (education.credentialProviderAvtUrl != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 12.0),
-                      child: CircleAvatar(
-                        radius: 35.0,
-                        backgroundImage:
-                            NetworkImage(education.credentialProviderAvtUrl!),
-                      ),
-                    ),
-                  if (education.credentialProviderAvtUrl == null)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 12.0),
-                      child: CircleAvatar(
-                        radius: 35.0,
-                        backgroundImage:
-                            AssetImage('assets/images/certificate.png'),
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          education.title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          education.organization,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${DateFormat('MM/yyyy').format(education.issueYear)} - ${getEndDate()}',
-                        ),
-                        const SizedBox(height: 4),
-                        if (education.description != null)
-                          Text(education.description!),
-                      ],
-                    ),
-                  ),
-                ],
+              Text(
+                '${education.title} - ${education.organization}',
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
               ),
-              Positioned.fill(
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: openUrl,
-                  ),
+              const SizedBox(height: 4),
+              Text(
+                DateFormat('d MMM y').format(education.issueYear),
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromRGBO(118, 118, 118, 1),
                 ),
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

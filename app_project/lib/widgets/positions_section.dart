@@ -1,81 +1,78 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/providers/position.dart';
 import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/widgets/position_item.dart';
 
 class PositionsSection extends StatefulWidget {
-  const PositionsSection({Key? key}) : super(key: key);
+  final String id;
+  const PositionsSection({Key? key, required this.id}) : super(key: key);
 
   @override
   _PositionsSectionState createState() => _PositionsSectionState();
 }
 
 class _PositionsSectionState extends State<PositionsSection> {
-  bool isSeeMore = false;
-  int loadedItemCount = 2;
-  String textButton = 'See more';
-  double heightSizedOfSection = 225;
-
   @override
   Widget build(BuildContext context) {
-    Positions positions = Provider.of<Positions>(context);
-
-    return Column(
-      children: [
-        const Divider(thickness: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+    final positions = Provider.of<Positions>(context, listen: false).getListPosition(widget.id);
+    return FutureBuilder(
+      builder: (ctx, snapshot) {
+        if(snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasData) {
+          List<Position> listPosition = snapshot.data as List<Position>;
+          return Column(
             children: [
-              Text(
-                'Position & Experience',
-                style: Theme.of(context).textTheme.headline1!,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (loadedItemCount == 2) {
-                      loadedItemCount = positions.items.length;
-                      textButton = 'See less';
-                      heightSizedOfSection = 440;
-                    } else {
-                      loadedItemCount = 2;
-                      textButton = 'See more';
-                      heightSizedOfSection = 230;
-                    }
-                  });
-                },
-                child: Text(
-                  textButton,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.blue,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 13,
+                  horizontal: 13,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'About my carrier',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
                         fontSize: 18,
                       ),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        EvaIcons.chevronRight,
+                        color: Color.fromRGBO(248, 145, 71, 1),
+                        size: 30,
+                      ),
+                      onPressed: () {},
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return PositionItem(
+                      position: listPosition[index],
+                    );
+                  },
+                  itemCount: listPosition.length,
                 ),
               ),
             ],
-          ),
-        ),
-        const SizedBox(height: 4),
-        AnimatedContainer(
-          height: heightSizedOfSection,
-          duration: const Duration(milliseconds: 200),
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return ChangeNotifierProvider.value(
-                value: positions.items[index],
-                child: PositionItem(),
-              );
-            },
-            itemCount: loadedItemCount,
-          ),
-        ),
-      ],
+          );
+        } else {
+          return const Center(child: Text("Error"));
+        }
+      },
+      future: positions,
     );
   }
 }
