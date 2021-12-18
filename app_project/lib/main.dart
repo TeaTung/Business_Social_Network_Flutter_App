@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +7,13 @@ import 'package:test_fix/providers/accounts.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
+import 'package:test_fix/providers/post/post_provider.dart';
+import 'package:test_fix/providers/post/posts_provider.dart';
 import 'package:test_fix/providers/user_info.dart';
-import 'package:test_fix/screens/account_screen.dart';
-import 'package:test_fix/screens/auth_wrapper.dart';
-import 'package:test_fix/screens/authentication/forgot_password_screen/forgot_password_screen.dart';
 import 'package:test_fix/screens/onboarding/onboarding_screen.dart';
+import 'package:test_fix/screens/post/detail_post_screen.dart';
 import './providers/account.dart';
 import './providers/comments.dart';
-import './providers/post.dart';
 import './providers/round.dart';
 import './providers/posts.dart';
 import './providers/process.dart';
@@ -27,7 +25,6 @@ import 'navigators/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
 
   runApp(MyApp());
 }
@@ -65,22 +62,22 @@ class MyApp extends StatelessWidget {
             nationality: '',
             gender: '',
             userName: '',
-            avatarUrl:'',
+            avatarUrl: '',
           ),
         ),
-        ChangeNotifierProvider.value(
-          value: UserInfoLocal(
-            uid: '',
-            userName: '',
-            avatarUrl:'',
-          ),
+        FutureProvider.value(
+          value: UserInfoLocal.fromFirebase(),
+          initialData: null,
         ),
+
+        // this is for post
         ChangeNotifierProvider(
           create: (_) => Posts(),
         ),
-        ChangeNotifierProvider.value(
-          value: PostDetail(),
+        ChangeNotifierProvider(
+          create: (_) => PostsProvider(),
         ),
+
         ChangeNotifierProvider.value(
           value: Processes(),
         ),
@@ -129,6 +126,17 @@ class MyApp extends StatelessWidget {
         home: MyHomePage(),
         debugShowCheckedModeBanner: false,
         routes: routes,
+        onGenerateRoute: (settings) {
+          final args = settings.arguments as PostProvider;
+          print(args);
+          return MaterialPageRoute(
+            builder: (context) {
+              return DetailPostScreen(
+                post: args,
+              );
+            },
+          );
+        },
       ),
     );
   }

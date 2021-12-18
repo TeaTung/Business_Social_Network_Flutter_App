@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:test_fix/navigators/bottom_navigator.dart';
+import 'package:test_fix/screens/post/list_post_screen.dart';
 import 'account_screen.dart';
-import 'list_post_screen.dart';
 import 'notification_screen.dart';
 import 'onboarding/onboarding_screen.dart';
 import 'overview_message_screen.dart';
@@ -47,11 +47,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
         controller: controller,
         children: [
           ListPostScreen(),
-          ProcessScreen(),
-          OverviewMessageScreen(),
-          NotificationScreen(),
-          // FollowerItem(),
-          AccountScreen(),
         ],
         onPageChanged: (index) {
           setState(() {
