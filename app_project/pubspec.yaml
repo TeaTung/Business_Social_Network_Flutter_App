@@ -53,6 +53,8 @@ dependencies:
   firebase_storage: ^10.2.3
   google_sign_in: ^5.2.1
   flutter_facebook_auth: ^3.5.6+3
+  cached_network_image: ^3.2.0
+  flutter_firebase_chat_core: ^1.5.1
 
 
 dev_dependencies:

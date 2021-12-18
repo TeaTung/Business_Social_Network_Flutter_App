@@ -16,6 +16,9 @@ import 'package:test_fix/screens/detail_post_screen.dart';
 import 'package:test_fix/screens/education_screen.dart';
 import 'package:test_fix/screens/onboarding/onboarding_screen.dart';
 import 'package:test_fix/screens/positon_screen.dart';
+import 'package:test_fix/screens/post/create_normal_post_screen.dart';
+import 'package:test_fix/screens/post/list_post_screen.dart';
+import 'package:test_fix/screens/post/middle_post_create_screen.dart';
 import 'package:test_fix/widgets/change_information_item.dart';
 import 'package:test_fix/screens/change_information_screen.dart';
 import 'package:test_fix/widgets/overview_message_item.dart';
@@ -24,7 +27,6 @@ import 'package:test_fix/widgets/selected_item.dart';
 
 var routes = <String, WidgetBuilder>{
   DetailBusinessPostScreen.routeName: (ctx) => const DetailBusinessPostScreen(),
-  DetailPostScreen.routeName: (ctx) => const DetailPostScreen(),
   AccountScreen.routeName: (ctx) => const AccountScreen(),
   OverViewMessageItem.routeName: (ctx) => DetailMessageScreen(),
   OnBoardingScreen.routeName: (ctx) => const OnBoardingScreen(),
@@ -42,4 +44,7 @@ var routes = <String, WidgetBuilder>{
   AddPositionScreen.routeName: (ctx) => const AddPositionScreen(),
   ChangePictureScreen.routeName: (ctx) => const ChangePictureScreen(),
   ForgotPasswordScreen.routeName: (ctx) => const ForgotPasswordScreen(),
+  MiddlePostCreateScreen.routeName: (ctx) => MiddlePostCreateScreen(),
+  CreateNormalPostScreen.routeName: (ctx) => CreateNormalPostScreen(),
+  ListPostScreen.routeName: (ctx) => ListPostScreen(),
 };
