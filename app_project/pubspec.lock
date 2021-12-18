@@ -272,6 +272,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.0+2"
+
   flutter_firebase_chat_core:
     dependency: "direct main"
     description:
@@ -576,6 +577,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
+
   rxdart:
     dependency: transitive
     description:
@@ -583,6 +585,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.3"
+
   search_widget:
     dependency: "direct main"
     description:
