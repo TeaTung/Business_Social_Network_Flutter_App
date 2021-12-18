@@ -14,7 +14,7 @@ class SignInScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             size: 20,
           ),

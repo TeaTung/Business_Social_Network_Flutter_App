@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 import 'package:test_fix/widgets/user_information_item.dart';
+import 'package:test_fix/widgets/user_information_selected_item.dart';
 
-class AvatarCoverPhotoItem extends StatelessWidget {
-  const AvatarCoverPhotoItem({
-    Key? key
+class AvatarCoverPhotoSelectedItem extends StatelessWidget {
+  final Account account;
+
+  const AvatarCoverPhotoSelectedItem({
+    Key? key,
+    required this.account,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Account account = Provider.of<Account>(context, listen: false);
-
     return SizedBox(
       height: 350,
       child: Stack(
@@ -62,7 +63,7 @@ class AvatarCoverPhotoItem extends StatelessWidget {
                         maxRadius: 55,
                       ),
                       const SizedBox(width: 20),
-                      const UserInformationItem(),
+                      UserInformationSelectedItem(account: account),
                     ],
                   ),
                 ),

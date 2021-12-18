@@ -5,7 +5,8 @@ import 'package:test_fix/widgets/positions_section.dart';
 import 'educations_section.dart';
 
 class PageViewCustom extends StatefulWidget {
-  const PageViewCustom({Key? key}) : super(key: key);
+  final String id;
+  const PageViewCustom({Key? key, required this.id}) : super(key: key);
 
   @override
   _PageViewCustomState createState() => _PageViewCustomState();
@@ -26,7 +27,6 @@ class _PageViewCustomState extends State<PageViewCustom> {
 
   @override
   Widget build(BuildContext context) {
-    final id = FirebaseAuth.instance.currentUser!.uid;
     return Column(
       children: [
         const SizedBox(height: 10),
@@ -40,8 +40,8 @@ class _PageViewCustomState extends State<PageViewCustom> {
                 return Card(
                   elevation: 2,
                   child: index == 0
-                      ? PositionsSection(id: id)
-                      : EducationsSection(id: id),
+                      ? PositionsSection(id: widget.id)
+                      : EducationsSection(id: widget.id),
                 );
               }),
         ),

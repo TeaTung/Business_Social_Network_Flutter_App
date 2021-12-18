@@ -8,6 +8,8 @@ import 'package:test_fix/widgets/avatar_coverphoto_item.dart';
 import 'package:test_fix/widgets/list_detail_information_in_account_screen.dart';
 import 'package:test_fix/widgets/pageview_custom.dart';
 import 'package:test_fix/screens/setting_account_screen.dart';
+import 'package:search_widget/search_widget.dart';
+import 'package:test_fix/widgets/search_account_item.dart';
 
 import '../providers/account.dart';
 
@@ -51,15 +53,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  leading: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color.fromRGBO(248, 145, 71, 1),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
                   actions: [
                     IconButton(
                       icon: const Icon(
@@ -72,13 +65,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ],
                 ),
-
                 body: SingleChildScrollView(
                   physics: const ScrollPhysics(),
                   child: Column(
-                    children: const [
-                      AvatarCoverPhotoItem(),
-                      Padding(
+                    children:  [
+                      const AvatarCoverPhotoItem(),
+                      const SearchAccountItem(),
+                      const Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical: 7,
@@ -86,8 +79,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: ListDetailInformationInAccountScreen(),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: PageViewCustom(),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: PageViewCustom(id: id),
                       ),
                     ],
                   ),

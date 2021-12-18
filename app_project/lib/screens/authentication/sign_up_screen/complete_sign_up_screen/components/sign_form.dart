@@ -139,10 +139,14 @@ class _SignFormState extends State<SignForm> {
                       .set({
                     'uid': user.uid,
                     'email': user.email,
-                    'password': password,
                     'name': name,
                     'birthday': birthday,
                     'gender': sex,
+                    'id': '',
+                    'quote': '',
+                    'nationality': '',
+                    'coverPhotoUrl': '',
+                    'avatarUrl': '',
                     'isBusinessAccount': isBusiness,
                   });
                   Navigator.pushNamed(context, '/auth_wrapper');

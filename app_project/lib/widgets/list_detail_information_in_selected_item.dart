@@ -5,14 +5,16 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 
-class ListDetailInformationInAccountScreen extends StatelessWidget {
-  const ListDetailInformationInAccountScreen({Key? key})
-      : super(key: key);
+class ListDetailInformationInSelectedItem extends StatelessWidget {
+  final Account account;
+
+  const ListDetailInformationInSelectedItem({
+    Key? key,
+    required this.account,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Account account = Provider.of<Account>(context, listen: false);
-
     Widget detailInformation(IconData icon, String title, String detail) {
       return Row(
         children: [

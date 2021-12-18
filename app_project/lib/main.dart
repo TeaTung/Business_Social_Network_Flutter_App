@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:test_fix/providers/accounts.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
@@ -49,6 +50,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Comments(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Accounts(),
         ),
         ChangeNotifierProvider.value(
           value: Account(

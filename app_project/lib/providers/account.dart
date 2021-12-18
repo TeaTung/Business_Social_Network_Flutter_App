@@ -19,12 +19,7 @@ class Account with ChangeNotifier {
   String email;
   String userName;
   String avatarUrl;
-
-  //users who this account is following
-  List<String>? uidFollowing;
-
-  //users who is following this account
-  List<String>? uidFollowers;
+  List<String> uidFollowers = [];
 
   Account(
       {required this.id,
@@ -34,11 +29,31 @@ class Account with ChangeNotifier {
       required this.birthDate,
       required this.nationality,
       required this.gender,
-      this.uidFollowers,
-      this.uidFollowing,
       required this.userName,
       required this.email,
       this.avatarUrl = ''});
+
+  void addUidFollowers(String myId, String hisId) async {
+    uidFollowers.add(id);
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(hisId)
+        .update(({'listUidFollowers': FieldValue.arrayUnion(uidFollowers)}));
+
+    notifyListeners();
+  }
+
+  void removeUidFollowers(String id, String hisId) {
+    List<String> list = uidFollowers;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(hisId)
+        .update(({'listUidFollowers': FieldValue.arrayRemove(list)}));
+
+    uidFollowers.remove(id);
+    notifyListeners();
+  }
 
   Future<Account> getMyAccount(String myId) async {
     await FirebaseFirestore.instance
@@ -56,6 +71,7 @@ class Account with ChangeNotifier {
       coverPhotoUrl = value['coverPhotoUrl'];
       userName = value['name'];
       avatarUrl = value['avatarUrl'];
+
       notifyListeners();
     }).catchError((error) {
       throw error;
@@ -111,22 +127,22 @@ class Account with ChangeNotifier {
     );
 
     try {
-      var authResult = await user!.reauthenticateWithCredential(authCredentials);
+      var authResult =
+          await user!.reauthenticateWithCredential(authCredentials);
       return authResult.user != null;
     } catch (errors) {
       print("errors");
       return false;
     }
-
   }
 
-  Future<void> updatePassword(String newPassword) async{
+  Future<void> updatePassword(String newPassword) async {
     var user = FirebaseAuth.instance.currentUser;
 
     await user!.updatePassword(newPassword);
   }
 
-  void setAndFetchAvatar (File image) async {
+  void setAndFetchAvatar(File image) async {
     var user = FirebaseAuth.instance.currentUser;
     var newAvatarUrl = '';
     final ref = FirebaseStorage.instance
@@ -144,11 +160,11 @@ class Account with ChangeNotifier {
       });
       avatarUrl = newAvatarUrl;
       notifyListeners();
-    });;
-
+    });
+    ;
   }
 
-  void setAndFetchCoverPhoto (File image) async {
+  void setAndFetchCoverPhoto(File image) async {
     var user = FirebaseAuth.instance.currentUser;
     var newCoverPhotoUrl = '';
     final ref = FirebaseStorage.instance
@@ -169,12 +185,7 @@ class Account with ChangeNotifier {
     });
   }
 
-
   int followersCount() {
-    if (uidFollowers != null) {
-      return uidFollowers!.length;
-    } else {
-      return 0;
-    }
+    return uidFollowers.length;
   }
 }

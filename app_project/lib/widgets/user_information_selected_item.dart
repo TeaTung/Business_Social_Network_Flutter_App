@@ -1,18 +1,16 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:test_fix/providers/account.dart';
 
-class UserInformationItem extends StatelessWidget {
+class UserInformationSelectedItem extends StatelessWidget {
+  final Account account;
 
-  const UserInformationItem({
+  const UserInformationSelectedItem({
+    required this.account,
     Key? key
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Account account = Provider.of<Account>(context, listen: false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
