@@ -142,7 +142,7 @@ class _SignFormState extends State<SignForm> {
                     'name': name,
                     'birthday': birthday,
                     'gender': sex,
-                    'id': '',
+                    'id': user.uid,
                     'quote': '',
                     'nationality': '',
                     'coverPhotoUrl': '',
