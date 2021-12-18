@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:test_fix/providers/comment_provider.dart';
 import 'package:test_fix/providers/comments_provider.dart';
 
-import '../providers/comments.dart';
-import '../providers/post_provider.dart';
-import '../providers/user_info.dart';
+import '../../providers/comments.dart';
+import '../../providers/post_provider.dart';
+import '../../providers/user_info.dart';
 
 class CommentField extends StatefulWidget {
   final String userImageUrl;

@@ -17,12 +17,12 @@ class PostsProvider with ChangeNotifier {
 
   Stream<List<PostProvider>> list = Stream.empty();
 
-  void createPost(
-    String content,
+  void createPost({
+    required String content,
     String? imageUrl,
-    UserInfoLocal userInfoLocal,
-  ) async {
-    var id = Uuid().v4();
+    required UserInfoLocal userInfoLocal,
+  }) async {
+    var id = const Uuid().v4();
     await _posts.doc(id).set({
       'id': id,
       'content': content,
@@ -69,20 +69,6 @@ class PostsProvider with ChangeNotifier {
               avatarUrl: data['userAvatarUrl'],
             )),
           );
-
-          // DocumentReference document = FirebaseFirestore.instance
-          //     .collection("users")
-          //     .doc(data['postCreatedUserId']);
-
-          // document.get().then((value) {
-          //   Map<String, dynamic> data = value.data() as Map<String, dynamic>;
-
-          //   postProvider.userInfoLocal = UserInfoLocal(
-          //     uid: data['uid'],
-          //     userName: data['name'],
-          //     avatarUrl: data['avatarUrl'],
-          //   );
-          // });
 
           return postProvider;
         }).toList());

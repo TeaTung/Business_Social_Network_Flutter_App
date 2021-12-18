@@ -7,8 +7,12 @@ import 'package:test_fix/screens/authentication/sign_up_screen/sign_up_screen.da
 import 'package:test_fix/screens/authentication/welcome_screen.dart';
 import 'package:test_fix/screens/detail_business_post_screen.dart';
 import 'package:test_fix/screens/detail_message_screen.dart';
-import 'package:test_fix/screens/detail_post_screen.dart';
+
 import 'package:test_fix/screens/onboarding/onboarding_screen.dart';
+import 'package:test_fix/screens/posts/create_business_post_screen.dart';
+import 'package:test_fix/screens/posts/create_normal_post_screen.dart';
+import 'package:test_fix/screens/posts/list_post_screen.dart';
+import 'package:test_fix/screens/posts/middle_post_create_screen.dart';
 import 'package:test_fix/widgets/change_information_item.dart';
 import 'package:test_fix/widgets/overview_message_item.dart';
 import 'package:test_fix/widgets/setting_account.dart';
@@ -25,4 +29,9 @@ var routes = <String, WidgetBuilder>{
   SignInScreen.routeName: (ctx) => SignInScreen(),
   WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
   AuthWrapper.routeName: (ctx) => AuthWrapper(),
+
+  ListPostScreen.routeName: (ctx) => ListPostScreen(),
+  MiddlePostCreateScreen.routeName: (ctx) => MiddlePostCreateScreen(),
+  CreateNormalPostScreen.routeName: (ctx) => CreateNormalPostScreen(),
+  CreateBusinessPostScreen.routeName: (ctx) => CreateBusinessPostScreen(),
 };

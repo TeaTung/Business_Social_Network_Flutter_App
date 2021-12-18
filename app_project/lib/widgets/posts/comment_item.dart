@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/comments.dart';
+import 'package:test_fix/providers/comments_provider.dart';
+import '../../providers/comments.dart';
 
 class CommentItem extends StatelessWidget {
   final String id;
@@ -9,8 +10,10 @@ class CommentItem extends StatelessWidget {
   final String userCommentText;
   final bool isMyComment;
   final DateTime postDate;
+  final String postId;
 
   CommentItem({
+    required this.postId,
     required this.id,
     required this.userName,
     required this.userAvatarUrl,
@@ -21,7 +24,10 @@ class CommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listComment = Provider.of<Comments>(context);
+    final listComment = Provider.of<Comments>(context, listen: false);
+
+    final commentsProvider = Provider.of<CommentsProvider>(context);
+
     String returnTimePost() {
       var days = DateTime.now().difference(postDate).inDays;
       var hours = DateTime.now().difference(postDate).inHours;
@@ -60,7 +66,7 @@ class CommentItem extends StatelessWidget {
               const SizedBox(width: 7),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   padding: const EdgeInsets.all(7),
                   decoration: const BoxDecoration(
                     // color: Color.fromRGBO(235, 235, 235, 1),
@@ -126,7 +132,10 @@ class CommentItem extends StatelessWidget {
                                       TextButton(
                                           child: const Text('Yes'),
                                           onPressed: () {
-                                            listComment.removeComment(id);
+                                            commentsProvider.deleteCommentById(
+                                              commentId: id,
+                                              postId: postId,
+                                            );
                                             Navigator.of(ctx).pop();
                                           }),
                                       TextButton(

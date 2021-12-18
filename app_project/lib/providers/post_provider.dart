@@ -1,16 +1,22 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:test_fix/providers/posts_provider.dart';
 
 import './user_info.dart';
 import 'comments.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 //This class create individual post to load to posts list
 class PostProvider with ChangeNotifier {
   final String id;
   // final UserInfoLocal userInfo;
   final String content;
-  final String imageUrl;
+  String imageUrl;
   Comments? comments;
   bool isFavourite;
   final DateTime postTime;
@@ -181,7 +187,34 @@ class PostProvider with ChangeNotifier {
         .get();
   }
 
-  // UserInfoLocal getUserInforUser(String userId) {}
+  Future<void> savePostToDatabase({
+    required PostsProvider postsProvider,
+    required UserInfoLocal myUserInfoLocal,
+    required PickedFile imageFile,
+  }) async {
+    if (imageFile != null) {
+      FirebaseStorage _storage = FirebaseStorage.instance;
+
+      Reference reference = _storage.ref().child('/images/posts/');
+
+      firebase_storage.TaskSnapshot taskSnapshot =
+          await reference.putFile(File(imageFile.path));
+
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+      postsProvider.createPost(
+        content: content,
+        userInfoLocal: myUserInfoLocal,
+        imageUrl: downloadUrl,
+      );
+    } else {
+      postsProvider.createPost(
+        content: content,
+        userInfoLocal: myUserInfoLocal,
+        imageUrl: null,
+      );
+    }
+  }
 }
 
 class PostDetail with ChangeNotifier {

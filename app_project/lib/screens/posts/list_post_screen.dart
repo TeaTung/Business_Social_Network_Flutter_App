@@ -1,21 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:test_fix/providers/user_info.dart';
+import 'package:test_fix/screens/posts/create_normal_post_screen.dart';
+import 'package:test_fix/screens/posts/middle_post_create_screen.dart';
 
-import '../widgets/post_item.dart';
+import '../../../widgets/posts/post_item.dart';
 
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/post_provider.dart';
-import '../providers/posts_provider.dart';
+import '../../../providers/post_provider.dart';
+import '../../../providers/posts_provider.dart';
 
 class ListPostScreen extends StatelessWidget {
   final _controller = ScrollController();
 
   late AnimationController controller;
 
+  static const String routeName = '/LIST_POST_SCREEN';
   //  var oldThings =
   //     StreamBuilder(
   //       stream: listPost.getPost(),
@@ -84,11 +86,20 @@ class ListPostScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                listPost.createPost('Content 1', null, userInfoLocal);
-                _controller.animateTo(
-                  _controller.position.maxScrollExtent,
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.fastOutSlowIn,
+                // listPost.createPost(
+                //     content:
+                //         'The decision about what to put into your paragraphs begins with the germination of a seed of ideas;',
+                //     imageUrl: "https://picsum.photos/200/300",
+                //     userInfoLocal: userInfoLocal);
+                // _controller.animateTo(
+                //   _controller.position.maxScrollExtent,
+                //   duration: const Duration(seconds: 1),
+                //   curve: Curves.fastOutSlowIn,
+                // );
+
+                Navigator.pushNamed(
+                  context,
+                  MiddlePostCreateScreen.routeName,
                 );
               },
               child: const Icon(

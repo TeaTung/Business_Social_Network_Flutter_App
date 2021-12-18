@@ -60,6 +60,8 @@ dependencies:
   overlay_support: ^1.2.1
   uuid: ^3.0.5
   rxdart: ^0.27.3
+  cached_network_image: ^3.2.0
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

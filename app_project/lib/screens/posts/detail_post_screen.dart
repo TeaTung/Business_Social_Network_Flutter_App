@@ -1,21 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
-import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/SMS/util.dart';
-import 'package:test_fix/providers/comment_provider.dart';
 import 'package:test_fix/providers/comments_provider.dart';
 import 'package:test_fix/providers/posts_provider.dart';
-import 'package:test_fix/providers/user_info.dart';
-import 'package:test_fix/widgets/list_comments.dart';
-import 'package:test_fix/widgets/post_item.dart';
+import 'package:test_fix/widgets/posts/post_item.dart';
 
-import '../providers/comments.dart';
-import '../providers/post_provider.dart';
-import '../widgets/comment_field.dart';
-import '../widgets/comment_item.dart';
-import '../widgets/post_detail_screen_item.dart';
+import '../../../providers/post_provider.dart';
+import '../../../widgets/posts/comment_field.dart';
 
 class DetailPostScreen extends StatefulWidget {
   static const routeName = '/DetailPostScreen';
@@ -87,7 +81,7 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
             decoration: BoxDecoration(
               image: (widget.post.imageUrl != null)
                   ? DecorationImage(
-                      image: NetworkImage(
+                      image: CachedNetworkImageProvider(
                         widget.post.imageUrl.toString(),
                       ),
                       fit: BoxFit.cover,
@@ -162,6 +156,10 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                         child: Text(
                           widget.post.content,
                           textAlign: TextAlign.start,
+                          style: GoogleFonts.workSans(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),

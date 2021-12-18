@@ -9,6 +9,9 @@ class CommentsProvider with ChangeNotifier {
   final CollectionReference _comments =
       FirebaseFirestore.instance.collection('comments');
 
+  final CollectionReference _posts =
+      FirebaseFirestore.instance.collection('posts');
+
   Stream<QuerySnapshot> getCommentForPost(String postId) {
     var documentStream = FirebaseFirestore.instance
         .collection('comments')
@@ -24,7 +27,7 @@ class CommentsProvider with ChangeNotifier {
     required String postId,
     required UserInfoLocal userInfoLocal,
   }) async {
-    var id = Uuid().v4();
+    var id = const Uuid().v4();
     await _comments.doc(id).set({
       'id': id,
       'content': content,
@@ -34,6 +37,24 @@ class CommentsProvider with ChangeNotifier {
       'postDate': DateTime.now(),
       'userAvatarUrl': userInfoLocal.avatarUrl,
       'userName': userInfoLocal.userName,
+    });
+  }
+
+  Future<void> deleteCommentById({
+    required String commentId,
+    required String postId,
+  }) async {
+    await _comments.doc(commentId).delete();
+
+    print(postId);
+
+    await _posts.doc(postId).update({
+      'commentUsers':
+          FieldValue.arrayRemove([FirebaseChatCore.instance.firebaseUser!.uid])
+    });
+
+    await _posts.doc(postId).update({
+      'commentCount': FieldValue.increment(-1),
     });
   }
 }

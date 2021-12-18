@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -7,10 +10,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/comments_provider.dart';
 import 'package:test_fix/screens/authentication/sign_up_screen/sign_up_screen.dart';
-import 'package:test_fix/screens/detail_post_screen.dart';
-import 'package:test_fix/widgets/list_comments.dart';
-import '../providers/comments.dart';
-import '../providers/post_provider.dart';
+import 'package:test_fix/screens/posts/detail_post_screen.dart';
+import 'package:test_fix/widgets/posts/list_comments.dart';
+import '../../providers/comments.dart';
+import '../../providers/post_provider.dart';
 
 //This widget represents for one individual post to load to posts list
 class PostItem extends StatelessWidget {
@@ -19,6 +22,8 @@ class PostItem extends StatelessWidget {
   final PostProvider postProvider;
   @override
   Widget build(BuildContext context) {
+    double c_width = MediaQuery.of(context).size.width * 0.6;
+
     return Wrap(
       children: [
         Card(
@@ -39,31 +44,33 @@ class PostItem extends StatelessWidget {
                       children: [
                         // postProvider.imageUrl != null
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              postProvider.userInfoLocal!.avatarUrl.toString()),
+                          backgroundImage: CachedNetworkImageProvider(
+                            postProvider.userInfoLocal!.avatarUrl.toString(),
+                          ),
                         ),
 
                         const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              postProvider.userInfoLocal!.userName,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                            Container(
+                              width: c_width,
+                              child: Text(postProvider.userInfoLocal!.userName,
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.workSans().copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  )),
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              DateFormat('hh:mm - dd/MM/yyyy')
-                                  .format(postProvider.postTime),
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                color: Colors.black26,
-                              ),
-                            ),
+                                DateFormat('hh:mm - dd/MM/yyyy')
+                                    .format(postProvider.postTime),
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.workSans().copyWith(
+                                  fontSize: 15,
+                                  color: Colors.black26,
+                                )),
                           ],
                         ),
                       ],
@@ -72,17 +79,26 @@ class PostItem extends StatelessWidget {
                     Text(
                       postProvider.content,
                       textAlign: TextAlign.left,
-                      style: const TextStyle(fontWeight: FontWeight.normal),
+                      style: GoogleFonts.workSans(),
                     ),
                   ],
                 ),
               ),
               if (postProvider.imageUrl != null)
-                Image.network(
-                  postProvider.imageUrl!,
+                CachedNetworkImage(
+                  imageUrl: postProvider.imageUrl,
                   height: 280,
                   fit: BoxFit.cover,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      SizedBox(
+                    height: 30,
+                    child: LinearProgressIndicator(
+                      value: downloadProgress.progress,
+                      color: const Color.fromRGBO(248, 145, 71, 1),
+                    ),
+                  ),
                   width: double.infinity,
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               /*const Divider(),*/
               ClipRRect(
@@ -398,7 +414,7 @@ class CommentPostButton extends StatelessWidget {
       );
     }
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25),
+      margin: const EdgeInsets.symmetric(horizontal: 25),
       child: SizedBox(
         height: 40.0,
         child: LikeButton(

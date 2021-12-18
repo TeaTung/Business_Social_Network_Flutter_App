@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:test_fix/SMS/rooms.dart';
+
 import 'package:test_fix/navigators/bottom_navigator.dart';
-import 'account_screen.dart';
-import 'list_post_screen.dart';
-import 'notification_screen.dart';
+import 'package:test_fix/screens/posts/create_normal_post_screen.dart';
+import 'package:test_fix/screens/posts/list_post_screen.dart';
+import 'package:test_fix/screens/posts/middle_post_create_screen.dart';
 import 'onboarding/onboarding_screen.dart';
-import 'overview_message_screen.dart';
-import 'process_screen.dart';
 import 'package:provider/provider.dart';
 
 class AuthWrapper extends StatefulWidget {
@@ -47,7 +45,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
       body: PageView(
         controller: controller,
         children: [
-          RoomsPage(),
           ListPostScreen(),
         ],
         onPageChanged: (index) {
@@ -56,7 +53,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
           });
         },
       ),
-      bottomNavigationBar: _buildBottomBar(),
+      //  bottomNavigationBar: _buildBottomBar(),
     );
   }
 
