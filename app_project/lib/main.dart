@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/accounts.dart';
+import 'package:test_fix/providers/chats/chat_provider.dart';
+import 'package:test_fix/providers/chats/friend_provider.dart';
+import 'package:test_fix/providers/chats/room_provider.dart';
 import 'package:test_fix/providers/educations.dart';
 import 'package:test_fix/providers/messages.dart';
 import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/providers/post/post_provider.dart';
 import 'package:test_fix/providers/post/posts_provider.dart';
 import 'package:test_fix/providers/user_info.dart';
+import 'package:test_fix/screens/chat/friend.dart';
 import 'package:test_fix/screens/onboarding/onboarding_screen.dart';
 import 'package:test_fix/screens/post/detail_post_screen.dart';
 import './providers/account.dart';
@@ -52,6 +56,12 @@ class MyApp extends StatelessWidget {
           value: Accounts(),
         ),
         ChangeNotifierProvider.value(
+          value: ChatProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RoomProvider(),
+        ),
+        ChangeNotifierProvider.value(
           value: Account(
             email: '',
             id: '',
@@ -69,7 +79,9 @@ class MyApp extends StatelessWidget {
           value: UserInfoLocal.fromFirebase(),
           initialData: null,
         ),
-
+        ChangeNotifierProvider(
+          create: (_) => FriendProvider(),
+        ),
         // this is for post
         ChangeNotifierProvider(
           create: (_) => Posts(),
@@ -127,15 +139,32 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: routes,
         onGenerateRoute: (settings) {
-          final args = settings.arguments as PostProvider;
-          print(args);
-          return MaterialPageRoute(
-            builder: (context) {
-              return DetailPostScreen(
-                post: args,
+          switch (settings.name) {
+            case FriendPage.routedName:
+              {
+                return MaterialPageRoute(
+                  builder: (BuildContext context) => FriendPage(),
+                );
+              }
+            case DetailPostScreen.routeName:
+              final args = settings.arguments as PostProvider;
+              print(args);
+              return MaterialPageRoute(
+                builder: (context) {
+                  return DetailPostScreen(
+                    post: args,
+                  );
+                },
               );
-            },
-          );
+
+            default:
+              return MaterialPageRoute(
+                builder: (_) => Scaffold(
+                  body: Center(
+                      child: Text('No route defined for ${settings.name}')),
+                ),
+              );
+          }
         },
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 class UserInfoLocal with ChangeNotifier {
@@ -22,6 +24,14 @@ class UserInfoLocal with ChangeNotifier {
     return userName;
   }
 
+  types.User toUserChat() {
+    return types.User(
+      id: uid,
+      firstName: userName,
+      imageUrl: avatarUrl,
+    );
+  }
+
   void setAvatarUrl(String newAvatarUrl) {
     avatarUrl = newAvatarUrl;
     notifyListeners();
@@ -35,7 +45,7 @@ class UserInfoLocal with ChangeNotifier {
   static Future<UserInfoLocal> fromFirebase() async {
     DocumentReference users = FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseChatCore.instance.firebaseUser!.uid);
+        .doc(FirebaseAuth.instance.currentUser!.uid);
     UserInfoLocal userInfoLocal = UserInfoLocal(uid: '', userName: '');
     await users.get().then((value) {
       Map<String, dynamic> data = value.data() as Map<String, dynamic>;
