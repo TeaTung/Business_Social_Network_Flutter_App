@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/accounts.dart';
+import 'package:test_fix/providers/ad_state.dart';
 import 'package:test_fix/providers/chats/chat_provider.dart';
 import 'package:test_fix/providers/chats/friend_provider.dart';
 import 'package:test_fix/providers/chats/room_provider.dart';
@@ -13,6 +14,7 @@ import 'package:test_fix/providers/positions.dart';
 import 'package:test_fix/providers/post/post_provider.dart';
 import 'package:test_fix/providers/post/posts_provider.dart';
 import 'package:test_fix/providers/user_info.dart';
+import 'package:test_fix/screens/auth_wrapper.dart';
 import 'package:test_fix/screens/chat/friend.dart';
 import 'package:test_fix/screens/onboarding/onboarding_screen.dart';
 import 'package:test_fix/screens/post/detail_post_screen.dart';
@@ -25,11 +27,13 @@ import 'helpers/auth_services.dart';
 import 'helpers/facebook_auth_controller.dart';
 import 'helpers/google_auth_controller.dart';
 import 'navigators/routes.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  final adsInitialization = MobileAds.instance.initialize();
   runApp(MyApp());
 }
 
@@ -179,6 +183,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return OnBoardingScreen();
+    return AuthWrapper();
   }
 }
