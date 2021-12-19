@@ -144,7 +144,7 @@ class _SignFormState extends State<SignForm> {
                     'gender': sex,
                     'id': user.uid,
                     'quote': '',
-                    'nationality': '',
+                    'nationality': nationality,
                     'coverPhotoUrl': '',
                     'avatarUrl': '',
                     'isBusinessAccount': isBusiness,
