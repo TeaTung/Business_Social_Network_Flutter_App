@@ -1,8 +1,10 @@
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:test_fix/providers/post/post_provider.dart';
 import 'package:test_fix/providers/post/posts_provider.dart';
 import 'package:test_fix/providers/user_info.dart';
 
 import 'package:flutter/material.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class ListPostScreen extends StatelessWidget {
   late AnimationController controller;
 
   static const String routeName = '/LIST_POST_SCREEN';
+
   //  var oldThings =
   //     StreamBuilder(
   //       stream: listPost.getPost(),
@@ -60,11 +63,18 @@ class ListPostScreen extends StatelessWidget {
   //         );
   //       },
 
+  final BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
+
   @override
   Widget build(BuildContext context) {
     final listPost = Provider.of<PostsProvider>(context);
     final userInfoLocal = Provider.of<UserInfoLocal>(context);
-
+    myBanner.load();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -131,24 +141,31 @@ class ListPostScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: StreamBuilder<List<PostProvider>>(
-        stream: listPost.getPost(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              controller: _controller,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return PostItem(
-                  postProvider: snapshot.data![index],
+      body: Column(
+        children: [
+          SizedBox(height: 60, width: 600, child: AdWidget(ad: myBanner)),
+          StreamBuilder<List<PostProvider>>(
+            stream: listPost.getPost(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Expanded(
+                  child: ListView.builder(
+                    controller: _controller,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return PostItem(
+                        postProvider: snapshot.data![index],
+                      );
+                    },
+                  ),
                 );
-              },
-            );
-          } else
-            return Center(
-              child: Text('Loading'),
-            );
-        },
+              } else
+                return Center(
+                  child: Text('Loading'),
+                );
+            },
+          ),
+        ],
       ),
     );
   }
