@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:test_fix/providers/post/comments_provider.dart';
 import 'package:test_fix/providers/post/post_provider.dart';
 import 'package:test_fix/providers/post/posts_provider.dart';
+import 'package:test_fix/screens/chat/util.dart';
 import 'package:test_fix/widgets/post/comment_field.dart';
 import 'package:test_fix/widgets/post/post_item.dart';
 
@@ -85,9 +86,9 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                       fit: BoxFit.cover,
                     )
                   : null,
-              // color: (widget.post.imageUrl == null)
-              //     ? getUserAvatarNameColor(widget.post.id)
-              //     : null,
+              color: (widget.post.imageUrl == null)
+                  ? getUserAvatarNameColor(widget.post.id)
+                  : null,
             ),
             child: StreamBuilder<DocumentSnapshot>(
               stream: postsProvider.getPostById(postId: widget.post.id),

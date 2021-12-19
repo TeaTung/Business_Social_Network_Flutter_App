@@ -46,8 +46,6 @@ class CommentsProvider with ChangeNotifier {
   }) async {
     await _comments.doc(commentId).delete();
 
-    print(postId);
-
     await _posts.doc(postId).update({
       'commentUsers':
           FieldValue.arrayRemove([FirebaseChatCore.instance.firebaseUser!.uid])
