@@ -54,36 +54,30 @@ class ListPostScreen extends StatelessWidget {
           ),
         ),
       ),
-
       body: StreamBuilder<List<PostProvider>>(
         stream: listPost.getPost(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Column(
-              children: [
-                 SizedBox(height: 60, width: 600, child: AdWidget(ad: myBanner)),
-
-                SearchAccountItem(),
-                Expanded(
-                  child: ListView.builder(
-                    controller: _controller,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return PostItem(
-                        postProvider: snapshot.data![index],
-                      );
-                    },
-                  ),
-
-                );
-              } else
-                return Center(
-                  child: Text('Loading'),
-                );
-            },
-          ),
-        ],
-
+            return Column(children: [
+              SizedBox(height: 60, width: 600, child: AdWidget(ad: myBanner)),
+              SearchAccountItem(),
+              Expanded(
+                child: ListView.builder(
+                  controller: _controller,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return PostItem(
+                      postProvider: snapshot.data![index],
+                    );
+                  },
+                ),
+              )
+            ]);
+          } else
+            return Center(
+              child: Text('Loading'),
+            );
+        },
       ),
     );
   }
