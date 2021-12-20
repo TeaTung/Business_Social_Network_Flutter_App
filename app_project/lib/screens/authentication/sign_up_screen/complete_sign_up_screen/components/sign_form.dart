@@ -27,7 +27,7 @@ class _SignFormState extends State<SignForm> {
   String nationality = 'Vietnam';
   String email = '';
   String password = '';
-  String sex = '';
+  String sex = 'Male';
   bool isBusiness = false;
   late FocusNode birthdayFocusNode;
 
@@ -144,7 +144,7 @@ class _SignFormState extends State<SignForm> {
                     'gender': sex,
                     'id': user.uid,
                     'quote': '',
-                    'nationality': '',
+                    'nationality': nationality,
                     'coverPhotoUrl': '',
                     'avatarUrl': '',
                     'isBusinessAccount': isBusiness,
