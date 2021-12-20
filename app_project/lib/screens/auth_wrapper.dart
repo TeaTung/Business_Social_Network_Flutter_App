@@ -4,7 +4,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:test_fix/navigators/bottom_navigator.dart';
 import 'package:test_fix/providers/user_info.dart';
 import 'package:test_fix/screens/chat/rooms.dart';
+import 'package:test_fix/screens/detail_business_post_screen.dart';
+import 'package:test_fix/screens/post/create_normal_post_screen.dart';
+import 'package:test_fix/screens/post_business/create_business_post_screen.dart';
 import 'package:test_fix/screens/post/list_post_screen.dart';
+import 'package:test_fix/screens/post_business/create_process_detail_screen.dart';
+import 'package:test_fix/screens/post_business/create_process_post_screen.dart';
+import 'package:test_fix/screens/process_detail_screen.dart';
 import 'account_screen.dart';
 import 'notification_screen.dart';
 import 'onboarding/onboarding_screen.dart';
@@ -48,11 +54,13 @@ class _AuthWrapperState extends State<AuthWrapper> {
       body: PageView(
         controller: controller,
         children: [
+          // ListPostScreen(),
+          //RoomsPage(),
+
+          //DetailBusinessPostScreen(),
+
+          //CreateProcessPostScreen(),
           ListPostScreen(),
-          FutureProvider(
-              create: (BuildContext context) => UserInfoLocal.fromFirebase(),
-              initialData: null,
-              child: RoomsPage()),
         ],
         onPageChanged: (index) {
           setState(() {

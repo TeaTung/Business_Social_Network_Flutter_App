@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:test_fix/providers/accounts.dart';
 import 'package:test_fix/providers/ad_state.dart';
@@ -95,7 +96,7 @@ class MyApp extends StatelessWidget {
         ),
 
         ChangeNotifierProvider.value(
-          value: Processes(),
+          value: ProcessesProvider(),
         ),
         ChangeNotifierProvider.value(
           value: Positions(),

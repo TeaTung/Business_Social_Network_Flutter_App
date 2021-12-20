@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../providers/process.dart';
 
 class ListDetailProcessDetailItem extends StatelessWidget {
-  final Process process;
+  final ProcessProvider process;
 
   const ListDetailProcessDetailItem({Key? key, required this.process})
       : super(key: key);

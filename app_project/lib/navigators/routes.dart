@@ -19,6 +19,7 @@ import 'package:test_fix/screens/positon_screen.dart';
 import 'package:test_fix/screens/post/create_normal_post_screen.dart';
 import 'package:test_fix/screens/post/list_post_screen.dart';
 import 'package:test_fix/screens/post/middle_post_create_screen.dart';
+import 'package:test_fix/screens/post_business/create_business_post_screen.dart';
 import 'package:test_fix/widgets/change_information_item.dart';
 import 'package:test_fix/screens/change_information_screen.dart';
 import 'package:test_fix/widgets/overview_message_item.dart';
@@ -47,4 +48,5 @@ var routes = <String, WidgetBuilder>{
   MiddlePostCreateScreen.routeName: (ctx) => MiddlePostCreateScreen(),
   CreateNormalPostScreen.routeName: (ctx) => CreateNormalPostScreen(),
   ListPostScreen.routeName: (ctx) => ListPostScreen(),
+  CreateBusinessPostScreen.routeName: (ctx) => CreateBusinessPostScreen(),
 };

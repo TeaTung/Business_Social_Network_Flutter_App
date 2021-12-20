@@ -23,6 +23,7 @@ class PostProvider with ChangeNotifier {
   final DateTime postTime;
 
   final String postCreatedUserId;
+  late final String? roundId;
 
   //Variables bellow point out that post is business post or not to add additional information to the post
   final bool isBusinessPost;
@@ -44,6 +45,7 @@ class PostProvider with ChangeNotifier {
   UserInfoLocal? userInfoLocal;
 
   PostProvider({
+    this.roundId,
     required this.postCreatedUserId,
     this.isFavourite = false,
     required this.postTime,
@@ -215,6 +217,15 @@ class PostProvider with ChangeNotifier {
         imageUrl: null,
       );
     }
+  }
+
+  Stream<DocumentSnapshot> getRoundsForPost() {
+    var documentStream = FirebaseFirestore.instance
+        .collection('processes')
+        .doc(roundId)
+        .snapshots();
+
+    return documentStream;
   }
 }
 

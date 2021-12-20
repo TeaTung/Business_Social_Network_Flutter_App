@@ -10,7 +10,7 @@ class ProcessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listProcess = Provider.of<Processes>(context).items;
+    //  final listProcess = Provider.of<ProcessesProvider>(context).items;
 
     return Scaffold(
       appBar: AppBar(
@@ -35,15 +35,15 @@ class ProcessScreen extends StatelessWidget {
         child: ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: listProcess.length,
+          itemCount: 0,
           itemBuilder: (context, index) => Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(4)),
               border: Border.all(color: Colors.grey, width: 0.5),
             ),
-            child: ProcessItem(
-              process: listProcess[index],
-            ),
+            // child: ProcessItem(
+            //   process: Proc,
+            // ),
           ),
           separatorBuilder: (BuildContext context, int index) =>
               const SizedBox(height: 40),

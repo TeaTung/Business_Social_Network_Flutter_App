@@ -1,34 +1,37 @@
 import 'dart:io';
+import 'package:provider/provider.dart';
+import 'package:test_fix/providers/post/posts_provider.dart';
+import 'package:test_fix/providers/user_info.dart';
+import 'package:test_fix/screens/post_business/create_process_post_screen.dart';
+import 'package:uuid/uuid.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:test_fix/providers/post/post_provider.dart';
-import 'package:test_fix/providers/post/posts_provider.dart';
-import 'package:test_fix/providers/user_info.dart';
-import 'package:test_fix/screens/post/list_post_screen.dart';
-import 'package:uuid/uuid.dart';
 
-class CreateNormalPostScreen extends StatefulWidget {
-  static var routeName = '/CREATENORMALPOSTSCREEN';
+class CreateBusinessPostScreen extends StatefulWidget {
+  static var routeName = '/CREATEBUSINESSPOSTSCREEN';
 
-  const CreateNormalPostScreen({Key? key}) : super(key: key);
+  const CreateBusinessPostScreen({Key? key}) : super(key: key);
 
   @override
-  _CreateNormalPostScreenState createState() => _CreateNormalPostScreenState();
+  _CreateBusinessPostScreenState createState() =>
+      _CreateBusinessPostScreenState();
 }
 
-class _CreateNormalPostScreenState extends State<CreateNormalPostScreen> {
+class _CreateBusinessPostScreenState extends State<CreateBusinessPostScreen> {
   var _back_color = Color.fromRGBO(248, 227, 203, 1);
   var imageFile = null;
   final _form = GlobalKey<FormState>();
+
   late PostProvider _post;
 
   @override
   Widget build(BuildContext context) {
-    var posts = Provider.of<PostsProvider>(context, listen: true);
     var userInforLocal = Provider.of<UserInfoLocal>(context);
+    var posts = Provider.of<PostsProvider>(context, listen: true);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -152,18 +155,29 @@ class _CreateNormalPostScreenState extends State<CreateNormalPostScreen> {
               width: double.infinity,
               height: 100,
               child: ElevatedButton(
-                child: Text("POST IT NOW",
+                child: Text("NEXT",
                     style: GoogleFonts.workSans().copyWith(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     )),
                 onPressed: () {
-                  savePost(
-                    posts,
-                    userInforLocal,
+                  // savePost(
+                  //   posts,
+                  //   userInforLocal,
+                  //);
+                  // int count = 0;
+                  // Navigator.of(context).popUntil((_) => count++ >= 2);
+
+                  savePost(posts, userInforLocal);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateProcessPostScreen(
+                        businessPostProvider: _post,
+                        imageFile: imageFile,
+                      ),
+                    ),
                   );
-                  int count = 0;
-                  Navigator.of(context).popUntil((_) => count++ >= 2);
                 },
                 style: ElevatedButton.styleFrom(
                     elevation: 1,
@@ -252,6 +266,7 @@ class _CreateNormalPostScreenState extends State<CreateNormalPostScreen> {
         content: _post.content,
         isBusinessPost: false,
         likeCount: 0,
+        userInfoLocal: userInfoLocal,
         postTime: DateTime.now(),
         imageUrl: '',
         commentCount: 0,
@@ -262,16 +277,17 @@ class _CreateNormalPostScreenState extends State<CreateNormalPostScreen> {
         shareUsers: [],
       );
 
-      _post.savePostToDatabase(
-        postsProvider: posts,
-        myUserInfoLocal: userInfoLocal,
-        imageFile: imageFile,
-      );
+      // _post.savePostToDatabase(
+      //   postsProvider: posts,
+      //   myUserInfoLocal: userInfoLocal,
+      //   imageFile: imageFile,
+      // );
     } else {
       _post = PostProvider(
         id: _post.id,
         content: _post.content,
-        isBusinessPost: false,
+        isBusinessPost: true,
+        userInfoLocal: userInfoLocal,
         likeCount: 0,
         postTime: DateTime.now(),
         imageUrl: '',
@@ -283,161 +299,11 @@ class _CreateNormalPostScreenState extends State<CreateNormalPostScreen> {
         shareUsers: [],
       );
 
-      _post.savePostToDatabase(
-        postsProvider: posts,
-        myUserInfoLocal: userInfoLocal,
-        imageFile: imageFile,
-      );
+      // _post.savePostToDatabase(
+      //   postsProvider: posts,
+      //   myUserInfoLocal: userInfoLocal,
+      //   imageFile: imageFile,
+      // );
     }
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
-
-//  [
-//               Form(
-//                 key: _form,
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     // DESCRIPTIONS
-//                     Padding(
-//                       padding: const EdgeInsets.only(
-//                         right: 10,
-//                         left: 20,
-//                         bottom: 10,
-//                         top: 30,
-//                       ),
-//                       child: Text("Description",
-//                           style: GoogleFonts.workSans().copyWith(
-//                               fontSize: 20, fontWeight: FontWeight.bold)),
-//                     ),
-//                     Padding(
-//                       padding: EdgeInsets.only(left: 20, right: 20),
-//                       child: TextFormField(
-//                         minLines: 4,
-//                         maxLines: 10,
-//                         buildCounter: (context,
-//                                 {required currentLength,
-//                                 required isFocused,
-//                                 maxLength}) =>
-//                             Text(
-//                                 (currentLength > 1)
-//                                     ? (currentLength.toString() + " words")
-//                                     : (currentLength.toString() + " word"),
-//                                 style: GoogleFonts.workSans()
-//                                     .copyWith(fontSize: 18)),
-//                         decoration: InputDecoration(
-//                           filled: true,
-//                           fillColor: Colors.grey.withOpacity(0.1),
-//                           hintText: 'Post what you want',
-//                           focusedBorder: OutlineInputBorder(
-//                             borderSide: BorderSide(
-//                                 color: Colors.grey.withOpacity(0.6),
-//                                 width: 1.5),
-//                           ),
-//                         ),
-//                         style: GoogleFonts.workSans().copyWith(fontSize: 20),
-//                         onSaved: (value) {
-//                           _post = PostProvider(
-//                             id: "",
-//                             content: value as String,
-//                             isBusinessPost: false,
-//                             likeCount: 0,
-//                             postTime: DateTime.now(),
-//                             commentCount: 0,
-//                             commentUsers: [],
-//                             imageUrl: '',
-//                             likedUsers: [],
-//                             postCreatedUserId: '',
-//                             shareCount: 0,
-//                             shareUsers: [],
-//                           );
-//                         },
-//                       ),
-//                     ),
-
-//                     //images
-//                     Padding(
-//                       padding: const EdgeInsets.only(
-//                         right: 10,
-//                         left: 20,
-//                         bottom: 10,
-//                         top: 20,
-//                       ),
-//                       child: Text("Image",
-//                           style: GoogleFonts.workSans().copyWith(
-//                               fontSize: 20, fontWeight: FontWeight.bold)),
-//                     ),
-//                     InkWell(
-//                       onTap: () {
-//                         _showChoiceDialog(context);
-//                         print(imageFile.runtimeType.toString());
-//                       },
-//                       child: Container(
-//                         margin: const EdgeInsets.only(
-//                           right: 20,
-//                           left: 20,
-//                           bottom: 10,
-//                           top: 10,
-//                         ),
-//                         height: 300,
-//                         width: double.infinity,
-//                         decoration: BoxDecoration(
-//                             image: (imageFile != null)
-//                                 ? DecorationImage(
-//                                     image: FileImage(
-//                                         File((imageFile as PickedFile).path)),
-//                                     fit: BoxFit.cover,
-//                                   )
-//                                 : null,
-//                             color: Colors.grey.withOpacity(0.1),
-//                             border: Border.all(
-//                               color: Colors.grey,
-//                             ),
-//                             borderRadius:
-//                                 BorderRadius.all(Radius.circular(2))),
-//                         child: Icon(
-//                           Icons.ac_unit_sharp,
-//                           color: Colors.black.withOpacity(0.4),
-//                           size: 30,
-//                         ),
-//                       ),
-//                     ),
-
-//                     // POST button
-//                     Container(
-//                       padding: const EdgeInsets.only(
-//                         right: 20,
-//                         left: 20,
-//                         bottom: 10,
-//                         top: 20,
-//                       ),
-//                       margin: const EdgeInsets.only(bottom: 20),
-//                       width: double.infinity,
-//                       height: 100,
-//                       child: ElevatedButton(
-//                         child: Text("POST IT NOW",
-//                             style: GoogleFonts.workSans().copyWith(
-//                               fontSize: 20,
-//                               fontWeight: FontWeight.bold,
-//                             )),
-//                         onPressed: () {
-//                           savePost(posts);
-//                           Navigator.of(context)
-//                               .popAndPushNamed(ListPostScreen.routeName);
-//                         },
-//                         style: ElevatedButton.styleFrom(
-//                             elevation: 1,
-//                             primary: Colors.green.withOpacity(0.8)),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           )),
-//         ],

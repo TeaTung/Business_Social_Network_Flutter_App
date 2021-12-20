@@ -9,7 +9,7 @@ import '../providers/round.dart';
 import '../widgets/job_description_item.dart';
 
 class ProcessDetailScreen extends StatelessWidget {
-  final Process process;
+  final ProcessProvider process;
 
   const ProcessDetailScreen({
     Key? key,
@@ -18,11 +18,9 @@ class ProcessDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listProcess = Provider.of<Processes>(context).items;
+    // final listProcess = Provider.of<ProcessesProvider>(context).items;
 
-    void onPressButton() {
-
-    }
+    void onPressButton() {}
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(240, 240, 240, 1.0),
@@ -34,8 +32,8 @@ class ProcessDetailScreen extends StatelessWidget {
           'Process Detail',
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline1!.copyWith(
-            color: Colors.white,
-          ),
+                color: Colors.white,
+              ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
