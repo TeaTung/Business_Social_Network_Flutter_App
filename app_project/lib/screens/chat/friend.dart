@@ -42,7 +42,7 @@ class FriendPage extends StatelessWidget {
         builder: (context) => ChatScreen(
           roomId: roomId,
           otherUserId: otherUser.uid,
-          otherUserAvatarUrl: otherUser.avatarUrl,
+          // otherUserAvatarUrl: otherUser.avatarUrl,
           otherUserName: otherUser.userName,
         ),
       ),

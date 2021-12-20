@@ -24,13 +24,13 @@ class ChatScreen extends StatefulWidget {
     required this.roomId,
     required this.otherUserId,
     required this.otherUserName,
-    required this.otherUserAvatarUrl,
+    //   required this.otherUserAvatarUrl,
   }) : super(key: key);
 
   final String roomId;
   final String otherUserId;
   final String otherUserName;
-  final String otherUserAvatarUrl;
+  // final String otherUserAvatarUrl;
 
   @override
   _ChatScreenState createState() => _ChatScreenState();

@@ -55,7 +55,11 @@ class _AuthWrapperState extends State<AuthWrapper> {
         controller: controller,
         children: [
           // ListPostScreen(),
-          //RoomsPage(),
+          FutureProvider.value(
+            value: UserInfoLocal.fromFirebase(),
+            initialData: null,
+            child: RoomsPage(),
+          ),
 
           //DetailBusinessPostScreen(),
 

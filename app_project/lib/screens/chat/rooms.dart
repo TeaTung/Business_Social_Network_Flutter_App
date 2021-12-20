@@ -58,7 +58,7 @@ class _RoomsPageState extends State<RoomsPage> {
 
   Widget _buildAvatar({
     required String roomType,
-    required String otherUserAvatarUrl,
+    //  required String otherUserAvatarUrl,
     required String otherUserId,
     required String roomName,
   }) {
@@ -200,17 +200,12 @@ class _RoomsPageState extends State<RoomsPage> {
                           .firstWhere((id) => id != _userAuth!.uid);
 
                       String otherUserName =
-                          (FirebaseChatCore.instance.firebaseUser!.uid !=
+                          (FirebaseChatCore.instance.firebaseUser!.uid ==
                                   data['otherUserId'])
                               ? data['name1']
                               : data['name2'];
 
-                      String otherUserAvatar =
-                          (FirebaseChatCore.instance.firebaseUser!.uid !=
-                                  data['otherUserId'])
-                              ? data['name1']
-                              : data['name2'];
-
+                      print('d');
                       return GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(
@@ -221,7 +216,7 @@ class _RoomsPageState extends State<RoomsPage> {
                                   child: ChatScreen(
                                     roomId: document.id,
                                     otherUserId: otherUserid,
-                                    otherUserAvatarUrl: otherUserAvatar,
+                                    //  otherUserAvatarUrl: otherUserAvatar,
                                     otherUserName: otherUserName,
                                   ),
                                 ),
@@ -244,7 +239,7 @@ class _RoomsPageState extends State<RoomsPage> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   _buildAvatar(
-                                    otherUserAvatarUrl: otherUserAvatar,
+                                    //     otherUserAvatarUrl: otherUserAvatar,
                                     otherUserId: otherUserid,
                                     roomName: otherUserName,
                                     roomType: 'direct',

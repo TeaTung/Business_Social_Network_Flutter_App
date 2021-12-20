@@ -10,6 +10,8 @@ import 'package:test_fix/screens/chat/util.dart';
 import 'package:test_fix/widgets/post/comment_field.dart';
 import 'package:test_fix/widgets/post/post_item.dart';
 
+import '../account_screen.dart';
+
 class DetailPostScreen extends StatefulWidget {
   static const routeName = '/DetailPostScreen';
 
@@ -72,11 +74,19 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                             width: 100,
                             margin: EdgeInsets.only(top: 10),
                             child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(data['userAvatarUrl']),
-                                backgroundColor: Colors.black12,
-                                radius: 20,
+                              leading: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      AccountScreen.routeName,
+                                      arguments:
+                                          widget.post.userInfoLocal!.uid);
+                                },
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(data['userAvatarUrl']),
+                                  backgroundColor: Colors.black12,
+                                  radius: 20,
+                                ),
                               ),
                               title: Text(
                                 data['userName'],
