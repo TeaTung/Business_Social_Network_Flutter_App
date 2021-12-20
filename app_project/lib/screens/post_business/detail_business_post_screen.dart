@@ -43,7 +43,7 @@ class _DetailBusinessPostScreenState extends State<DetailBusinessPostScreen> {
                   List content = listRound[index].split('----');
                   return ProcessViewItem(
                     description: content[0],
-                    title: content[0],
+                    title: content[1],
                   );
                 },
                 itemCount: data['roundNum'],
