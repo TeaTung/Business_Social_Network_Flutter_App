@@ -41,6 +41,27 @@ class PostsProvider with ChangeNotifier {
     });
   }
 
+  Future<void> createBusinessPost(PostProvider postProvider) async {
+    var id = const Uuid().v4();
+    await _posts.doc(id).set({
+      'id': id,
+      'content': postProvider.content,
+      'isBusinessPost': false,
+      'likeCount': 0,
+      'postTime': DateTime.now(),
+      'postCreatedUserId': FirebaseChatCore.instance.firebaseUser!.uid,
+      'likedUsers': [],
+      'comments': [],
+      'shareUsers': [],
+      'shareCount': 0,
+      'commentCount': 0,
+      'commentUsers': [],
+      'imageUrl': postProvider.imageUrl,
+      'userName': postProvider.userInfoLocal!.userName,
+      'userAvatarUrl': postProvider.userInfoLocal!.avatarUrl,
+    });
+  }
+
   Stream<List<PostProvider>> getPost() {
     var documentStream =
         FirebaseFirestore.instance.collection('posts').snapshots();
@@ -48,7 +69,6 @@ class PostsProvider with ChangeNotifier {
     PostProvider postProvider;
     var document = documentStream.map((qShot) => qShot.docs.map((doc) {
           var data = doc.data();
-
           postProvider = PostProvider(
             commentCount: data['commentCount'],
             commentUsers: (List.from(data['commentUsers'])),
@@ -62,6 +82,7 @@ class PostsProvider with ChangeNotifier {
             postTime: (data['postTime'].toDate()),
             shareCount: data['shareCount'],
             shareUsers: (List.from(data['shareUsers'])),
+            roundId: data['roundId'],
             userInfoLocal: (UserInfoLocal(
               uid: data['postCreatedUserId'],
               userName: data['userName'],

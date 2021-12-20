@@ -33,49 +33,6 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
-          // appBar: AppBar(
-          //   centerTitle: false,
-          //   leadingWidth: 7,
-          //   elevation: 0,
-          //   backgroundColor: Colors.transparent,
-          //   // leadingWidth: 15,
-          //   title: FutureBuilder<DocumentSnapshot>(
-          //     future: post.getPostUserInfoLocal(),
-          //     builder: (BuildContext context,
-          //         AsyncSnapshot<DocumentSnapshot> snapshot) {
-          //       if (snapshot.hasError) {
-          //         return Text("Something went wrong");
-          //       }
-          //       if (snapshot.hasData && !snapshot.data!.exists) {
-          //         return Text("Document does not exist");
-          //       }
-          //       if (snapshot.connectionState == ConnectionState.done) {
-          //         Map<String, dynamic> data =
-          //             snapshot.data!.data() as Map<String, dynamic>;
-          //         return ListTile(
-          //           leading: CircleAvatar(
-          //             backgroundImage: NetworkImage(data['avatarUrl']),
-          //             backgroundColor: Colors.black12,
-          //             radius: 20,
-          //           ),
-          //           title: Text(
-          //             data['name'],
-          //             style: Theme.of(context)
-          //                 .textTheme
-          //                 .headline1!
-          //                 .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
-          //           ),
-          //           subtitle: Text(DateFormat('d MMMM y').format(post.postTime)),
-          //         );
-          //       }
-
-          //       return const Padding(
-          //         padding: EdgeInsets.only(left: 8.0),
-          //         child: Text("loading"),
-          //       );
-          //     },
-          //   ),
-          // ),
           body: Container(
             decoration: BoxDecoration(
               image: (widget.post.imageUrl != null)
@@ -127,7 +84,7 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                                     .textTheme
                                     .headline1!
                                     .copyWith(
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                       color: Colors.white,
                                     ),

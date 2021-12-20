@@ -7,7 +7,7 @@ import '../widgets/list_detail_process_detail.dart';
 import 'job_description_in_process_detail_item.dart';
 
 class JobDescriptionItem extends StatelessWidget {
-  final Process process;
+  final ProcessProvider process;
 
   const JobDescriptionItem({
     Key? key,
@@ -17,13 +17,15 @@ class JobDescriptionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TitleInProcessDetail(title: "About Job",icon: Icons.work_outline,),
+            const TitleInProcessDetail(
+              title: "About Job",
+              icon: Icons.work_outline,
+            ),
             const SizedBox(height: 11),
             Row(
               // crossAxisAlignment: CrossAxisAlignment.end,

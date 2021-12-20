@@ -42,9 +42,11 @@ class PostItem extends StatelessWidget {
 
     void navigateToDetailPost() {
       if (post.isBusinessPost) {
-        Navigator.of(context).pushNamed(DetailBusinessPostScreen.routeName, arguments: post.id);
+        Navigator.of(context)
+            .pushNamed(DetailBusinessPostScreen.routeName, arguments: post.id);
       } else {
-        Navigator.of(context).pushNamed(DetailPostScreen.routeName, arguments: post.id);
+        Navigator.of(context)
+            .pushNamed(DetailPostScreen.routeName, arguments: post.id);
       }
     }
 
@@ -65,7 +67,9 @@ class PostItem extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             // open post detail screen with post id
-                            Navigator.of(context).pushNamed(AccountScreen.routeName, arguments: post.userInfo.uid);
+                            Navigator.of(context).pushNamed(
+                                AccountScreen.routeName,
+                                arguments: post.userInfo.uid);
                           },
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(

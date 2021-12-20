@@ -1,42 +1,42 @@
 import 'package:flutter/cupertino.dart';
 
 class Round {
-  final String roundName;
+  final String roundTitle;
   final bool isFinished;
   final DateTime deadline;
   final String description;
 
   Round({
-    required this.roundName,
+    required this.roundTitle,
     required this.isFinished,
     required this.deadline,
     required this.description,
   });
 }
 
-class Rounds with ChangeNotifier{
+class Rounds with ChangeNotifier {
   List<Round> _listRound = [
     Round(
-      roundName: 'CV',
+      roundTitle: 'CV',
       isFinished: true,
       deadline: DateTime.now(),
       description: 'This is description',
     ),
     Round(
-      roundName: 'Test online',
+      roundTitle: 'Test online',
       isFinished: true,
       deadline: DateTime.now(),
       description: 'This is description',
     ),
     Round(
-      roundName: 'Interview',
+      roundTitle: 'Interview',
       isFinished: false,
       deadline: DateTime.now(),
       description:
-      'This is a super long description, which is made to test !!!! keke',
+          'This is a super long description, which is made to test !!!! keke',
     ),
     Round(
-      roundName: 'Interview 2',
+      roundTitle: 'Interview 2',
       isFinished: false,
       deadline: DateTime.now(),
       description: 'This is description',

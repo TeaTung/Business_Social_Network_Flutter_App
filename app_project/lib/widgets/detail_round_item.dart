@@ -22,7 +22,7 @@ class DetailRoundItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              listRound[index].roundName,
+              listRound[index].roundTitle,
               style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: const Color.fromRGBO(248, 145, 71, 1),
                     fontSize: 20,
@@ -57,7 +57,6 @@ class DetailRoundItem extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-
       ],
     );
   }

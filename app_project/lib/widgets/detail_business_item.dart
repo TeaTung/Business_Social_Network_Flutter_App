@@ -14,7 +14,7 @@ class DetailBusinessItem extends StatelessWidget {
     //When user click apply job button
     void applyJob() {}
 
-    final process = Provider.of<Process>(context);
+    final process = Provider.of<ProcessProvider>(context);
     return Column(
       children: [
         PostDetailScreenItem(

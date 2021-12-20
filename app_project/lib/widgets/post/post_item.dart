@@ -12,6 +12,7 @@ import 'package:test_fix/providers/post/comments_provider.dart';
 import 'package:test_fix/providers/post/post_provider.dart';
 
 import 'package:test_fix/screens/post/detail_post_screen.dart';
+import 'package:test_fix/screens/post_business/detail_business_post_screen.dart';
 import 'package:test_fix/widgets/post/list_comments.dart';
 
 //This widget represents for one individual post to load to posts list
@@ -108,7 +109,7 @@ class PostItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if (!false) ...[
+                    if (!postProvider.isBusinessPost) ...[
                       LikePostButton(
                         postProvider: postProvider,
                       ),
@@ -123,11 +124,20 @@ class PostItem extends StatelessWidget {
                       _BusinessButton(
                         icon: const Icon(
                           MdiIcons.accountCheckOutline,
-                          color: Colors.white,
+                          color: Colors.black,
                           size: 20,
                         ),
                         label: 'Interested',
-                        tapHandler: () {},
+                        tapHandler: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailBusinessPostScreen(
+                                postProvider: postProvider,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ]
                   ],
@@ -584,7 +594,7 @@ class _BusinessButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Material(
-        color: Colors.blue,
+        color: Colors.white,
         child: InkWell(
           onTap: tapHandler,
           child: SizedBox(
@@ -596,7 +606,7 @@ class _BusinessButton extends StatelessWidget {
                 const SizedBox(width: 5),
                 Text(
                   label,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),

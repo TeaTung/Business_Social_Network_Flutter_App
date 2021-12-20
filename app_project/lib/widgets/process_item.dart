@@ -6,10 +6,12 @@ import '../screens/process_detail_screen.dart';
 import '../providers/process.dart';
 
 class ProcessItem extends StatelessWidget {
-  final Process process;
+  final ProcessProvider process;
 
-  const ProcessItem({Key? key, required this.process,})
-      : super(key: key);
+  const ProcessItem({
+    Key? key,
+    required this.process,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,28 +89,20 @@ class ProcessItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    listItem[index].roundName,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    listItem[index].roundTitle,
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     DateFormat('d MMM y').format(listItem[index].deadline),
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey,
-                    ),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                        ),
                   ),
                 ],
               ),
@@ -116,21 +110,14 @@ class ProcessItem extends StatelessWidget {
                 height: 3,
               ),
               SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.7,
+                width: MediaQuery.of(context).size.width * 0.7,
                 child: Text(
                   listItem[index].description,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(
-                    fontSize: 14,
-                    color: const Color.fromRGBO(128, 128, 128, 1),
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 14,
+                        color: const Color.fromRGBO(128, 128, 128, 1),
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
               ),
             ],
@@ -145,10 +132,9 @@ class ProcessItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ProcessDetailScreen(
-                  process: process,
-                ),
+            builder: (context) => ProcessDetailScreen(
+              process: process,
+            ),
           ),
         );
       },
@@ -165,8 +151,7 @@ class ProcessItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   process.companyName,
-                  style: Theme
-                      .of(context)
+                  style: Theme.of(context)
                       .textTheme
                       .headline1!
                       .copyWith(fontSize: 20),
@@ -176,14 +161,10 @@ class ProcessItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   process.position,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
               ],
             ),
