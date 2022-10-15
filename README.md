@@ -50,6 +50,7 @@ if any error occur, try:
 
 #Step 7: Affter testing, add all files have change and commit.
 > git add .
+
 > git commit -m 'What are added, changed, removed, name of feature'
 
 NOTICE [What are added, changed, removed, name of feature] must writen in English clearly and detail.
@@ -81,4 +82,5 @@ If you see branch feature/name_of_your_branch is deleted, your code is accepted 
 
 #Step 12:Checkout Develop, pull newest code and repeat the process
 > git checkout develop
+
 > git pull
