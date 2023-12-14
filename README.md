@@ -13,11 +13,11 @@
 + Must not merge code.
 ### Git & Working flow
 #Step 1: Clone Project
-> git clone https://github.com/TeaTung/Business_Social_Network_Flutter_App.git
+> git clone http://
 
 if any error occur, try:
 
-> git clone http://github.com/TeaTung/Business_Social_Network_Flutter_App.git
+> git clone https://
 
 ![image](https://user-images.githubusercontent.com/67773933/115963852-8193a800-a54b-11eb-9fbd-e3a0b9833212.png)
 
